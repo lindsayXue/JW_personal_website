@@ -1,15 +1,11 @@
 <template>
-  <div>
-    <p>Test!!!</p>
-  </div>
+  <p>Home component</p>
 </template>
-
 <script>
-
 export default {
-  name: 'Test'
+
 }
 </script>
-
 <style>
 </style>
+

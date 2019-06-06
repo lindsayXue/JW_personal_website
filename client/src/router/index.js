@@ -1,13 +1,13 @@
 import VueRouter from 'vue-router'
 
-import Test from '../components/test.vue'
+import Home from '../components/Home/Home'
 
 const router = new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'test',
-      component: Test
+      name: 'home',
+      component: Home
     }
   ],
   mode: 'history'
