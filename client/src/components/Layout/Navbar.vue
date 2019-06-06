@@ -7,32 +7,36 @@
     </div>
     <v-list class="nav">
       <template v-for="(item, index) in navItems">
+        <v-divider :key="index" class="textGrey"></v-divider>
         <v-list-tile
           :key="item.title"
           class="nav-item textGrey--text"
           active-class="white--text bgGrey"
           :to="item.to"
-          @click="()=> {}"
         >
           <v-list-tile-action>
-            <v-list-tile-title class="nav-item-content secondary--text font-weight-bold">|</v-list-tile-title>
+            <v-list-tile-title class="nav-item-icon secondary--text font-weight-bold">|</v-list-tile-title>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title class="nav-item-content font-weight-bold">{{item.title}}</v-list-tile-title>
           </v-list-tile-content>
-          <v-list-tile-action class="nav-item-content secondary--text font-weight-bold">
+          <v-list-tile-action class="nav-item-icon secondary--text font-weight-bold">
             <i class="fas fa-chevron-right"></i>
           </v-list-tile-action>
         </v-list-tile>
-
-        <v-divider :key="index" class="textGrey"></v-divider>
       </template>
+      <v-divider class="textGrey"></v-divider>
     </v-list>
+    <Footer/>
   </v-navigation-drawer>
 </template>
 <script>
+import Footer from './Footer'
 
 export default {
+  components: {
+    Footer
+  },
   data () {
     return {
       navItems: [
@@ -81,6 +85,9 @@ export default {
   margin-top: 10vh;
 }
 .nav-item-content {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+}
+.nav-item-icon {
+  font-size: 1.6rem;
 }
 </style>

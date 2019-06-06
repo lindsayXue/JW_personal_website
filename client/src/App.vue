@@ -20,9 +20,9 @@ export default {
 </script>
 
 <style>
-/* #app {
-  font-family: "Montserrat", sans-serif;
-} */
+main {
+  margin-left: 300px;
+}
 
 h1 {
   font-size: 1.8rem;
