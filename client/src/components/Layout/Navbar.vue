@@ -1,93 +1,64 @@
 <template>
-  <v-navigation-drawer permanent fixed class="primary hidden-md-and-down">
-    <div class="title">
-      <div class="logo"></div>
-      <h1 class="textGrey--text text-xs-center mb-4">Jason Wu</h1>
-      <p class="detail textGrey--text text-xs-center">Ph.D of University of Canterbury</p>
-    </div>
-    <v-list class="nav">
-      <template v-for="(item, index) in navItems">
-        <v-divider :key="index" class="textGrey"></v-divider>
-        <v-list-tile
-          :key="item.title"
-          class="nav-item textGrey--text"
-          active-class="white--text bgGrey"
-          :to="item.to"
+  <div>
+    <v-toolbar flat fixed prominent class="nav-toolbar primary hidden-lg-and-up white--text py-2">
+      <div class="logo-toolbar"></div>
+      <v-toolbar-title class="textGrey--text font-weight-bold">Jason Wu</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-btn
+          icon
+          @click.stop="drawerMedium = !drawerMedium"
+          class="white--text hidden-lg-and-up hidden-sm-and-down"
         >
-          <v-list-tile-action>
-            <v-list-tile-title class="nav-item-icon secondary--text font-weight-bold">|</v-list-tile-title>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title class="nav-item-content font-weight-bold">{{item.title}}</v-list-tile-title>
-          </v-list-tile-content>
-          <v-list-tile-action class="nav-item-icon secondary--text font-weight-bold">
-            <i class="fas fa-chevron-right"></i>
-          </v-list-tile-action>
-        </v-list-tile>
-      </template>
-      <v-divider class="textGrey"></v-divider>
-    </v-list>
-    <Footer/>
-  </v-navigation-drawer>
+          <i class="fas fa-bars fa-2x"></i>
+        </v-btn>
+        <v-btn icon @click.stop="drawerSmall = !drawerSmall" class="white--text hidden-md-and-up">
+          <i class="fas fa-bars fa-2x"></i>
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-navigation-drawer permanent fixed class="nav-side primary hidden-md-and-down">
+      <NavContent/>
+    </v-navigation-drawer>
+    <v-navigation-drawer v-model="drawerMedium" temporary fixed class="nav-medium primary">
+      <NavContent/>
+    </v-navigation-drawer>
+    <v-navigation-drawer
+      class="nav-small primary"
+      v-model="drawerSmall"
+      fixed
+      temporary
+      height="250"
+    >
+      <NavContent/>
+    </v-navigation-drawer>
+  </div>
 </template>
 <script>
-import Footer from './Footer'
+import NavContent from './NavContent'
 
 export default {
   components: {
-    Footer
+    NavContent
   },
   data () {
     return {
-      navItems: [
-        {
-          title: 'HOME',
-          to: '/'
-        },
-        {
-          title: 'RESEARCH',
-          to: '/research'
-        },
-        {
-          title: 'PUBLICATIONS',
-          to: '/publications'
-        },
-        {
-          title: 'BLOG',
-          to: '/blog'
-        },
-        {
-          title: 'CONTACT',
-          to: '/contact'
-        }
-      ]
+      drawerMedium: false,
+      drawerSmall: false
     }
   }
 }
 </script>
 <style scoped>
-.logo {
+.logo-toolbar {
   background: url(../../assets/Logo.jpg) no-repeat center;
   background-size: cover;
   border: 2px solid white;
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
-  margin: auto;
-  margin-top: 5vh;
-  margin-bottom: 5vh;
+  width: 60px;
+  height: 60px;
 }
-.detail {
-  font-size: 1.2rem;
-  font-style: italic;
-}
-.nav {
-  margin-top: 10vh;
-}
-.nav-item-content {
-  font-size: 1.2rem;
-}
-.nav-item-icon {
-  font-size: 1.6rem;
+.nav-small {
+  top: 80px;
 }
 </style>

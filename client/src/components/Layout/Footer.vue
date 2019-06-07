@@ -11,4 +11,4 @@ export default {
   justify-content: center;
   font-size: 1.2rem;
 }
-</style>
+</style>ß
