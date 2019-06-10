@@ -4,9 +4,9 @@
     <v-content>
       <v-container fluid pa-0>
         <main>
-          <v-slide-x-reverse-transition>
+          <v-scale-transition hide-on-leave>
             <router-view></router-view>
-          </v-slide-x-reverse-transition>
+          </v-scale-transition>
         </main>
       </v-container>
     </v-content>
