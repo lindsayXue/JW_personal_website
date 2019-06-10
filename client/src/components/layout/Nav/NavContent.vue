@@ -53,7 +53,7 @@
   </div>
 </template>
 <script>
-import Footer from './Footer'
+import Footer from '../Footer'
 
 export default {
   components: {
@@ -89,7 +89,7 @@ export default {
 </script>
 <style scoped>
 .logo {
-  background: url(../../assets/Logo.jpg) no-repeat center;
+  background: url(../../../assets/Logo.jpg) no-repeat center;
   background-size: cover;
   border: 2px solid white;
   border-radius: 50%;
@@ -98,10 +98,6 @@ export default {
   margin: auto;
   margin-top: 5vh;
   margin-bottom: 5vh;
-}
-.detail {
-  font-size: 1.2rem;
-  font-style: italic;
 }
 .title {
   margin-bottom: 10vh;

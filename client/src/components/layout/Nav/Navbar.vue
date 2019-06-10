@@ -1,6 +1,13 @@
 <template>
   <div>
-    <v-toolbar flat fixed prominent class="nav-toolbar primary hidden-lg-and-up white--text py-2">
+    <v-toolbar
+      app
+      flat
+      fixed
+      prominent
+      v-if="!$vuetify.breakpoint.lgAndUp"
+      class="nav-toolbar primary white--text py-2"
+    >
       <div class="logo-toolbar"></div>
       <v-toolbar-title class="textGrey--text font-weight-bold">Jason Wu</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -17,15 +24,16 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-navigation-drawer permanent fixed class="nav-side primary hidden-md-and-down">
+    <v-navigation-drawer app fixed class="nav-side primary hidden-md-and-down">
       <NavContent/>
     </v-navigation-drawer>
-    <v-navigation-drawer v-model="drawerMedium" temporary fixed class="nav-medium primary">
+    <v-navigation-drawer app v-model="drawerMedium" temporary fixed class="nav-medium primary">
       <NavContent/>
     </v-navigation-drawer>
     <v-navigation-drawer
       class="nav-small primary"
       v-model="drawerSmall"
+      app
       fixed
       temporary
       height="250"
@@ -51,7 +59,7 @@ export default {
 </script>
 <style scoped>
 .logo-toolbar {
-  background: url(../../assets/Logo.jpg) no-repeat center;
+  background: url(../../../assets/Logo.jpg) no-repeat center;
   background-size: cover;
   border: 2px solid white;
   border-radius: 50%;

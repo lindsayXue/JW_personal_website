@@ -10,7 +10,12 @@ import './stylus/main.styl'
 
 Vue.config.productionTip = false
 
-Vue.use(Vuetify, { theme })
+Vue.use(Vuetify, {
+  theme,
+  options: {
+    customProperties: true
+  }
+})
 Vue.use(VueRouter)
 
 new Vue({
