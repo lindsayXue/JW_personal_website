@@ -2,7 +2,7 @@
   <div id="timeline-area">
     <h1 class="tertiary--text font-weight-regular mb-4">{{title}}</h1>
     <div class="content primary--text">
-      <TimeLineContent v-for="(item,index) in data" :key="index" :item="item"/>
+      <TimeLineContent v-for="(item,index) in timelineData" :key="index" :item="item"/>
     </div>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
   },
   props: {
     title: String,
-    data: Array
+    timelineData: Array
   }
 }
 </script>

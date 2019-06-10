@@ -1,23 +1,64 @@
 <template>
   <div>
-    <Banner title="RESEARCH" detail="Current projects and research interets"></Banner>
+    <Banner class="banner" title="RESEARCH" detail="Current projects and research interets"></Banner>
+    <v-layout row wrap justify-center>
+      <v-flex md8 order-md1 order-sm2 order-xs2>
+        <ContentArea :content="research"/>
+      </v-flex>
+      <v-flex md4 xs11 order-md2 order-sm1 order-xs1>
+        <ListArea title="Interests" :listData="interestsData"/>
+      </v-flex>
+    </v-layout>
+    <ProjectsList class="lightGrey" title="Research Projects" :projectsData="projectsData"/>
   </div>
 </template>
 <script>
 import Banner from './common/Banner'
-
+import ContentArea from './common/ContentArea'
+import ListArea from './common/ListArea'
+import ProjectsList from './common/PojectsList'
 
 export default {
   components: {
-    Banner
+    Banner,
+    ContentArea,
+    ListArea,
+    ProjectsList
   },
   data () {
     return {
       research: 'Yuanjie is a PhD student and his research interest is avatar mediated interaction in VR by using multiple tracking devices. Before joining HIT Lab, he completed his masters degree in signal and information processing and bachelors degree in electronic information engineering from University of Electronic Science and Technology of China. During his masters period, he worked on time-frequency signal analysing and processing based on the project of Terahertz radar signal processing for heartbeat and breathing rate detection and analysing. After that, he worked for 3 years as project manager for ITS information systems integration. In his spare time, Yuanjie likes watching movies, chatting with friends, hiking and other outdoor activities.',
+      interestsData: [
+        'VR technology',
+        'VR technology',
+        'VR technology',
+        'VR technology',
+        'VR technology'
+      ],
+      projectsData: [
+        {
+          name: 'Project Name 1',
+          detail: 'Project 1 detail',
+          projectImg: 'test'
+        },
+        {
+          name: 'Project Name 2',
+          detail: 'Project 2 detail',
+          projectImg: 'test'
+        },
+        {
+          name: 'Project Name 3',
+          detail: 'Project 3 detail',
+          projectImg: 'test'
+        }
+      ]
     }
   }
 }
 </script>
 <style scoped>
+.banner {
+  background: url(../assets/home_banner_bg.svg) center/cover no-repeat;
+}
 </style>
 

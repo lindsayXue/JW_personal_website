@@ -1,20 +1,20 @@
 <template>
-  <div>
-    <Banner title="HOME" detail="Welcome to my personal website"></Banner>
-    <TextArea title="About" :content="content"/>
-    <TimeLineArea class="lightGrey" title="Education" :data="educationData"/>
-    <TimeLineArea title="Experience" :data="experienceData"/>
+  <div id="home">
+    <Banner class="banner" title="HOME" detail="Welcome to my personal website"></Banner>
+    <ContentArea class="about" title="About" :content="content"/>
+    <TimeLineArea class="lightGrey" title="Education" :timelineData="educationData"/>
+    <TimeLineArea title="Experience" :timelineData="experienceData"/>
   </div>
 </template>
 <script>
 import Banner from './common/Banner'
-import TextArea from './common/TextArea'
+import ContentArea from './common/ContentArea'
 import TimeLineArea from './common/timeLine/TimeLineArea'
 
 export default {
   components: {
     Banner,
-    TextArea,
+    ContentArea,
     TimeLineArea
   },
   data () {
@@ -69,5 +69,11 @@ export default {
 }
 </script>
 <style scoped>
+.banner {
+  background: url(../assets/home_banner_bg.svg) center/cover no-repeat;
+}
+.about {
+  padding: 2rem 5vw;
+}
 </style>
 

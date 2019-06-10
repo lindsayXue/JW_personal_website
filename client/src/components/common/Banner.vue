@@ -9,7 +9,6 @@
 <script>
 export default {
   props: {
-    bgImg: String,
     title: String,
     detail: String
   }
@@ -17,10 +16,9 @@ export default {
 </script>
 <style scoped>
 #banner {
-  height: 250px;
+  height: 280px;
   background-color: var(--v-secondary-base);
-  /* background: var(--v-secondary-base) url(../../assets/home_banner_bg.png) top
-    center/cover no-repeat; */
+  /* background: url(../../assets/home_banner_bg.svg) center/cover no-repeat; */
 }
 .content {
   padding-left: 5vw;
