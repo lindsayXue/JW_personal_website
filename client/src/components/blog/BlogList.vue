@@ -19,7 +19,7 @@
         </v-list-tile>
         <v-divider :key="index"></v-divider>
       </template>
-      <v-btn color="primary" to="/blog/add" light small fab>
+      <v-btn color="tertiary" to="/blog/add" dark small fab>
         <i class="fas fa-plus"></i>
       </v-btn>
     </v-list>

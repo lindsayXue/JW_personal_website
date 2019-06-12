@@ -1,8 +1,8 @@
 <template>
   <div class="create-blog">
-    <v-btn color="tertiary white--text" to="/blog">Back</v-btn>
     <vue-editor class="editor" v-model="content"></vue-editor>
-    <v-btn color="tertiary white--text" @click="create">Create</v-btn>
+    <v-btn color="primary" dark to="/blog">Back</v-btn>
+    <v-btn color="tertiary" dark @click="create">Create</v-btn>
   </div>
 </template>
 <script>
