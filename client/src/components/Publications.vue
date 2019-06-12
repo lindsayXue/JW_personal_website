@@ -3,7 +3,7 @@
     <Banner class="banner" title="PUBLICATIONS" detail="Key publications"></Banner>
     <v-layout class="search-bar mt-2" row wrap justify-space-between align-center>
       <v-flex md5 xs11>
-        <v-text-field label="Search..." v-model="searchContent" outline clearable>
+        <v-text-field label="Search..." v-model="searchContent" clearable>
           <template v-slot:prepend-inner>
             <i class="fas fa-search"></i>
           </template>

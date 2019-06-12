@@ -3,7 +3,7 @@
     <v-flex md9>
       <v-layout class="search-bar mt-2 primary--text" row wrap align-start justify-space-between>
         <v-flex md7 xs11>
-          <v-text-field label="Search..." v-model="searchContent" outline clearable>
+          <v-text-field label="Search..." v-model="searchContent" clearable>
             <template v-slot:prepend-inner>
               <i class="fas fa-search"></i>
             </template>
@@ -16,41 +16,24 @@
       </v-layout>
       <BlogList :selectedCatagory="selectedCatagory" :blogData="blogShow"/>
     </v-flex>
-    <v-flex md3 class="catagory tertiary hidden-sm-and-down">
-      <h1 class="white--text font-weight-regular ma-2">Catagory</h1>
-      <v-list dense class="tertiary textGrey--text">
-        <template v-for="(item, index) in catagoryData">
-          <v-list-tile
-            :class="item === selectedCatagory? 'active-list': ''"
-            @click="selectClick(item)"
-            :key="index"
-          >
-            <v-list-tile-content>
-              <v-list-tile-title class="content">
-                <span class="list-icon secondary--text font-weight-bold pr-2">|</span>
-                {{item}}
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </template>
-        <v-list-tile :class="!selectedCatagory? 'active-list': ''" @click="selectClick(null)">
-          <v-list-tile-content>
-            <v-list-tile-title class="content">
-              <span class="list-icon secondary--text font-weight-bold pr-2">|</span>
-              ALL
-            </v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
+    <v-flex md3 class="tertiary">
+      <BlogCatagory
+        class="catagory hidden-sm-and-down"
+        :catagoryData="catagoryData"
+        :selectedCatagory="selectedCatagory"
+        v-on:selectClick="selectClick"
+      />
     </v-flex>
   </v-layout>
 </template>
 <script>
 import BlogList from './BlogList'
+import BlogCatagory from './BlogCatagory'
 
 export default {
   components: {
-    BlogList
+    BlogList,
+    BlogCatagory
   },
   data () {
     return {
@@ -113,10 +96,5 @@ export default {
 }
 .catagory {
   height: calc(100vh - 280px);
-}
-.active-list {
-  background: var(--v-primary-base);
-  color: white;
-  font-weight: bold;
 }
 </style>

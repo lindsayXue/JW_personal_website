@@ -1,6 +1,9 @@
 <template>
   <div class="blog-list">
-    <h1 v-if="selectedCatagory" class="secondary--text font-weight-regular">{{selectedCatagory}}</h1>
+    <h1 v-if="selectedCatagory" class="primary--text font-weight-regular">
+      {{selectedCatagory}}
+      <i class="fas fa-chevron-right"></i>
+    </h1>
     <v-list>
       <template v-for="(item, index) in blogData">
         <v-list-tile :key="item.id" :to="{name: 'blog-view', params:{id: item.id}}">
@@ -19,7 +22,7 @@
         </v-list-tile>
         <v-divider :key="index"></v-divider>
       </template>
-      <v-btn color="tertiary" to="/blog/add" dark small fab>
+      <v-btn color="tertiary" to="/blog/add" dark small flat>
         <i class="fas fa-plus"></i>
       </v-btn>
     </v-list>
