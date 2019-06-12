@@ -1,10 +1,12 @@
 const express = require('express')
+const Routes = require('./routes')
 
 const app = express()
 
-app.get('*', (req, res) => {
-  res.send('Server runing successful!!!')
-})
+// Init Middleware
+app.use(express.json({ extended: false }))
+
+app.use('/api', Routes)
 
 const PORT = process.env.PORT || 5000
 
