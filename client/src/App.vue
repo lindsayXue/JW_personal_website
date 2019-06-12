@@ -4,9 +4,9 @@
     <v-content>
       <v-container fluid pa-0>
         <main>
-          <v-scale-transition hide-on-leave>
+          <v-scroll-y-transition mode="out-in">
             <router-view></router-view>
-          </v-scale-transition>
+          </v-scroll-y-transition>
         </main>
       </v-container>
     </v-content>
