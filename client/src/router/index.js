@@ -3,6 +3,10 @@ import VueRouter from 'vue-router'
 import Home from '../components/Home'
 import Research from '../components/Research'
 import Publications from '../components/Publications'
+import Blog from '../components/blog/Blog'
+import BlogHome from '../components/blog/BlogHome'
+import BlogView from '../components/blog/BlogView'
+import Contact from '../components/Contact'
 
 const router = new VueRouter({
   routes: [
@@ -20,6 +24,27 @@ const router = new VueRouter({
       path: '/publications',
       name: 'publications',
       component: Publications
+    },
+    {
+      path: '/blog',
+      component: Blog,
+      children: [
+        {
+          path: '/blog',
+          name: 'blog-home',
+          component: BlogHome
+        },
+        {
+          path: '/blog/:id',
+          name: 'blog-view',
+          component: BlogView
+        }
+      ]
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: Contact
     }
   ],
   mode: 'history'

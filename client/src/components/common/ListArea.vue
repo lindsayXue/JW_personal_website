@@ -1,7 +1,7 @@
 <template>
   <div id="list-area">
-    <h1 class="tertiary--text font-weight-regular mb-4">{{title}}</h1>
-    <v-list>
+    <h1 class="font-weight-regular mb-4">{{title}}</h1>
+    <v-list style="background: rgba(0,0,0,0)">
       <v-list-tile v-for="(item,index) in listData" :key="index">
         <v-list-tile-action>
           <v-list-tile-title class="list-icon secondary--text font-weight-bold">|</v-list-tile-title>

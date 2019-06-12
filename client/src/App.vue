@@ -27,6 +27,9 @@ export default {
 h1 {
   font-size: 1.8rem;
 }
+h1 {
+  font-size: 1.5rem;
+}
 .detail {
   font-size: 1.2rem;
   font-style: italic;
