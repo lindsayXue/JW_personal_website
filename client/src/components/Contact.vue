@@ -6,7 +6,7 @@
       detail="Feel free to contact me if you have questions with regards to my research"
     ></Banner>
     <v-layout class="content primary--text" row wrap align-center>
-      <v-flex md5>
+      <v-flex md5 xs11>
         <h2 class="font-weight-regular mb-4">
           <i class="fas fa-envelope icon px-2"></i>
           <a href="mailto:yuanjiewu925@gmail.com">yuanjiewu925@gmail.com</a>
@@ -37,8 +37,8 @@
           </a>
         </div>
       </v-flex>
-      <v-flex md5>
-        <v-img width="500" height="500" class="secondary"></v-img>
+      <v-flex md5 xs11>
+        <v-img width="500" height="500" class="secondary hidden-sm-and-down"></v-img>
       </v-flex>
     </v-layout>
   </div>
@@ -60,7 +60,11 @@ export default {
   color: var(--v-tertiary-base);
 }
 .social-icon {
-  color: var(--v-secondary-base);
+  color: var(--v-primary-base);
   margin: 5px;
+}
+.social-icon:hover {
+  color: var(--v-tertiary-base);
+  transition: color 0.5s;
 }
 </style>

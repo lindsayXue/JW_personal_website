@@ -18,7 +18,6 @@ export default {
 #banner {
   height: 280px;
   background-color: var(--v-tertiary-base);
-  /* background: url(../../assets/home_banner_bg.svg) center/cover no-repeat; */
 }
 .content {
   padding-left: 5vw;

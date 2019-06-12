@@ -27,7 +27,7 @@ export default {
 h1 {
   font-size: 1.8rem;
 }
-h1 {
+h2 {
   font-size: 1.5rem;
 }
 .detail {
