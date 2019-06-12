@@ -6,6 +6,8 @@ import Publications from '../components/Publications'
 import Blog from '../components/blog/Blog'
 import BlogHome from '../components/blog/BlogHome'
 import BlogView from '../components/blog/BlogView'
+import CreateBlog from '../components/blog/CreateBlog'
+
 import Contact from '../components/Contact'
 
 const router = new VueRouter({
@@ -33,6 +35,11 @@ const router = new VueRouter({
           path: '/blog',
           name: 'blog-home',
           component: BlogHome
+        },
+        {
+          path: '/blog/add',
+          name: 'create-blog',
+          component: CreateBlog
         },
         {
           path: '/blog/:id',

@@ -8,7 +8,10 @@
             <v-list-tile-title class="blog-title tertiary--text">{{item.title}}</v-list-tile-title>
           </v-list-tile-content>
           <v-list-tile-content>
-            <v-list-tile-sub-title v-text="item.catagory"></v-list-tile-sub-title>
+            <v-list-tile-sub-title>
+              {{item.catagory}}
+              <i class="fas fa-tag pl-2"></i>
+            </v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-content>
             <v-list-tile-sub-title v-text="item.date"></v-list-tile-sub-title>
@@ -16,6 +19,9 @@
         </v-list-tile>
         <v-divider :key="index"></v-divider>
       </template>
+      <v-btn color="primary" to="/blog/add" light small fab>
+        <i class="fas fa-plus"></i>
+      </v-btn>
     </v-list>
     <v-pagination v-model="page" :length="4" circle></v-pagination>
   </div>
@@ -28,7 +34,8 @@ export default {
   ],
   data () {
     return {
-      page: 1
+      page: 1,
+      itemPerPage: 20
     }
   },
 }

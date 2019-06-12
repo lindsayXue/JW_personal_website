@@ -3,9 +3,12 @@
     <div class="blog-content">
       <v-btn to="/blog" color="tertiary mr-4" dark absolute right>back</v-btn>
       <h1 class="tertiary--text font-weight-regular mb-4">{{blogData.title}}</h1>
-      <div
-        class="detail secondary--text"
-      >{{blogData.catagory}} {{blogData.author}} {{blogData.date}}</div>
+      <div class="detail secondary--text">
+        {{blogData.catagory}}
+        <i class="fas fa-tag pr-2"></i>
+        {{blogData.author}}
+        {{blogData.date}}
+      </div>
       <div class="content primary--text">{{blogData.content}}</div>
     </div>
     <div class="blog-comments lightGrey">

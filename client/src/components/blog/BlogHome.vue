@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap justify-center align-start>
-    <v-flex lg8 md9 order-sm1 order-xs2>
+    <v-flex md9>
       <v-layout class="search-bar mt-2 primary--text" row wrap align-start justify-space-between>
         <v-flex md7 xs11>
           <v-text-field label="Search..." v-model="searchContent" outline clearable>
@@ -16,7 +16,7 @@
       </v-layout>
       <BlogList :selectedCatagory="selectedCatagory" :blogData="blogShow"/>
     </v-flex>
-    <v-flex lg4 md3 order-sm2 order-xs1 class="catagory tertiary">
+    <v-flex md3 class="catagory tertiary hidden-sm-and-down">
       <h1 class="white--text font-weight-regular ma-2">Catagory</h1>
       <v-list dense class="tertiary textGrey--text">
         <template v-for="(item, index) in catagoryData">
@@ -25,20 +25,20 @@
             @click="selectClick(item)"
             :key="index"
           >
-            <v-list-tile-action>
-              <v-list-tile-title class="list-icon secondary--text font-weight-bold">|</v-list-tile-title>
-            </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title class="content" v-html="item"></v-list-tile-title>
+              <v-list-tile-title class="content">
+                <span class="list-icon secondary--text font-weight-bold pr-2">|</span>
+                {{item}}
+              </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </template>
         <v-list-tile :class="!selectedCatagory? 'active-list': ''" @click="selectClick(null)">
-          <v-list-tile-action>
-            <v-list-tile-title class="list-icon secondary--text font-weight-bold">|</v-list-tile-title>
-          </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title class="content">All</v-list-tile-title>
+            <v-list-tile-title class="content">
+              <span class="list-icon secondary--text font-weight-bold pr-2">|</span>
+              ALL
+            </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -110,6 +110,9 @@ export default {
 }
 .sort {
   font-size: 1.2rem;
+}
+.catagory {
+  height: calc(100vh - 280px);
 }
 .active-list {
   background: var(--v-primary-base);

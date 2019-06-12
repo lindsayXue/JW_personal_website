@@ -12,6 +12,7 @@
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
+    "vue2-editor": "^2.7.2",
     "vuetify": "^1.5.14"
   },
   "devDependencies": {
