@@ -8,11 +8,11 @@
     <v-layout class="content primary--text" row wrap align-center>
       <v-flex md5 xs11>
         <h2 class="font-weight-regular mb-4">
-          <i class="fas fa-envelope icon px-2"></i>
+          <i class="fas fa-envelope icon pr-2"></i>
           <a href="mailto:yuanjiewu925@gmail.com">yuanjiewu925@gmail.com</a>
         </h2>
         <h2 class="font-weight-regular mb-4">
-          <i class="fas fa-map-marker-alt icon px-2"></i>Christchurch, New Zealand
+          <i class="fas fa-map-marker-alt icon pr-2"></i>Christchurch, New Zealand
         </h2>
         <div class="social">
           <a class="social-icon" href="https://www.facebook.com/lingzi.xue.1" target="_blank">

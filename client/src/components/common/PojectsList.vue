@@ -4,7 +4,7 @@
     <div class="list-content">
       <v-card class="mb-4" v-for="(item, index) in projectsData" :key="index" hover>
         <v-layout>
-          <v-flex xs4>
+          <v-flex xs4 class="hidden-md-and-down">
             <v-img class="secondary" height="250" width="250" contain>Project image</v-img>
           </v-flex>
           <v-flex xs7>

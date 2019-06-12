@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap>
+  <v-layout row wrap justify-center align-start>
     <v-flex lg8 md9 order-sm1 order-xs2>
       <v-layout class="search-bar mt-2 primary--text" row wrap align-start justify-space-between>
         <v-flex md7 xs11>
