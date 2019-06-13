@@ -2,8 +2,10 @@
   <div>
     <div class="title hidden-sm-and-down">
       <div class="logo"></div>
-      <h1 class="textGrey--text text-xs-center mb-4">Jason Wu</h1>
-      <p class="detail textGrey--text text-xs-center">Ph.D of University of Canterbury</p>
+      <h1
+        class="textGrey--text text-xs-center mb-4"
+      >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</h1>
+      <p class="detail textGrey--text text-xs-center">{{$store.state.profile.currentTitle}}</p>
     </div>
     <v-list class="nav-items hidden-sm-and-down">
       <template v-for="(item, index) in navItems">

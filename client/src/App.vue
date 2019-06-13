@@ -19,7 +19,10 @@ export default {
   name: 'app',
   components: {
     Navbar
-  }
+  },
+  mounted () {
+    this.$store.dispatch('getProfile')
+  },
 }
 </script>
 

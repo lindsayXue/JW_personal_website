@@ -9,7 +9,9 @@
       class="nav-toolbar primary white--text py-2"
     >
       <div class="logo-toolbar"></div>
-      <v-toolbar-title class="textGrey--text font-weight-bold">Jason Wu</v-toolbar-title>
+      <v-toolbar-title
+        class="textGrey--text font-weight-bold"
+      >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn
@@ -52,9 +54,10 @@ export default {
   data () {
     return {
       drawerMedium: false,
-      drawerSmall: false
+      drawerSmall: false,
+      profileData: {}
     }
-  }
+  },
 }
 </script>
 <style scoped>
