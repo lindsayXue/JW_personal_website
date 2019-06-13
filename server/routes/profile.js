@@ -44,6 +44,18 @@ router.post(
       .isEmpty(),
     check('imgURL', 'Image URL is required')
       .not()
+      .isEmpty(),
+    check('facebook', 'Facebook is required')
+      .not()
+      .isEmpty(),
+    check('linkedin', 'LinkedIn is required')
+      .not()
+      .isEmpty(),
+    check('github', 'GitHub is required')
+      .not()
+      .isEmpty(),
+    check('youtube', 'Youtube is required')
+      .not()
       .isEmpty()
   ],
   async (req, res) => {
@@ -61,7 +73,11 @@ router.post(
         email,
         city,
         country,
-        imgURL
+        imgURL,
+        facebook,
+        linkedin,
+        github,
+        youtube
       } = req.body
 
       const newProfile = new Profile({
@@ -73,13 +89,186 @@ router.post(
           city,
           country
         },
-        imgURL
+        imgURL,
+        socialLinks: {
+          facebook,
+          linkedin,
+          github,
+          youtube
+        }
       })
 
       await newProfile.save()
 
       res.json(newProfile)
     } catch (e) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
+// @route    PUT api/profile/name
+// @desc     Edit profile name
+// @access   Admin
+router.put(
+  '/name',
+  [
+    check('firstName', 'First name is required')
+      .not()
+      .isEmpty(),
+    check('lastName', 'Last name is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+
+    try {
+      const { firstName, lastName } = req.body
+
+      let profile = await Profile.findOne({})
+
+      // Check whether there is a profile
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+      }
+
+      profile.firstName = firstName
+      profile.lastName = lastName
+
+      await profile.save()
+      res.json(profile)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
+// @route    PUT api/profile/currentTitle
+// @desc     Edit profile current title
+// @access   Admin
+router.put(
+  '/currentTitle',
+  [
+    check('currentTitle', 'Current title is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+
+    try {
+      const { currentTitle } = req.body
+
+      let profile = await Profile.findOne({})
+
+      // Check whether there is a profile
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+      }
+
+      profile.currentTitle = currentTitle
+
+      await profile.save()
+      res.json(profile)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
+// @route    PUT api/profile/email
+// @desc     Edit profile email
+// @access   Admin
+router.put(
+  '/email',
+  [
+    check('email', 'Email is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+
+    try {
+      const { email } = req.body
+
+      let profile = await Profile.findOne({})
+
+      // Check whether there is a profile
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+      }
+
+      profile.email = email
+
+      await profile.save()
+      res.json(profile)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
+// @route    PUT api/profile/location
+// @desc     Edit profile location
+// @access   Admin
+router.put(
+  '/location',
+  [
+    check('location.city', 'City is required')
+      .not()
+      .isEmpty(),
+    check('location.country', 'Country is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+
+    try {
+      const { location } = req.body
+
+      let profile = await Profile.findOne({})
+
+      // Check whether there is a profile
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+      }
+
+      profile.location = location
+
+      await profile.save()
+      res.json(profile)
+    } catch (err) {
       console.log(err)
       res.status(500).json({ errors: { server: { msg: 'Server error' } } })
     }

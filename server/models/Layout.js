@@ -8,7 +8,11 @@ const Layout = new Schema({
   applicationsDesc: String,
   blogDesc: String,
   contactDesc: String,
-  footer: String
+  footer: String,
+  imgContactURL: {
+    type: String,
+    required: true
+  }
 })
 
 module.exports = Team = mongoose.model('layout', Layout)

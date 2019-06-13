@@ -9,36 +9,34 @@
       <v-flex md5 xs11>
         <h2 class="font-weight-regular mb-4">
           <i class="fas fa-envelope icon pr-2"></i>
-          <a href="mailto:yuanjiewu925@gmail.com">yuanjiewu925@gmail.com</a>
+          <a :href="`mailTo:${$store.state.profile.email}`">{{$store.state.profile.email}}</a>
         </h2>
-        <h2 class="font-weight-regular mb-4">
-          <i class="fas fa-map-marker-alt icon pr-2"></i>Christchurch, New Zealand
+        <h2 class="font-weight-regular mb-4" v-if="$store.state.profile.location">
+          <i class="fas fa-map-marker-alt icon pr-2"></i>
+          {{$store.state.profile.location.city}}, {{$store.state.profile.location.country}}
         </h2>
-        <div class="social">
-          <a class="social-icon" href="https://www.facebook.com/lingzi.xue.1" target="_blank">
+        <div class="social" v-if="$store.state.profile.socialLinks">
+          <a class="social-icon" :href="$store.state.profile.socialLinks.facebook" target="_blank">
             <i class="fab fa-facebook fa-2x"></i>
           </a>
-          <a
-            class="social-icon"
-            href="https://www.linkedin.com/in/lingzi-xue-a7165469/"
-            target="_blank"
-          >
+          <a class="social-icon" :href="$store.state.profile.socialLinks.linkedin" target="_blank">
             <i class="fab fa-linkedin fa-2x"></i>
           </a>
-          <a class="social-icon" href="https://github.com/lindsayXue" target="_blank">
+          <a class="social-icon" :href="$store.state.profile.socialLinks.github" target="_blank">
             <i class="fab fa-github fa-2x"></i>
           </a>
-          <a
-            class="social-icon"
-            href="https://www.youtube.com/channel/UCmn2R5vLEJTHKJphaZ9Gy_A"
-            target="_blank"
-          >
+          <a class="social-icon" :href="$store.state.profile.socialLinks.youtube" target="_blank">
             <i class="fab fa-youtube-square fa-2x"></i>
           </a>
         </div>
       </v-flex>
       <v-flex md5 xs11>
-        <v-img width="500" height="500" class="secondary hidden-sm-and-down"></v-img>
+        <v-img
+          width="500"
+          height="500"
+          class="secondary hidden-sm-and-down"
+          src="https://i.ytimg.com/vi/MOWDb2TBYDg/maxresdefault.jpg"
+        ></v-img>
       </v-flex>
     </v-layout>
   </div>

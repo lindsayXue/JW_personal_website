@@ -8,7 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   state: {
-    profile: null,
+    profile: {},
     isAdmin: false,
     errors: {}
   },
@@ -23,6 +23,9 @@ export default new Vuex.Store({
       state.isAdmin = true
     },
     setErrors: (state, errors) => {
+      if (!errors) {
+        return (state.errors = {})
+      }
       state.errors = errors
     }
   },
@@ -32,15 +35,26 @@ export default new Vuex.Store({
         const res = await ProfileService.getProfile()
         commit('setProfile', res.data)
       } catch (err) {
-        commit('setErrors', err.response.data)
+        commit('setErrors', err.response.data.errors)
+      }
+    },
+    createProfile: async ({ commit }, newProfile) => {
+      try {
+        const res = await ProfileService.createProfile(newProfile)
+        commit('setProfile', res.data)
+      } catch (err) {
+        commit('setErrors', err.response.data.errors)
       }
     },
     editProfile: async ({ commit }, newProfile) => {
       try {
         commit('setProfile', newProfile)
       } catch (err) {
-        commit('setErrors', err.response.data)
+        commit('setErrors', err.response.data.errors)
       }
+    },
+    setErrors: ({ commit }, errors) => {
+      commit('setErrors', errors)
     }
   }
 })
