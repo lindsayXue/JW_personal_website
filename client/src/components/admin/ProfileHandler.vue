@@ -1,5 +1,5 @@
 <template>
-  <div class="create-profile">
+  <div class="profile-handler">
     <v-card>
       <v-card-title class="headline tertiary white--text" primary-title>Profile</v-card-title>
       <v-card-text>
@@ -8,7 +8,7 @@
             <v-layout wrap>
               <v-flex xs12 md4>
                 <v-text-field
-                  v-model="firstName"
+                  v-model="form.firstName"
                   :error="!!$store.state.errors.firstName"
                   :error-messages="$store.state.errors.firstName? $store.state.errors.firstName.msg  : ''"
                   label="First name"
@@ -17,7 +17,7 @@
               </v-flex>
               <v-flex xs12 md4>
                 <v-text-field
-                  v-model="lastName"
+                  v-model="form.lastName"
                   :error="!!$store.state.errors.lastName"
                   :error-messages="$store.state.errors.lastName? $store.state.errors.lastName.msg  : ''"
                   label="Last name"
@@ -26,7 +26,7 @@
               </v-flex>
               <v-flex xs12 md4>
                 <v-text-field
-                  v-model="email"
+                  v-model="form.email"
                   :error="!!$store.state.errors.email"
                   :error-messages="$store.state.errors.email? $store.state.errors.email.msg  : ''"
                   type="email"
@@ -36,7 +36,7 @@
               </v-flex>
               <v-flex xs12 md4>
                 <v-text-field
-                  v-model="city"
+                  v-model="form.location.city"
                   :error="!!$store.state.errors.city"
                   :error-messages="$store.state.errors.city? $store.state.errors.city.msg  : ''"
                   label="City"
@@ -45,7 +45,7 @@
               </v-flex>
               <v-flex xs12 md4>
                 <v-text-field
-                  v-model="country"
+                  v-model="form.location.country"
                   :error="!!$store.state.errors.country"
                   :error-messages="$store.state.errors.country? $store.state.errors.country.msg  : ''"
                   label="Country"
@@ -54,7 +54,7 @@
               </v-flex>
               <v-flex xs12 md4>
                 <v-text-field
-                  v-model="currentTitle"
+                  v-model="form.currentTitle"
                   :error="!!$store.state.errors.currentTitle"
                   :error-messages="$store.state.errors.currentTitle? $store.state.errors.currentTitle.msg  : ''"
                   label="Current title"
@@ -63,7 +63,7 @@
               </v-flex>
               <v-flex xs12>
                 <v-text-field
-                  v-model="imgURL"
+                  v-model="form.imgURL"
                   :error="!!$store.state.errors.imgURL"
                   :error-messages="$store.state.errors.imgURL? $store.state.errors.imgURL.msg  : ''"
                   label="LOGO Image URL"
@@ -72,7 +72,7 @@
               </v-flex>
               <v-flex xs12>
                 <v-text-field
-                  v-model="facebook"
+                  v-model="form.socialLinks.facebook"
                   :error="!!$store.state.errors.facebook"
                   :error-messages="$store.state.errors.facebook? $store.state.errors.facebook.msg  : ''"
                   label="Facebook URL"
@@ -81,7 +81,7 @@
               </v-flex>
               <v-flex xs12>
                 <v-text-field
-                  v-model="linkedin"
+                  v-model="form.socialLinks.linkedin"
                   :error="!!$store.state.errors.linkedin"
                   :error-messages="$store.state.errors.linkedin? $store.state.errors.linkedin.msg  : ''"
                   label="LinkedIn URL"
@@ -90,7 +90,7 @@
               </v-flex>
               <v-flex xs12>
                 <v-text-field
-                  v-model="github"
+                  v-model="form.socialLinks.github"
                   :error="!!$store.state.errors.github"
                   :error-messages="$store.state.errors.github? $store.state.errors.github.msg  : ''"
                   label="GitHub URL"
@@ -99,7 +99,7 @@
               </v-flex>
               <v-flex xs12>
                 <v-text-field
-                  v-model="youtube"
+                  v-model="form.socialLinks.youtube"
                   :error="!!$store.state.errors.youtube"
                   :error-messages="$store.state.errors.youtube? $store.state.errors.youtube.msg  : ''"
                   label="Youtube URL"
@@ -113,55 +113,86 @@
 
       <v-divider></v-divider>
 
-      <v-card-actions>
+      <v-card-actions v-if="!$store.state.profile">
         <v-spacer></v-spacer>
-        <v-btn color="primary" flat @click="backClick">Back</v-btn>
+        <v-btn color="primary" flat @click="close">Back</v-btn>
         <v-btn color="tertiary" flat @click="createProfile">Create</v-btn>
+      </v-card-actions>
+      <v-card-actions v-if="!!$store.state.profile">
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat @click="closeEdit">Back</v-btn>
+        <v-btn color="tertiary" flat @click="editProfile">Edit</v-btn>
       </v-card-actions>
     </v-card>
   </div>
 </template>
 <script>
+import ProfileService from '../../services/Profile'
+
 export default {
   data () {
     return {
       valid: false,
-      firstName: '',
-      lastName: '',
-      email: '',
-      city: '',
-      country: '',
-      currentTitle: '',
-      imgURL: '',
-      facebook: '',
-      linkedin: '',
-      github: '',
-      youtube: ''
+      form: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        location: {
+          city: '',
+          country: ''
+        },
+        currentTitle: '',
+        imgURL: '',
+        socialLinks: {
+          facebook: '',
+          linkedin: '',
+          github: '',
+          youtube: ''
+        }
+      },
+      isLoading: false
     }
   },
   methods: {
-    createProfile (e) {
-      e.preventDefault()
-      const newProfile = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        city: this.city,
-        country: this.country,
-        currentTitle: this.currentTitle,
-        imgURL: this.imgURL,
-        facebook: this.facebook,
-        linkedin: this.linkedin,
-        github: this.github,
-        youtube: this.youtube
-      }
+    createProfile () {
+      this.$store.dispatch('setErrors', null)
 
-      this.$store.dispatch('createProfile', newProfile)
+      this.$store.dispatch('createProfile', this.profile).then(() => {
+        if (Object.keys(this.$store.state.errors).length === 0) {
+          this.$emit('closeDialog')
+        }
+      })
     },
-    backClick () {
+    close () {
+      this.$emit('closeDialog')
       this.$refs.form.reset()
       this.$store.dispatch('setErrors', null)
+    },
+    async closeEdit () {
       this.$emit('closeDialog')
+      try {
+        const res = await ProfileService.getProfile()
+        this.form = res.data
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    editProfile () {
+      this.$store.dispatch('setErrors', null)
+
+      this.$store.dispatch('editProfile', this.form).then(() => {
+        if (Object.keys(this.$store.state.errors).length === 0) {
+          this.$emit('closeDialog')
+        }
+      })
+    }
+  },
+  async mounted () {
+    try {
+      const res = await ProfileService.getProfile()
+      this.form = res.data
+    } catch (err) {
+      console.log(err)
     }
   },
 }

@@ -1,20 +1,23 @@
 <template>
   <div>
-    <div class="title hidden-sm-and-down" v-if="$store.state.profile">
-      <div class="logo"></div>
-      <h1
-        class="textGrey--text text-xs-center mb-4"
-      >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</h1>
-      <p class="detail textGrey--text text-xs-center">{{$store.state.profile.currentTitle}}</p>
+    <div class="title hidden-sm-and-down">
+      <div class="profile" v-if="$store.state.profile">
+        <div class="logo"></div>
+        <h1
+          class="textGrey--text text-xs-center mb-4"
+        >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</h1>
+        <p class="detail textGrey--text text-xs-center">{{$store.state.profile.currentTitle}}</p>
+      </div>
+      <v-dialog v-model="dialog" width="600">
+        <template v-slot:activator="{ on }">
+          <v-btn flat dark v-on="on" absolute right>
+            <i class="fas fa-plus pr-2" v-if="!$store.state.profile"></i>
+            <i class="fas fa-edit pr-2" v-if="!!$store.state.profile"></i> profile
+          </v-btn>
+        </template>
+        <ProfileHandler v-on:closeDialog="closeDialog"/>
+      </v-dialog>
     </div>
-    <v-dialog v-model="dialog" width="600" v-if="!$store.state.profile">
-      <template v-slot:activator="{ on }">
-        <v-btn flat dark v-on="on">
-          <i class="fas fa-plus pr-2"></i> profile
-        </v-btn>
-      </template>
-      <CreateProfile v-on:closeDialog="closeDialog"/>
-    </v-dialog>
     <v-list class="nav-items hidden-sm-and-down">
       <template v-for="(item, index) in navItems">
         <v-divider :key="index" class="textGrey"></v-divider>
@@ -64,12 +67,12 @@
 </template>
 <script>
 import Footer from '../Footer'
-import CreateProfile from '../../admin/CreateProfile'
+import ProfileHandler from '../../admin/ProfileHandler'
 
 export default {
   components: {
     Footer,
-    CreateProfile
+    ProfileHandler
   },
   data () {
     return {

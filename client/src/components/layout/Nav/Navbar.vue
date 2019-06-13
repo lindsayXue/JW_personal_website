@@ -13,6 +13,14 @@
         v-if="$store.state.profile"
         class="textGrey--text font-weight-bold"
       >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</v-toolbar-title>
+      <v-dialog v-model="dialogEdit" width="600" v-if="!!$store.state.profile">
+        <template v-slot:activator="{ on }">
+          <v-btn flat dark fab v-on="on" class="hidden-md-and-up">
+            <i class="fas fa-edit"></i>
+          </v-btn>
+        </template>
+        <ProfileHandler v-on:closeDialog="closeDialogEdit"/>
+      </v-dialog>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-dialog v-model="dialog" width="600" v-if="!$store.state.profile">
@@ -21,7 +29,7 @@
               <i class="fas fa-plus pr-2"></i> profile
             </v-btn>
           </template>
-          <CreateProfile v-on:closeDialog="closeDialog"/>
+          <ProfileHandler v-on:closeDialog="closeDialog"/>
         </v-dialog>
         <v-btn
           flat
@@ -56,23 +64,27 @@
 </template>
 <script>
 import NavContent from './NavContent'
-import CreateProfile from '../../admin/CreateProfile'
+import ProfileHandler from '../../admin/ProfileHandler'
 
 export default {
   components: {
     NavContent,
-    CreateProfile
+    ProfileHandler
   },
   data () {
     return {
       drawerMedium: false,
       drawerSmall: false,
-      dialog: false
+      dialog: false,
+      dialogEdit: false
     }
   },
   methods: {
     closeDialog () {
       this.dialog = false
+    },
+    closeDialogEdit () {
+      this.dialogEdit = false
     }
   },
 }

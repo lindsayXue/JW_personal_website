@@ -48,6 +48,7 @@ export default new Vuex.Store({
     },
     editProfile: async ({ commit }, newProfile) => {
       try {
+        await ProfileService.editProfile(newProfile)
         commit('setProfile', newProfile)
       } catch (err) {
         commit('setErrors', err.response.data.errors)
