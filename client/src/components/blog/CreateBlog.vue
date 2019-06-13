@@ -21,7 +21,6 @@ export default {
   methods: {
     create (e) {
       e.preventDefault()
-      console.log(this.content)
     }
   },
 }

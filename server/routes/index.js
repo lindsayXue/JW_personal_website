@@ -1,8 +1,9 @@
 const express = require('express')
 var router = express.Router()
 
-router.get('/', (req, res) => {
-  res.send('TEST')
-})
+const profileRouter = require('./profile')
+
+// Profile routes
+router.use('/profile', profileRouter)
 
 module.exports = router

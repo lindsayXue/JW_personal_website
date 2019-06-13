@@ -97,7 +97,6 @@ export default {
       }
     },
     editClick (item) {
-      console.log('edited!!!')
       this.editing = !this.editing
       this.editForm = item
     },

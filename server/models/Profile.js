@@ -3,7 +3,11 @@ const Schema = mongoose.Schema
 
 // Create Schema
 const Profile = new Schema({
-  Name: {
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
     type: String,
     required: true
   },
@@ -17,8 +21,14 @@ const Profile = new Schema({
   },
   location: [
     {
-      city: String,
-      country: String
+      city: {
+        type: String,
+        required: true
+      },
+      country: {
+        type: String,
+        required: true
+      }
     }
   ],
   imgURL: {
