@@ -27,5 +27,11 @@ export default {
   },
   deleteexperience(id) {
     return Api().delete(`/profile/experience/${id}`)
+  },
+  createinterest(params) {
+    return Api().post('/profile/interests', params)
+  },
+  deleteinterest(id) {
+    return Api().delete(`/profile/interests/${id}`)
   }
 }

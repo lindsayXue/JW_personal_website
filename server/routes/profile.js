@@ -467,4 +467,79 @@ router.delete('/experience/:id', async (req, res) => {
   }
 })
 
+// @route    POST api/profile/interests
+// @desc     Create interests
+// @access   Admin
+router.post(
+  '/interests',
+  [
+    check('interest', 'Interest content is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+    try {
+      const profile = await Profile.findOne({})
+
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+      }
+
+      profile.interests.unshift({ title: req.body.interest })
+      await profile.save()
+      res.json(profile)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
+// @route    DELETE api/profile/interests/:id
+// @desc     Delete interests
+// @access   Admin
+router.delete('/interests/:id', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({})
+
+    if (!profile) {
+      return res
+        .status(400)
+        .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+    }
+
+    const interest = profile.interests.find(
+      item => item._id.toString() === req.params.id
+    )
+
+    // Make sure interests exists
+    if (!interest) {
+      return res.status(404).json({ msg: 'Education does not exist' })
+    }
+
+    const removeIndex = profile.interests
+      .map(item => item._id.toString())
+      .indexOf(req.params.id)
+
+    if (removeIndex < 0) {
+      return res.status(404).json({ msg: 'Something wrong' })
+    }
+
+    profile.interests.splice(removeIndex, 1)
+
+    await profile.save()
+    res.json(profile)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+  }
+})
+
 module.exports = router

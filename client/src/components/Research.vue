@@ -6,7 +6,11 @@
         <ContentArea title :content="$store.state.profile.aboutresearch"/>
       </v-flex>
       <v-flex md4 xs11 order-md2 order-sm1 order-xs1>
-        <ListArea class="tertiary--text" title="Interests" :listData="interestsData"/>
+        <ListArea
+          class="tertiary--text"
+          title="Interests"
+          :listData="$store.state.profile.interests"
+        />
       </v-flex>
     </v-layout>
     <ProjectsList class="lightGrey" title="Research Projects" :projectsData="projectsData"/>
@@ -27,13 +31,6 @@ export default {
   },
   data () {
     return {
-      interestsData: [
-        'VR technology',
-        'VR technology',
-        'VR technology',
-        'VR technology',
-        'VR technology'
-      ],
       projectsData: [
         {
           name: 'Project Name 1',

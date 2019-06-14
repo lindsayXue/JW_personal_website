@@ -116,13 +116,15 @@ export default {
       this.$store.dispatch('setErrors', null)
       try {
         const newData = this.form
-        const res = await ProfileService[`create${this.title}`](newData)
+        await ProfileService[`create${this.title}`](newData)
         this.$store.dispatch('getProfile')
         this.$emit('closeDialog')
         this.isLoading = false
         this.$refs.form.reset()
       } catch (err) {
-        this.$store.dispatch('setErrors', err.response.data.errors)
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
         this.isLoading = false
       }
     },

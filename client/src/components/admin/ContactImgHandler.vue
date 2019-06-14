@@ -59,7 +59,9 @@ export default {
         this.isLoading = false
         this.$emit('closeDialog')
       } catch (err) {
-        this.$store.dispatch('setErrors', err.response.data.errors)
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
         this.isLoading = false
       }
     },
@@ -75,7 +77,10 @@ export default {
         }
         this.isLoading = false
       } catch (err) {
-        this.$store.dispatch('setErrors', err.response.data.errors)
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
+        this.isLoading = false
       }
     },
   },
@@ -87,7 +92,9 @@ export default {
       }
       this.isLoading = false
     } catch (err) {
-      this.$store.dispatch('setErrors', err.response.data.errors)
+      if (err.response.data.errors) {
+        this.$store.dispatch('setErrors', err.response.data.errors)
+      }
     }
   },
 }

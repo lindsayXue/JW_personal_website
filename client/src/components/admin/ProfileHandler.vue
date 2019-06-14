@@ -194,7 +194,9 @@ export default {
         const res = await ProfileService.getProfile()
         this.form = res.data
       } catch (err) {
-        this.$store.dispatch('setErrors', err.response.data.errors)
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
       }
     },
     editProfile () {
@@ -217,7 +219,9 @@ export default {
       }
       this.isLoading = false
     } catch (err) {
-      this.$store.dispatch('setErrors', err.response.data.errors)
+      if (err.response.data.errors) {
+        this.$store.dispatch('setErrors', err.response.data.errors)
+      }
     }
   },
 }

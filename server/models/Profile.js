@@ -107,7 +107,7 @@ const Profile = new Schema({
   },
   interests: [
     {
-      type: String
+      title: String
     }
   ],
   projects: [
