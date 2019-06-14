@@ -13,7 +13,11 @@
         />
       </v-flex>
     </v-layout>
-    <ProjectsList class="lightGrey" title="Research Projects" :projectsData="projectsData"/>
+    <ProjectsList
+      class="lightGrey"
+      title="Research Projects"
+      :projectsData="$store.state.profile.projects"
+    />
   </div>
 </template>
 <script>
@@ -28,27 +32,6 @@ export default {
     ContentArea,
     ListArea,
     ProjectsList
-  },
-  data () {
-    return {
-      projectsData: [
-        {
-          name: 'Project Name 1',
-          detail: 'Project 1 detail',
-          projectImg: 'test'
-        },
-        {
-          name: 'Project Name 2',
-          detail: 'Project 2 detail',
-          projectImg: 'test'
-        },
-        {
-          name: 'Project Name 3',
-          detail: 'Project 3 detail',
-          projectImg: 'test'
-        }
-      ]
-    }
   }
 }
 </script>

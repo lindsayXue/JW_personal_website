@@ -33,5 +33,11 @@ export default {
   },
   deleteinterest(id) {
     return Api().delete(`/profile/interests/${id}`)
+  },
+  createproject(params) {
+    return Api().post('/profile/project', params)
+  },
+  deleteproject(id) {
+    return Api().delete(`/profile/project/${id}`)
   }
 }

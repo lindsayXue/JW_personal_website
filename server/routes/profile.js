@@ -542,4 +542,89 @@ router.delete('/interests/:id', async (req, res) => {
   }
 })
 
+// @route    POST api/profile/project
+// @desc     Create project
+// @access   Admin
+router.post(
+  '/project',
+  [
+    check('projectName', 'Project name is required')
+      .not()
+      .isEmpty(),
+    check('projectDetail', 'Project detail is required')
+      .not()
+      .isEmpty(),
+    check('projectImage', 'Project image URL is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+    try {
+      const profile = await Profile.findOne({})
+
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+      }
+
+      profile.projects.unshift({
+        name: req.body.projectName,
+        detail: req.body.projectDetail,
+        imgURL: req.body.projectImage
+      })
+      await profile.save()
+      res.json(profile)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
+// @route    DELETE api/profile/project/:id
+// @desc     Delete project
+// @access   Admin
+router.delete('/project/:id', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({})
+
+    if (!profile) {
+      return res
+        .status(400)
+        .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+    }
+
+    const project = profile.projects.find(
+      item => item._id.toString() === req.params.id
+    )
+
+    // Make sure interests exists
+    if (!project) {
+      return res.status(404).json({ msg: 'Education does not exist' })
+    }
+
+    const removeIndex = profile.projects
+      .map(item => item._id.toString())
+      .indexOf(req.params.id)
+
+    if (removeIndex < 0) {
+      return res.status(404).json({ msg: 'Something wrong' })
+    }
+
+    profile.projects.splice(removeIndex, 1)
+
+    await profile.save()
+    res.json(profile)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+  }
+})
+
 module.exports = router
