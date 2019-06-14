@@ -12,19 +12,6 @@
         <div class="edit-content">
           <vue-editor class="editor" v-model="content"></vue-editor>
         </div>
-
-        <!-- <v-form ref="form">
-          <v-container>
-            <v-layout wrap>
-              <v-flex xs11 class="text-xs-center">
-                <v-progress-circular v-if="isLoading" :width="3" color="secondary" indeterminate></v-progress-circular>
-              </v-flex>
-              <v-flex xs11>
-                <v-text-field v-model="content" :disabled="isLoading" label="Content" clearable></v-text-field>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-form>-->
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
