@@ -6,7 +6,6 @@
 </template>
 <script>
 import Banner from '../common/Banner'
-import LayoutService from '../../services/Layout'
 
 export default {
   components: {

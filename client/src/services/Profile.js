@@ -9,5 +9,11 @@ export default {
   },
   editProfile(params) {
     return Api().put('/profile', params)
+  },
+  editaboutme(params) {
+    return Api().post('/profile/aboutme', params)
+  },
+  editaboutresearch(params) {
+    return Api().post('/profile/aboutresearch', params)
   }
 }

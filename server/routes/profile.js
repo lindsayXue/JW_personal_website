@@ -219,4 +219,48 @@ router.put(
   }
 )
 
+// @route    POST api/profile/aboutme
+// @desc     Create/Edit about me
+// @access   Admin
+router.post('/aboutme', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({})
+    if (!profile) {
+      return res
+        .status(400)
+        .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+    }
+
+    profile.aboutme = req.body.content
+    await profile.save()
+
+    res.json(profile)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+  }
+})
+
+// @route    POST api/profile/aboutresearch
+// @desc     Create/Edit about research
+// @access   Admin
+router.post('/aboutresearch', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({})
+    if (!profile) {
+      return res
+        .status(400)
+        .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+    }
+
+    profile.aboutresearch = req.body.content
+    await profile.save()
+
+    res.json(profile)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+  }
+})
+
 module.exports = router

@@ -1,10 +1,7 @@
 <template>
-  <div class="desc-handler">
+  <div class="content-handler">
     <v-card>
-      <v-card-title
-        class="headline tertiary white--text"
-        primary-title
-      >{{title.toUpperCase()}} Description</v-card-title>
+      <v-card-title class="headline tertiary white--text" primary-title>Content</v-card-title>
       <v-card-text>
         <v-alert
           :value="true"
@@ -18,12 +15,7 @@
                 <v-progress-circular v-if="isLoading" :width="3" color="secondary" indeterminate></v-progress-circular>
               </v-flex>
               <v-flex xs11>
-                <v-text-field
-                  v-model="description"
-                  :disabled="isLoading"
-                  label="Description"
-                  clearable
-                ></v-text-field>
+                <v-text-field v-model="content" :disabled="isLoading" label="Content" clearable></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
@@ -33,31 +25,31 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" flat @click="closeEdit">Back</v-btn>
-        <v-btn color="tertiary" flat @click="editDesc">Edit</v-btn>
+        <v-btn color="tertiary" flat @click="editContent">Edit</v-btn>
       </v-card-actions>
     </v-card>
   </div>
 </template>
 <script>
-import LayoutService from '../../services/Layout'
+import ProfileService from '../../services/Profile'
 
 export default {
-  props: ['title'],
+  props: ['type'],
   data () {
     return {
-      description: '',
+      content: '',
       isLoading: true
     }
   },
   methods: {
-    async editDesc () {
+    async editContent () {
       this.isLoading = true
       this.$store.dispatch('setErrors', null)
       try {
-        await LayoutService[`edit${this.title}Desc`]({
-          description: this.description
+        await ProfileService[`edit${this.type}`]({
+          content: this.content
         })
-        this.$emit('updateDesc', this.description)
+        this.$emit('updateContent', this.content)
         this.isLoading = false
         this.$emit('closeDialog')
       } catch (err) {
@@ -68,9 +60,9 @@ export default {
       this.$emit('closeDialog')
       this.$store.dispatch('setErrors', null)
       try {
-        const res = await LayoutService.getLayout()
-        if (res.data) {
-          this.description = res.data[`${this.title}Desc`]
+        const res = await ProfileService.getProfile()
+        if (res.data && res.data[this.type]) {
+          this.content = res.data[this.type]
         } else {
           this.$refs.form.reset()
         }
@@ -82,9 +74,10 @@ export default {
   },
   async mounted () {
     try {
-      const res = await LayoutService.getLayout()
-      if (res.data) {
-        this.description = res.data[`${this.title}Desc`]
+
+      const res = await ProfileService.getProfile()
+      if (res.data && res.data[this.type]) {
+        this.content = res.data[this.type]
       }
       this.isLoading = false
     } catch (err) {

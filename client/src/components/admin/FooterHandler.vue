@@ -45,7 +45,7 @@ export default {
       this.isLoading = true
       this.$store.dispatch('setErrors', null)
       try {
-        const res = await LayoutService.editFooter({
+        await LayoutService.editFooter({
           footer: this.footer
         })
         this.$emit('updateFooter', this.footer)

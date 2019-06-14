@@ -33,6 +33,7 @@ const Profile = new Schema({
     type: String,
     required: true
   },
+  aboutme: String,
   socialLinks: {
     facebook: String,
     linkedin: String,
@@ -101,7 +102,7 @@ const Profile = new Schema({
       ]
     }
   ],
-  researchDesc: {
+  aboutresearch: {
     type: String
   },
   interests: [
