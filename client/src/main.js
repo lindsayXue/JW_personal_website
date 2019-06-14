@@ -18,6 +18,7 @@ Vue.use(Vuetify, {
   }
 })
 Vue.use(VueRouter)
+Vue.use(require('vue-moment'))
 
 new Vue({
   render: h => h(App),

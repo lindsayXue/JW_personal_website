@@ -11,7 +11,7 @@
         {{blogData.author}}
         {{blogData.date}}
       </div>
-      <div class="content primary--text">{{blogData.content}}</div>
+      <div class="content primary--text" v-html="blogData.content"></div>
     </div>
     <div class="blog-comments lightGrey">
       <h1 class="primary--text font-weight-regular mb-2">Comments</h1>

@@ -2,29 +2,46 @@
   <div class="blog-catagory">
     <h1 class="white--text font-weight-regular ma-2">
       Catagory
-      <v-btn dark flat small @click="addClick" v-if="!adding && !editing">
+      <v-btn dark flat small @click="addClick" v-if="!adding ">
         <i class="fas fa-plus"></i>
       </v-btn>
-      <v-btn dark flat small @click="closeClick" v-if="adding || editing">
+      <v-btn dark flat small @click="closeClick" v-if="adding">
         <i class="fas fa-times"></i>
       </v-btn>
     </h1>
     <v-list dense class="tertiary textGrey--text">
-      <template v-for="(item, index) in catagoryData">
+      <v-alert
+        :value="true"
+        type="error"
+        class="alert my-4"
+        v-if="!catagoryData || catagoryData.length === 0"
+      >No data yet!</v-alert>
+      <template v-for="item in catagoryData">
         <v-list-tile
-          :class="item === selectedCatagory? 'active-list': ''"
-          @click="selectClick(item)"
-          :key="index"
+          :class="item._id === selectedCatagory? 'active-list': ''"
+          @click="selectClick(item._id)"
+          :key="item._id"
         >
           <v-list-tile-content>
             <v-list-tile-title class="content">
               <span class="list-icon secondary--text font-weight-bold pr-2">|</span>
-              {{item}}
+              {{item.name}}
             </v-list-tile-title>
           </v-list-tile-content>
 
-          <v-list-tile-action @click="editClick(item)">
-            <i class="fas fa-edit"></i>
+          <!-- <v-list-tile-action @click="deleteItem(item._id)">
+            <i class="fas fa-times"></i>
+          </v-list-tile-action>-->
+
+          <v-list-tile-action>
+            <v-dialog v-model="dialog" width="600">
+              <template v-slot:activator="{ on }">
+                <v-btn flat dark small v-on="on">
+                  <i class="fas fa-edit"></i>
+                </v-btn>
+              </template>
+              <CatagoryHandler v-on:closeDialog="closeDialog" :catagoryEdit="item"/>
+            </v-dialog>
           </v-list-tile-action>
         </v-list-tile>
       </template>
@@ -37,45 +54,34 @@
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
-    <v-form class="pa-2" ref="form" v-model="valid" lazy-validation v-if="adding">
+    <v-form class="pa-2" ref="form" v-if="adding">
       <v-text-field
-        color="white"
         label="Catagory"
-        :rules="[rules.required]"
-        v-model="addForm"
-        flat
+        v-model="catagoryName"
+        :error="!!$store.state.errors.catagoryName"
+        :error-message="$store.state.errors.catagoryName? $store.state.errors.catagoryName.msg : ''"
         dark
         required
       ></v-text-field>
       <v-btn color="primary" dark small @click="addCatagory">Create</v-btn>
     </v-form>
-    <v-form class="pa-2" ref="form" v-model="valid" lazy-validation v-if="editing">
-      <v-text-field
-        color="white"
-        label="Catagory"
-        :rules="[rules.required]"
-        v-model="editForm"
-        flat
-        dark
-        required
-      ></v-text-field>
-      <v-btn color="primary" dark small @click="editCatagory">Edit</v-btn>
-    </v-form>
   </div>
 </template>
 <script>
+import CatagoryHandler from '../admin/CatagoryHandler'
+import BlogService from '../../services/Blog'
+
 export default {
   props: ['catagoryData', 'selectedCatagory'],
+  components: {
+    CatagoryHandler
+  },
   data () {
     return {
       adding: false,
       editing: false,
-      addForm: '',
-      editForm: '',
-      valid: false,
-      rules: {
-        required: v => !!v || 'This field is required'
-      }
+      catagoryName: '',
+      dialog: false
     }
   },
   methods: {
@@ -84,27 +90,37 @@ export default {
     },
     closeClick () {
       this.adding = false
-      this.editing = false
+      this.$refs.form.reset()
+      this.$store.dispatch('setErrors', null)
+    },
+    closeDialog () {
+      this.dialog = false
+      this.$emit('updateCatagory')
     },
     selectClick (catagory) {
       this.$emit('selectClick', catagory)
     },
-    addCatagory (e) {
-      e.preventDefault()
-      if (this.$refs.form.validate()) {
-        this.snackbar = true
-        // Add catagory
+    async addCatagory () {
+      try {
+        await BlogService.createCatagory({ catagoryName: this.catagoryName })
+        this.$emit('updateCatagory')
+        this.$refs.form.reset()
+        this.adding = false
+      } catch (err) {
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
       }
     },
-    editClick (item) {
-      this.editing = !this.editing
-      this.editForm = item
-    },
-    editCatagory (e) {
-      e.preventDefault()
-      if (this.$refs.form.validate()) {
-        this.snackbar = true
-        // Add catagory
+    async deleteItem (id) {
+      try {
+        await BlogService.deleteCatagory(id)
+        this.$emit('updateCatagory')
+        this.selectClick(null)
+      } catch (err) {
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
       }
     }
   }

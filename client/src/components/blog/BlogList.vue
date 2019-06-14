@@ -1,23 +1,31 @@
 <template>
   <div class="blog-list">
-    <h1 v-if="selectedCatagory" class="primary--text font-weight-regular">
-      {{selectedCatagory}}
+    <h1 class="primary--text font-weight-regular">
+      {{selectedCatagory? selectedCatagory.name : 'ALL'}}
       <i class="fas fa-chevron-right"></i>
     </h1>
     <v-list>
+      <v-alert
+        :value="true"
+        type="error"
+        class="alert my-4"
+        v-if="!blogData || blogData.length === 0"
+      >No data yet!</v-alert>
       <template v-for="(item, index) in blogData">
-        <v-list-tile :key="item.id" :to="{name: 'blog-view', params:{id: item.id}}">
+        <v-list-tile :key="item._id" :to="{name: 'blog-view', params:{id: item._id}}">
           <v-list-tile-content>
             <v-list-tile-title class="blog-title tertiary--text">{{item.title}}</v-list-tile-title>
           </v-list-tile-content>
           <v-list-tile-content>
             <v-list-tile-sub-title>
-              {{item.catagory}}
+              {{item.catagory.name}}
               <i class="fas fa-tag pl-2"></i>
             </v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-content>
-            <v-list-tile-sub-title v-text="item.date"></v-list-tile-sub-title>
+            <v-list-tile-sub-title>
+              <span>{{ item.date | moment("MM-DD-YYYY") }}</span>
+            </v-list-tile-sub-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-divider :key="index"></v-divider>

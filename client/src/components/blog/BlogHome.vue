@@ -11,7 +11,7 @@
         </v-flex>
         <v-flex class="sort my-auto" md4 xs11>
           <p class="detail d-inline px-2">Sorted by Date</p>
-          <i @click="sorted" class="fas fa-sort"></i>
+          <i @click="sorted" class="fas fa-sort" style="{cursor: pointer}"></i>
         </v-flex>
       </v-layout>
       <BlogList :selectedCatagory="selectedCatagory" :blogData="blogShow"/>
@@ -22,6 +22,7 @@
         :catagoryData="catagoryData"
         :selectedCatagory="selectedCatagory"
         v-on:selectClick="selectClick"
+        v-on:updateCatagory="updateCatagory"
       />
     </v-flex>
   </v-layout>
@@ -29,6 +30,7 @@
 <script>
 import BlogList from './BlogList'
 import BlogCatagory from './BlogCatagory'
+import BlogService from '../../services/Blog'
 
 export default {
   components: {
@@ -37,33 +39,9 @@ export default {
   },
   data () {
     return {
-      blogData: [
-        {
-          id: 123,
-          title: 'TEST',
-          catagory: 'VR',
-          content: 'hahahahahahahhhhhhhhhhhhhhhhhh',
-          date: '01/06/2019'
-        },
-        {
-          id: 2232,
-          title: 'TEST',
-          catagory: 'Life',
-          content: 'hahahahahahahhhhhhhhhhhhhhhhhh',
-          date: '01/05/2019'
-        },
-        {
-          id: 3211,
-          title: 'TEST',
-          catagory: 'Test',
-          content: 'hahahahahahahhhhhhhhhhhhhhhhhh',
-          date: '01/02/2019'
-        }
-      ],
+      blogData: [],
       blogShow: [],
-      catagoryData: [
-        'VR', 'Life', 'Test'
-      ],
+      catagoryData: [],
       selectedCatagory: null,
       searchContent: null
     }
@@ -76,14 +54,35 @@ export default {
         return
       }
       this.selectedCatagory = cata
-      this.blogShow = this.blogData.filter(blog => blog.catagory === cata)
+      this.blogShow = this.blogData.filter(blog => blog.catagory._id === cata)
     },
     sorted () {
       this.blogShow.reverse()
+    },
+    async updateCatagory () {
+      try {
+        const res = await BlogService.getCatagory()
+        this.catagoryData = res.data
+
+      } catch (err) {
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
+      }
     }
   },
-  mounted () {
-    this.blogShow = this.blogData
+  async mounted () {
+    try {
+      let res = await BlogService.getBlog()
+      this.blogData = res.data
+      this.blogShow = res.data
+      res = await BlogService.getCatagory()
+      this.catagoryData = res.data
+    } catch (err) {
+      if (err.response.data.errors) {
+        this.$store.dispatch('setErrors', err.response.data.errors)
+      }
+    }
   },
 }
 </script>
