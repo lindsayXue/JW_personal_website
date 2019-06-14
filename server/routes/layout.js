@@ -156,21 +156,21 @@ router.post('/footer', async (req, res) => {
   }
 })
 
-// @route    POST api/layout/imgContact
+// @route    POST api/layout/contactimg
 // @desc     Create/Edit contact image
 // @access   Admin
-router.post('/imgContact', async (req, res) => {
+router.post('/contactimg', async (req, res) => {
   try {
-    const { imgContactURL } = req.body
+    const { contactImg } = req.body
     const layout = await Layout.findOne({})
     if (!layout) {
       const newLayout = new Layout({
-        imgContactURL
+        contactImg
       })
       await newLayout.save()
       return res.json(newLayout)
     }
-    layout.imgContactURL = imgContactURL
+    layout.contactImgURL = contactImg
     await layout.save()
     res.json(layout)
   } catch (err) {

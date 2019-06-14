@@ -33,11 +33,20 @@
         </div>
       </v-flex>
       <v-flex md5 xs11>
+        <v-dialog v-model="dialog" width="600">
+          <template v-slot:activator="{ on }">
+            <v-btn color="tertiary" flat light small absolute right v-on="on">
+              <i class="fas fa-edit"></i>
+            </v-btn>
+          </template>
+          <ContactImgHandler v-on:closeDialog="closeDialog" v-on:updateImg="updateImg"/>
+        </v-dialog>
         <v-img
-          width="500"
-          height="500"
+          max-width="500"
+          max-height="500"
           class="secondary hidden-sm-and-down"
-          src="https://i.ytimg.com/vi/MOWDb2TBYDg/maxresdefault.jpg"
+          :src="imgURL"
+          contain
         ></v-img>
       </v-flex>
     </v-layout>
@@ -45,11 +54,27 @@
 </template>
 <script>
 import Banner from './common/Banner'
+import ContactImgHandler from './admin/ContactImgHandler'
 
 export default {
   components: {
-    Banner
-  }
+    Banner,
+    ContactImgHandler
+  },
+  data () {
+    return {
+      dialog: false,
+      imgURL: 'https://i.ytimg.com/vi/MOWDb2TBYDg/maxresdefault.jpg'
+    }
+  },
+  methods: {
+    closeDialog () {
+      this.dialog = false
+    },
+    updateImg (newData) {
+      this.imgURL = newData
+    }
+  },
 }
 </script>
 <style scoped>

@@ -23,6 +23,6 @@ export default {
     return Api().post('/layout/footer', params)
   },
   editContactImg(params) {
-    return Api().post('/layout/contactImg', params)
+    return Api().post('layout/contactimg', params)
   }
 }

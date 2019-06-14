@@ -60,7 +60,7 @@ export default {
         if (res.data && res.data[this.type]) {
           this.content = res.data[this.type]
         } else {
-          this.$refs.form.reset()
+          this.content = ''
         }
         this.isLoading = false
       } catch (err) {
