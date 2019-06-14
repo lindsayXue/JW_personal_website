@@ -15,5 +15,17 @@ export default {
   },
   editaboutresearch(params) {
     return Api().post('/profile/aboutresearch', params)
+  },
+  createeducation(params) {
+    return Api().post('/profile/education', params)
+  },
+  deleteeducation(id) {
+    return Api().delete(`/profile/education/${id}`)
+  },
+  createexperience(params) {
+    return Api().post('/profile/experience', params)
+  },
+  deleteexperience(id) {
+    return Api().delete(`/profile/experience/${id}`)
   }
 }

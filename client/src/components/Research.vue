@@ -3,7 +3,7 @@
     <Banner class="banner" title="research"></Banner>
     <v-layout row wrap justify-center>
       <v-flex md8 order-md1 order-sm2 order-xs2>
-        <ContentArea title :content="aboutresearch" v-on:updateContent="updateAboutResearch"/>
+        <ContentArea title :content="$store.state.profile.aboutresearch"/>
       </v-flex>
       <v-flex md4 xs11 order-md2 order-sm1 order-xs1>
         <ListArea class="tertiary--text" title="Interests" :listData="interestsData"/>
@@ -17,7 +17,6 @@ import Banner from './common/Banner'
 import ContentArea from './common/ContentArea'
 import ListArea from './common/ListArea'
 import ProjectsList from './common/PojectsList'
-import ProfileService from '../services/Profile'
 
 export default {
   components: {
@@ -28,7 +27,6 @@ export default {
   },
   data () {
     return {
-      aboutresearch: 'Yuanjie is a PhD student and his research interest is avatar mediated interaction in VR by using multiple tracking devices. Before joining HIT Lab, he completed his masters degree in signal and information processing and bachelors degree in electronic information engineering from University of Electronic Science and integration. In his spare time, Yuanjie likes watching movies, chatting with friends, hiking and other outdoor activities.',
       interestsData: [
         'VR technology',
         'VR technology',
@@ -54,24 +52,7 @@ export default {
         }
       ]
     }
-  },
-  methods: {
-    updateAboutResearch (updateContent) {
-      this.aboutresearch = updateContent
-    }
-  },
-  async mounted () {
-    try {
-      const res = await ProfileService.getProfile()
-      if (res.data && res.data.aboutresearch) {
-        this.aboutresearch = res.data.aboutresearch
-      }
-    } catch (err) {
-      if (err.response.data.errors) {
-        this.$store.dispatch('setErrors', err.response.data.errors)
-      }
-    }
-  },
+  }
 }
 </script>
 <style scoped>

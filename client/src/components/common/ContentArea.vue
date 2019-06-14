@@ -8,11 +8,7 @@
             <i class="fas fa-edit"></i>
           </v-btn>
         </template>
-        <ContentHandler
-          v-on:closeDialog="closeDialog"
-          :type="typeCreator()"
-          v-on:updateContent="updateContent"
-        />
+        <ContentHandler v-on:closeDialog="closeDialog" :type="typeCreator()"/>
       </v-dialog>
     </h1>
     <div class="content primary--text" v-html="content"></div>
@@ -34,9 +30,6 @@ export default {
   methods: {
     closeDialog () {
       this.dialog = false
-    },
-    updateContent (newContent) {
-      this.$emit('updateContent', newContent)
     },
     typeCreator () {
       if (this.title === 'about') {

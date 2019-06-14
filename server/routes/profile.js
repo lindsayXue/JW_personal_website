@@ -263,4 +263,208 @@ router.post('/aboutresearch', async (req, res) => {
   }
 })
 
+// @route    POST api/profile/education
+// @desc     Create/Edit education
+// @access   Admin
+router.post(
+  '/education',
+  [
+    check('start', 'Education start date is required')
+      .not()
+      .isEmpty(),
+    check('end', 'Education end date is required')
+      .not()
+      .isEmpty(),
+    check('degree', 'Degree is required')
+      .not()
+      .isEmpty(),
+    check('school', 'School is required')
+      .not()
+      .isEmpty(),
+    check('city', 'City is required').custom((value, { req }) => {
+      if (!req.body.location.city) {
+        return false
+      }
+      return true
+    }),
+    check('country', 'Country is required').custom((value, { req }) => {
+      if (!req.body.location.country) {
+        return false
+      }
+      return true
+    })
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+    try {
+      const profile = await Profile.findOne({})
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+      }
+
+      const { start, end, degree, school, location } = req.body
+
+      profile.education.unshift({ start, end, degree, school, location })
+
+      await profile.save()
+
+      res.json(profile)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
+// @route    POST api/profile/experience
+// @desc     Create/Edit experience
+// @access   Admin
+router.post(
+  '/experience',
+  [
+    check('start', 'Experience start date is required')
+      .not()
+      .isEmpty(),
+    check('end', 'Experience end date is required')
+      .not()
+      .isEmpty(),
+    check('degree', 'Position is required')
+      .not()
+      .isEmpty(),
+    check('school', 'Company is required')
+      .not()
+      .isEmpty(),
+    check('city', 'City is required').custom((value, { req }) => {
+      if (!req.body.location.city) {
+        return false
+      }
+      return true
+    }),
+    check('country', 'Country is required').custom((value, { req }) => {
+      if (!req.body.location.country) {
+        return false
+      }
+      return true
+    })
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+    try {
+      const profile = await Profile.findOne({})
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+      }
+
+      const { start, end, degree, school, location } = req.body
+
+      profile.experience.unshift({
+        start,
+        end,
+        position: degree,
+        company: school,
+        location
+      })
+
+      await profile.save()
+
+      res.json(profile)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
+// @route    DELETE api/profile/education/:id
+// @desc     Delete education
+// @access   Admin
+router.delete('/education/:id', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({})
+
+    if (!profile) {
+      return res
+        .status(400)
+        .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+    }
+
+    const education = profile.education.find(
+      item => item._id.toString() === req.params.id
+    )
+
+    // Make sure education exists
+    if (!education) {
+      return res.status(404).json({ msg: 'Education does not exist' })
+    }
+
+    const removeIndex = profile.education
+      .map(item => item._id.toString())
+      .indexOf(req.params.id)
+
+    if (removeIndex < 0) {
+      return res.status(404).json({ msg: 'Something wrong' })
+    }
+
+    profile.education.splice(removeIndex, 1)
+
+    await profile.save()
+    res.json(profile)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+  }
+})
+
+// @route    DELETE api/profile/experience/:id
+// @desc     Delete experience
+// @access   Admin
+router.delete('/experience/:id', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({})
+
+    if (!profile) {
+      return res
+        .status(400)
+        .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+    }
+
+    const experience = profile.experience.find(
+      item => item._id.toString() === req.params.id
+    )
+
+    // Make sure experience exists
+    if (!experience) {
+      return res.status(404).json({ msg: 'Education does not exist' })
+    }
+
+    const removeIndex = profile.experience
+      .map(item => item._id.toString())
+      .indexOf(req.params.id)
+
+    if (removeIndex < 0) {
+      return res.status(404).json({ msg: 'Something wrong' })
+    }
+
+    profile.experience.splice(removeIndex, 1)
+
+    await profile.save()
+    res.json(profile)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+  }
+})
+
 module.exports = router

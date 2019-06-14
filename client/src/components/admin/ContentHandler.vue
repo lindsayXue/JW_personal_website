@@ -45,6 +45,7 @@ export default {
         await ProfileService[`edit${this.type}`]({
           content: this.content
         })
+        await this.$store.dispatch('getProfile')
         this.$emit('updateContent', this.content)
         this.isLoading = false
         this.$emit('closeDialog')
@@ -70,7 +71,6 @@ export default {
   },
   async mounted () {
     try {
-
       const res = await ProfileService.getProfile()
       if (res.data && res.data[this.type]) {
         this.content = res.data[this.type]
