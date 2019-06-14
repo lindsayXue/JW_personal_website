@@ -176,7 +176,7 @@ export default {
       this.isLoading = true
       this.$store.dispatch('setErrors', null)
 
-      this.$store.dispatch('createProfile', this.profile).then(() => {
+      this.$store.dispatch('createProfile', this.form).then(() => {
         if (Object.keys(this.$store.state.errors).length === 0) {
           this.$emit('closeDialog')
         }
@@ -213,7 +213,9 @@ export default {
   async mounted () {
     try {
       const res = await ProfileService.getProfile()
-      this.form = res.data
+      if (!!res.data) {
+        this.form = res.data
+      }
       this.isLoading = false
     } catch (err) {
       this.$store.dispatch('setErrors', err.response.data.errors)
