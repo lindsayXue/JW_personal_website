@@ -15,7 +15,7 @@
         />
       </v-dialog>
     </h1>
-    <div class="content primary--text">{{content}}</div>
+    <div class="content primary--text" v-html="content"></div>
   </div>
 </template>
 <script>

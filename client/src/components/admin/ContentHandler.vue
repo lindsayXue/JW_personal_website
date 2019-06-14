@@ -8,7 +8,12 @@
           type="error"
           v-if="!!$store.state.errors.server"
         >{{$store.state.errors.server.msg}}</v-alert>
-        <v-form ref="form">
+
+        <div class="edit-content">
+          <vue-editor class="editor" v-model="content"></vue-editor>
+        </div>
+
+        <!-- <v-form ref="form">
           <v-container>
             <v-layout wrap>
               <v-flex xs11 class="text-xs-center">
@@ -19,7 +24,7 @@
               </v-flex>
             </v-layout>
           </v-container>
-        </v-form>
+        </v-form>-->
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
@@ -32,9 +37,13 @@
 </template>
 <script>
 import ProfileService from '../../services/Profile'
+import { VueEditor } from "vue2-editor"
 
 export default {
   props: ['type'],
+  components: {
+    VueEditor
+  },
   data () {
     return {
       content: '',
