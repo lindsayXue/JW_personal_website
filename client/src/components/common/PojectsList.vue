@@ -18,7 +18,7 @@
         class="alert my-4"
         v-if="!projectsData || projectsData.length === 0"
       >No data yet!</v-alert>
-      <v-card class="mb-4" v-for="item in projectsData" :key="item._id" hover>
+      <v-card class="project-card mb-4" v-for="item in projectsData" :key="item._id" hover>
         <v-btn fab flat dark small color="tertiary" @click="deleteItem(item._id)" absolute right>
           <i class="fas fa-times"></i>
         </v-btn>
@@ -27,11 +27,7 @@
             <v-img class="secondary" height="250" width="250" :src="item.imgURL"></v-img>
           </v-flex>
           <v-flex xs7>
-            <v-card-title primary-title>
-              <div>
-                <div class="headline tertiary--text">{{item.name}}</div>
-              </div>
-            </v-card-title>
+            <v-card-title class="headline tertiary--text">{{item.name}}</v-card-title>
             <v-card-text class="detail">{{item.detail}}</v-card-text>
           </v-flex>
         </v-layout>
@@ -79,5 +75,8 @@ export default {
 }
 .list-content {
   padding: 0 5vw;
+}
+.project-card {
+  overflow-wrap: break-word;
 }
 </style>

@@ -14,7 +14,7 @@
         <i @click="sorted" class="fas fa-sort"></i>
       </v-flex>
     </v-layout>
-    <PubList :pubData="pubData"/>
+    <PubList :pubData="$store.state.profile.publications"/>
   </div>
 </template>
 <script>
@@ -28,38 +28,12 @@ export default {
   },
   data () {
     return {
-      pubData: [
-        {
-          id: 1,
-          title: "TEST HAHAHA",
-          authors: 'Yuanjie Wu',
-          type: 'Conference',
-          year: '2018',
-          info: 'Test test'
-        },
-        {
-          id: 2,
-          title: "TEST HAHAHA",
-          authors: 'Yuanjie Wu',
-          type: 'Conference',
-          year: '2017',
-          info: 'Test test'
-        },
-        {
-          id: 3,
-          title: "TEST HAHAHA",
-          authors: 'Yuanjie Wu',
-          type: 'Conference',
-          year: '2016',
-          info: 'Test test'
-        }
-      ],
       searchContent: null
     }
   },
   methods: {
     sorted () {
-      this.pubData.reverse()
+
     }
   }
 }

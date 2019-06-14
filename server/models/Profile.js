@@ -136,12 +136,8 @@ const Profile = new Schema({
         required: true
       },
       authors: [{ type: String }],
-      info: {
-        type: String
-      },
-      Year: {
-        type: Number
-      }
+      info: String,
+      Year: String
     }
   ]
 })

@@ -604,9 +604,9 @@ router.delete('/project/:id', async (req, res) => {
       item => item._id.toString() === req.params.id
     )
 
-    // Make sure interests exists
+    // Make sure project exists
     if (!project) {
-      return res.status(404).json({ msg: 'Education does not exist' })
+      return res.status(404).json({ msg: 'Project does not exist' })
     }
 
     const removeIndex = profile.projects
@@ -618,6 +618,104 @@ router.delete('/project/:id', async (req, res) => {
     }
 
     profile.projects.splice(removeIndex, 1)
+
+    await profile.save()
+    res.json(profile)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+  }
+})
+
+// @route    POST api/profile/publications
+// @desc     Create publications
+// @access   Admin
+router.post(
+  '/publications',
+  [
+    check('title', 'Title is required')
+      .not()
+      .isEmpty(),
+    check('catagory', 'Catagory is required')
+      .not()
+      .isEmpty(),
+    check('authors', 'Author is required')
+      .not()
+      .isEmpty(),
+    check('info', 'Info is required')
+      .not()
+      .isEmpty(),
+    check('year', 'Year is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+    try {
+      const profile = await Profile.findOne({})
+
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+      }
+
+      const { title, catagory, authors, info, year } = req.body
+
+      const authorsArray = authors.split(',')
+
+      profile.publications.unshift({
+        title,
+        catagory,
+        authors: authorsArray,
+        info,
+        year
+      })
+
+      await profile.save()
+      res.json(profile)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
+// @route    DELETE api/profile/publications/:id
+// @desc     Delete publications
+// @access   Admin
+router.delete('/publications/:id', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({})
+
+    if (!profile) {
+      return res
+        .status(400)
+        .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+    }
+
+    const pub = profile.publications.find(
+      item => item._id.toString() === req.params.id
+    )
+
+    // Make sure project exists
+    if (!pub) {
+      return res.status(404).json({ msg: 'Publication does not exist' })
+    }
+
+    const removeIndex = profile.publications
+      .map(item => item._id.toString())
+      .indexOf(req.params.id)
+
+    if (removeIndex < 0) {
+      return res.status(404).json({ msg: 'Something wrong' })
+    }
+
+    profile.publications.splice(removeIndex, 1)
 
     await profile.save()
     res.json(profile)

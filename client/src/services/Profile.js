@@ -39,5 +39,11 @@ export default {
   },
   deleteproject(id) {
     return Api().delete(`/profile/project/${id}`)
+  },
+  createpublication(params) {
+    return Api().post('/profile/publications', params)
+  },
+  deletepublication(id) {
+    return Api().delete(`/profile/publications/${id}`)
   }
 }
