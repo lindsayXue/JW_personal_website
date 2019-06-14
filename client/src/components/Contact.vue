@@ -5,7 +5,13 @@
       title="CONTACT"
       detail="Feel free to contact me if you have questions with regards to my research"
     ></Banner>
-    <v-layout class="content primary--text" row wrap align-center>
+    <v-alert
+      :value="true"
+      type="error"
+      class="alert my-4"
+      v-if="!$store.state.profile"
+    >Please create profile firstly</v-alert>
+    <v-layout class="content primary--text" row wrap align-center v-if="$store.state.profile">
       <v-flex md5 xs11>
         <h2 class="font-weight-regular mb-4">
           <i class="fas fa-envelope icon pr-2"></i>
@@ -64,5 +70,8 @@ export default {
 .social-icon:hover {
   color: var(--v-tertiary-base);
   transition: color 0.5s;
+}
+.alert {
+  width: 300px;
 }
 </style>
