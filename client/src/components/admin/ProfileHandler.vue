@@ -8,7 +8,7 @@
           type="error"
           v-if="!!$store.state.errors.server"
         >{{$store.state.errors.server.msg}}</v-alert>
-        <v-form v-model="valid" ref="form">
+        <v-form ref="form">
           <v-container>
             <v-layout wrap>
               <v-flex xs12 class="text-xs-center">
@@ -150,7 +150,6 @@ import ProfileService from '../../services/Profile'
 export default {
   data () {
     return {
-      valid: false,
       form: {
         firstName: '',
         lastName: '',
@@ -213,7 +212,7 @@ export default {
   async mounted () {
     try {
       const res = await ProfileService.getProfile()
-      if (!!res.data) {
+      if (res.data) {
         this.form = res.data
       }
       this.isLoading = false

@@ -1,6 +1,6 @@
 <template>
   <div id="publications">
-    <Banner class="banner" title="PUBLICATIONS" detail="Key publications"></Banner>
+    <Banner class="banner" title="publications"></Banner>
     <v-layout class="search-bar mt-2" row wrap justify-space-between align-center>
       <v-flex md5 xs11>
         <v-text-field label="Search..." v-model="searchContent" clearable>
@@ -61,7 +61,7 @@ export default {
     sorted () {
       this.pubData.reverse()
     }
-  },
+  }
 }
 </script>
 <style scoped>

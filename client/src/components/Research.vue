@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Banner class="banner" title="RESEARCH" detail="Current projects and research interets"></Banner>
+    <Banner class="banner" title="research"></Banner>
     <v-layout row wrap justify-center>
       <v-flex md8 order-md1 order-sm2 order-xs2>
         <ContentArea :content="research"/>

@@ -39,9 +39,6 @@ const Profile = new Schema({
     github: String,
     youtube: String
   },
-  about: {
-    type: String
-  },
   education: [
     {
       start: {

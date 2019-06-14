@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <Banner class="banner" title="HOME" detail="Welcome to my personal website"></Banner>
+    <Banner class="banner" title="home"></Banner>
     <ContentArea class="about" title="About" :content="content"/>
     <TimeLineArea class="lightGrey" title="Education" :timelineData="educationData"/>
     <TimeLineArea title="Experience" :timelineData="experienceData"/>

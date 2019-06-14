@@ -1,10 +1,6 @@
 <template>
   <div id="contact">
-    <Banner
-      class="banner"
-      title="CONTACT"
-      detail="Feel free to contact me if you have questions with regards to my research"
-    ></Banner>
+    <Banner class="banner" title="contact"></Banner>
     <v-alert
       :value="true"
       type="error"
@@ -49,6 +45,7 @@
 </template>
 <script>
 import Banner from './common/Banner'
+
 export default {
   components: {
     Banner

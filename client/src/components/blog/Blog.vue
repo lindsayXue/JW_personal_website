@@ -1,11 +1,13 @@
 <template>
   <div id="blog">
-    <Banner class="banner" title="BLOG" detail="My personal blog"></Banner>
+    <Banner class="banner" title="blog"></Banner>
     <router-view></router-view>
   </div>
 </template>
 <script>
 import Banner from '../common/Banner'
+import LayoutService from '../../services/Layout'
+
 export default {
   components: {
     Banner

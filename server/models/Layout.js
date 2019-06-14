@@ -9,10 +9,7 @@ const Layout = new Schema({
   blogDesc: String,
   contactDesc: String,
   footer: String,
-  imgContactURL: {
-    type: String,
-    required: true
-  }
+  imgContactURL: String
 })
 
 module.exports = Team = mongoose.model('layout', Layout)

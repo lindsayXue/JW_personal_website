@@ -1,9 +1,29 @@
 <template>
-  <v-footer class="footer secondary white--text" height="50" absolute>2019&copy; Jason Wu</v-footer>
+  <v-footer
+    class="footer secondary white--text"
+    height="50"
+    absolute
+  >{{!footer? "2019&copy; Jason Wu" : footer}}</v-footer>
 </template>
 <script>
-export default {
+import LayoutService from '../../services/Layout'
 
+export default {
+  data () {
+    return {
+      footer: ''
+    }
+  },
+  async mounted () {
+    try {
+      const res = await LayoutService.getLayout()
+      if (res.data) {
+        this.footer = res.data.footer
+      }
+    } catch (err) {
+      this.$store.dispatch('setErrors', err.response.data.errors)
+    }
+  },
 }
 </script>
 <style scoped>
