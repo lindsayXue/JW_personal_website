@@ -159,24 +159,38 @@ router.post('/footer', async (req, res) => {
 // @route    POST api/layout/contactimg
 // @desc     Create/Edit contact image
 // @access   Admin
-router.post('/contactimg', async (req, res) => {
-  try {
-    const { contactImg } = req.body
-    const layout = await Layout.findOne({})
-    if (!layout) {
-      const newLayout = new Layout({
-        contactImg
-      })
-      await newLayout.save()
-      return res.json(newLayout)
+router.post(
+  '/contactimg',
+  [
+    check('contactImg', 'Image URL is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
     }
-    layout.contactImgURL = contactImg
-    await layout.save()
-    res.json(layout)
-  } catch (err) {
-    console.log(err)
-    res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+
+    try {
+      const { contactImg } = req.body
+      const layout = await Layout.findOne({})
+      if (!layout) {
+        const newLayout = new Layout({
+          contactImg
+        })
+        await newLayout.save()
+        return res.json(newLayout)
+      }
+      layout.contactImgURL = contactImg
+      await layout.save()
+      res.json(layout)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
   }
-})
+)
 
 module.exports = router

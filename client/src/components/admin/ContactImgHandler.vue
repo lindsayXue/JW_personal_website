@@ -19,6 +19,8 @@
                   v-model="imgURL"
                   :disabled="isLoading"
                   label="Contact image URL"
+                  :error="!!$store.state.errors.contactImg"
+                  :error-messages="$store.state.errors.contactImg? $store.state.errors.contactImg.msg  : ''"
                   clearable
                 ></v-text-field>
               </v-flex>
@@ -58,6 +60,7 @@ export default {
         this.$emit('closeDialog')
       } catch (err) {
         this.$store.dispatch('setErrors', err.response.data.errors)
+        this.isLoading = false
       }
     },
     async close () {
