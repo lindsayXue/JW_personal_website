@@ -27,7 +27,7 @@
         <div class="detail blog-info secondary--text">
           <span class="authors px-2">
             <i class="fas fa-tag pr-1"></i>
-            {{blogData.catagory.name}}
+            {{blogData.catagory? blogData.catagory.name:''}}
           </span> |
           <span class="authors px-2">
             <i class="fas fa-user pr-1"></i>

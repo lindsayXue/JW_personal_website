@@ -36,7 +36,7 @@
         <i class="fas fa-plus"></i>
       </v-btn>
     </v-list>
-    <v-pagination v-model="page" :length="4" circle></v-pagination>
+    <!-- <v-pagination v-model="page" :length="pageLength" circle></v-pagination> -->
   </div>
 </template>
 <script>
