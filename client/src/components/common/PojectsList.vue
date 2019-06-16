@@ -18,8 +18,8 @@
         class="alert my-4"
         v-if="$store.state.isAdmin && (!projectsData || projectsData.length === 0)"
       >No data yet!</v-alert>
-      <v-flex md9 xs11>
-        <v-dialog v-model="dialogProject" width="600" persistent>
+      <v-flex md10 xs11>
+        <v-dialog v-model="dialogProject" max-width="600">
           <template v-slot:activator="{ on }">
             <v-card
               class="project-card mb-4"
