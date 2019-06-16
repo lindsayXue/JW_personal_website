@@ -17,6 +17,7 @@
         v-model="dialogEdit"
         width="600"
         v-if="!!$store.state.profile && $store.state.isAdmin"
+        persistent
       >
         <template v-slot:activator="{ on }">
           <v-btn flat dark fab v-on="on" class="hidden-md-and-up">
@@ -27,7 +28,12 @@
       </v-dialog>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-dialog v-model="dialog" width="600" v-if="!$store.state.profile && $store.state.isAdmin">
+        <v-dialog
+          v-model="dialog"
+          width="600"
+          v-if="!$store.state.profile && $store.state.isAdmin"
+          persistent
+        >
           <template v-slot:activator="{ on }">
             <v-btn flat dark v-on="on">
               <i class="fas fa-plus pr-2"></i> profile

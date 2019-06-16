@@ -2,7 +2,7 @@
   <div id="timeline-area">
     <h1 class="tertiary--text font-weight-regular mb-4 text-capitalize">
       {{title}}
-      <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin">
+      <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin" persistent>
         <template v-slot:activator="{ on }">
           <v-btn flat light color="tertiary" fab v-on="on">
             <i class="fas fa-plus"></i>

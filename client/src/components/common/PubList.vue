@@ -1,6 +1,6 @@
 <template>
   <div class="pub-list lightGrey">
-    <v-dialog v-model="dialog" width="600">
+    <v-dialog v-model="dialog" width="600" persistent>
       <template v-slot:activator="{ on }" v-if="$store.state.isAdmin">
         <v-btn flat light small absolute right color="tertiary" fab v-on="on">
           <i class="fas fa-plus"></i>

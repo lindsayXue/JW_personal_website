@@ -8,7 +8,7 @@
         >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</h1>
         <p class="detail textGrey--text text-xs-center">{{$store.state.profile.currentTitle}}</p>
       </div>
-      <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin">
+      <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin" persistent>
         <template v-slot:activator="{ on }">
           <v-btn flat dark v-on="on" absolute right>
             <i class="fas fa-plus pr-2" v-if="!$store.state.profile"></i>
@@ -72,6 +72,17 @@
         </v-list-tile>
       </template>
       <v-divider class="textGrey"></v-divider>
+      <v-list-tile class="nav-item textGrey--text" @click="logout" v-if="$store.state.isAdmin">
+        <v-list-tile-action>
+          <v-list-tile-title class="nav-item-icon secondary--text font-weight-bold">|</v-list-tile-title>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title class="nav-item-content font-weight-bold">LOGOUT</v-list-tile-title>
+        </v-list-tile-content>
+        <v-list-tile-action class="nav-item-icon secondary--text font-weight-bold">
+          <i class="fas fa-chevron-right"></i>
+        </v-list-tile-action>
+      </v-list-tile>
     </v-list>
     <Footer class="footer hidden-sm-and-down"/>
   </div>

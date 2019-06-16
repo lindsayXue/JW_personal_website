@@ -24,7 +24,7 @@
           :key="item._id"
         >
           <v-list-tile-avatar v-if="$store.state.isAdmin">
-            <v-dialog v-model="dialog" width="600">
+            <v-dialog v-model="dialog" width="600" persistent>
               <template v-slot:activator="{ on }">
                 <v-btn flat fab dark small v-on="on">
                   <i class="fas fa-edit"></i>

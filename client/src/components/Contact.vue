@@ -33,7 +33,7 @@
         </div>
       </v-flex>
       <v-flex md5 xs11>
-        <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin">
+        <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin" persistent>
           <template v-slot:activator="{ on }">
             <v-btn color="tertiary" flat light small absolute right v-on="on">
               <i class="fas fa-edit"></i>

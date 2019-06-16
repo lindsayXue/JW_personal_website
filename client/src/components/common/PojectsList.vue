@@ -2,7 +2,7 @@
   <div id="projects-list">
     <h1 class="primary--text font-weight-regular mb-4">
       {{title}}
-      <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin">
+      <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin" persistent>
         <template v-slot:activator="{ on }">
           <v-btn flat light color="tertiary" fab v-on="on">
             <i class="fas fa-plus"></i>
@@ -19,7 +19,7 @@
         v-if="$store.state.isAdmin && (!projectsData || projectsData.length === 0)"
       >No data yet!</v-alert>
       <v-flex md9 xs11>
-        <v-dialog v-model="dialogProject" width="600">
+        <v-dialog v-model="dialogProject" width="600" persistent>
           <template v-slot:activator="{ on }">
             <v-card
               class="project-card mb-4"

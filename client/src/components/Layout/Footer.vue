@@ -1,7 +1,7 @@
 <template>
   <v-footer class="footer secondary white--text" height="50" absolute>
     {{!footer? "2019&copy; Jason Wu" : footer}}
-    <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin">
+    <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin" persistent>
       <template v-slot:activator="{ on }">
         <v-btn flat dark small v-on="on" absolute right>
           <i class="fas fa-edit"></i>

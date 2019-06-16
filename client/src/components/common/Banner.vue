@@ -4,7 +4,12 @@
       <h1 class="font-weight-regular mb-4 text-capitalize">{{title}}</h1>
       <p class="detail">
         {{desc}}
-        <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin && $store.state.profile">
+        <v-dialog
+          v-model="dialog"
+          width="600"
+          v-if="$store.state.isAdmin && $store.state.profile"
+          persistent
+        >
           <template v-slot:activator="{ on }">
             <v-btn flat dark small v-on="on">
               <i class="fas fa-edit"></i>
