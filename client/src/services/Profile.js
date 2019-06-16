@@ -10,10 +10,10 @@ export default {
   editProfile(params) {
     return Api().put('/profile', params)
   },
-  editaboutme(params) {
+  editabout(params) {
     return Api().post('/profile/aboutme', params)
   },
-  editaboutresearch(params) {
+  editresearch(params) {
     return Api().post('/profile/aboutresearch', params)
   },
   createeducation(params) {

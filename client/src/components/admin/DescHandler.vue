@@ -19,7 +19,7 @@
               </v-flex>
               <v-flex xs11>
                 <v-text-field
-                  v-model="description"
+                  v-model="descEdit"
                   :disabled="isLoading"
                   label="Description"
                   clearable
@@ -42,11 +42,16 @@
 import LayoutService from '../../services/Layout'
 
 export default {
-  props: ['title'],
+  props: ['title', 'desc'],
   data () {
     return {
-      description: '',
-      isLoading: true
+      descEdit: '',
+      isLoading: false
+    }
+  },
+  watch: {
+    desc: function (val) {
+      this.descEdit = val
     }
   },
   methods: {
@@ -55,11 +60,10 @@ export default {
       this.$store.dispatch('setErrors', null)
       try {
         await LayoutService[`edit${this.title}Desc`]({
-          description: this.description
+          description: this.descEdit
         })
-        this.$emit('updateDesc', this.description)
+        this.$emit('closeDialog', true)
         this.isLoading = false
-        this.$emit('closeDialog')
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)
@@ -67,38 +71,12 @@ export default {
         this.isLoading = false
       }
     },
-    async closeEdit () {
-      this.$emit('closeDialog')
+    closeEdit () {
+      this.$emit('closeDialog', false)
       this.$store.dispatch('setErrors', null)
-      try {
-        const res = await LayoutService.getLayout()
-        if (res.data) {
-          this.description = res.data[`${this.title}Desc`]
-        } else {
-          this.$refs.form.reset()
-        }
-        this.isLoading = false
-      } catch (err) {
-        if (err.response.data.errors) {
-          this.$store.dispatch('setErrors', err.response.data.errors)
-        }
-        this.isLoading = false
-      }
+      this.descEdit = this.desc
     },
-  },
-  async mounted () {
-    try {
-      const res = await LayoutService.getLayout()
-      if (res.data) {
-        this.description = res.data[`${this.title}Desc`]
-      }
-      this.isLoading = false
-    } catch (err) {
-      if (err.response.data.errors) {
-        this.$store.dispatch('setErrors', err.response.data.errors)
-      }
-    }
-  },
+  }
 }
 </script>
 <style scoped>

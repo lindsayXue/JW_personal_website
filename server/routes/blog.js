@@ -140,7 +140,7 @@ router.put(
 // @access   Admin
 router.delete('/catagory/:id', async (req, res) => {
   try {
-    const catagory = BlogCatagory.findById(req.params.id)
+    const catagory = await BlogCatagory.findById(req.params.id)
 
     // Make sure project exists
     if (!catagory) {
@@ -148,6 +148,12 @@ router.delete('/catagory/:id', async (req, res) => {
     }
 
     await catagory.deleteOne()
+
+    // Delete all related blogs catagory
+    await Blog.updateMany(
+      { catagory: req.params.id },
+      { $unset: { catagory: 1 } }
+    )
 
     res.json({ msg: 'Post removed' })
   } catch (err) {

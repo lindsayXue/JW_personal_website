@@ -16,7 +16,7 @@
         :value="true"
         type="error"
         class="alert my-4"
-        v-if="timelineData.length === 0"
+        v-if="!!timelineData && timelineData.length === 0"
       >No data yet!</v-alert>
       <v-layout
         v-for="item in timelineData"

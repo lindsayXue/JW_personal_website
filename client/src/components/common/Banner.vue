@@ -10,7 +10,7 @@
               <i class="fas fa-edit"></i>
             </v-btn>
           </template>
-          <DescHandler v-on:closeDialog="closeDialog" :title="title" v-on:updateDesc="updateDesc"/>
+          <DescHandler v-on:closeDialog="closeDialog" :title="title" :desc="desc"/>
         </v-dialog>
       </p>
     </v-flex>
@@ -34,22 +34,25 @@ export default {
     }
   },
   methods: {
-    closeDialog () {
+    closeDialog (update) {
       this.dialog = false
+      if (update) {
+        this.updateDesc()
+      }
     },
-    updateDesc (updateData) {
-      this.desc = updateData
-    }
-  },
-  async mounted () {
-    try {
-      const res = await LayoutService.getLayout()
-      this.desc = res.data[`${this.title}Desc`]
-    } catch (err) {
-      if (err.response.data.errors) {
-        this.$store.dispatch('setErrors', err.response.data.errors)
+    async updateDesc () {
+      try {
+        const res = await LayoutService.getLayout()
+        this.desc = res.data[`${this.title}Desc`]
+      } catch (err) {
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
       }
     }
+  },
+  mounted () {
+    this.updateDesc()
   }
 }
 </script>

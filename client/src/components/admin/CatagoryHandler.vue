@@ -57,8 +57,8 @@ export default {
           catagoryId: this.catagoryEdit._id,
           catagoryName: this.catagoryName
         })
+        this.$emit('closeDialog', true)
         this.isLoading = false
-        this.$emit('closeDialog')
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)
@@ -67,7 +67,7 @@ export default {
       }
     },
     close () {
-      this.$emit('closeDialog')
+      this.$emit('closeDialog', false)
       this.$store.dispatch('setErrors', null)
       this.catagoryName = this.catagoryEdit.name
     },

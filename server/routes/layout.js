@@ -145,7 +145,8 @@ router.post('/footer', async (req, res) => {
         footer
       })
       await newLayout.save()
-      return res.json(newLayout)
+      res.json(newLayout)
+      return
     }
     layout.footer = footer
     await layout.save()

@@ -9,6 +9,7 @@
         <i class="fas fa-times"></i>
       </v-btn>
     </h1>
+    <v-progress-linear v-if="isLoading" :indeterminate="true" color="secondary" height="3"></v-progress-linear>
     <v-list dense class="tertiary textGrey--text">
       <v-alert
         :value="true"
@@ -18,34 +19,37 @@
       >No data yet!</v-alert>
       <template v-for="item in catagoryData">
         <v-list-tile
-          :class="item._id === selectedCatagory? 'active-list': ''"
-          @click="selectClick(item._id)"
+          :class="item._id === $store.state.route.query.cataId? 'active-list': ''"
+          @click="selectClick(item)"
           :key="item._id"
         >
+          <v-list-tile-avatar>
+            <v-dialog v-model="dialog" width="600">
+              <template v-slot:activator="{ on }">
+                <v-btn flat fab dark small v-on="on">
+                  <i class="fas fa-edit"></i>
+                </v-btn>
+              </template>
+              <CatagoryHandler v-on:closeDialog="closeDialog" :catagoryEdit="item"/>
+            </v-dialog>
+          </v-list-tile-avatar>
           <v-list-tile-content>
             <v-list-tile-title class="content">
               <span class="list-icon secondary--text font-weight-bold pr-2">|</span>
               {{item.name}}
             </v-list-tile-title>
           </v-list-tile-content>
-
-          <!-- <v-list-tile-action @click="deleteItem(item._id)">
-            <i class="fas fa-times"></i>
-          </v-list-tile-action>-->
-
           <v-list-tile-action>
-            <v-dialog v-model="dialog" width="600">
-              <template v-slot:activator="{ on }">
-                <v-btn flat dark small v-on="on">
-                  <i class="fas fa-edit"></i>
-                </v-btn>
-              </template>
-              <CatagoryHandler v-on:closeDialog="closeDialog" :catagoryEdit="item"/>
-            </v-dialog>
+            <v-btn flat dark small fab>
+              <i class="fas fa-times" @click="deleteItem(item._id)"></i>
+            </v-btn>
           </v-list-tile-action>
         </v-list-tile>
       </template>
-      <v-list-tile :class="!selectedCatagory? 'active-list': ''" @click="selectClick(null)">
+      <v-list-tile
+        :class="!$store.state.route.query.catagory? 'active-list': ''"
+        @click="selectClick(null)"
+      >
         <v-list-tile-content>
           <v-list-tile-title class="content">
             <span class="list-icon secondary--text font-weight-bold pr-2">|</span>
@@ -72,7 +76,7 @@ import CatagoryHandler from '../admin/CatagoryHandler'
 import BlogService from '../../services/Blog'
 
 export default {
-  props: ['catagoryData', 'selectedCatagory'],
+  props: ['catagoryData'],
   components: {
     CatagoryHandler
   },
@@ -81,7 +85,8 @@ export default {
       adding: false,
       editing: false,
       catagoryName: '',
-      dialog: false
+      dialog: false,
+      isLoading: false
     }
   },
   methods: {
@@ -93,17 +98,27 @@ export default {
       this.$refs.form.reset()
       this.$store.dispatch('setErrors', null)
     },
-    closeDialog () {
+    closeDialog (update) {
       this.dialog = false
-      this.$emit('updateCatagory')
+      if (update) {
+        this.isLoading = true
+        this.$emit('updateBlog')
+        this.isLoading = false
+        return
+      }
+      this.isLoading = false
     },
-    selectClick (catagory) {
-      this.$emit('selectClick', catagory)
+    selectClick (cata) {
+      if (cata) {
+        this.$router.push({ query: { catagory: cata.name, cataId: cata._id } })
+      } else {
+        this.$router.push({ query: { catagory: null, cataId: null } })
+      }
     },
     async addCatagory () {
       try {
         await BlogService.createCatagory({ catagoryName: this.catagoryName })
-        this.$emit('updateCatagory')
+        this.$emit('updateBlog')
         this.$refs.form.reset()
         this.adding = false
       } catch (err) {
@@ -115,7 +130,7 @@ export default {
     async deleteItem (id) {
       try {
         await BlogService.deleteCatagory(id)
-        this.$emit('updateCatagory')
+        this.$emit('updateBlog')
         this.selectClick(null)
       } catch (err) {
         if (err.response.data.errors) {

@@ -7,7 +7,7 @@
           <i class="fas fa-edit"></i>
         </v-btn>
       </template>
-      <FooterHandler v-on:closeDialog="closeDialog" v-on:updateFooter="updateFooter"/>
+      <FooterHandler v-on:closeDialog="closeDialog" :footer="footer"/>
     </v-dialog>
   </v-footer>
 </template>
@@ -26,22 +26,25 @@ export default {
     }
   },
   methods: {
-    closeDialog () {
+    closeDialog (update) {
       this.dialog = false
+      if (update) {
+        this.updateFooter()
+      }
     },
-    updateFooter (updateData) {
-      this.footer = updateData
+    async updateFooter () {
+      try {
+        const res = await LayoutService.getLayout()
+        if (res.data) {
+          this.footer = res.data.footer
+        }
+      } catch (err) {
+        this.$store.dispatch('setErrors', err.response.data.errors)
+      }
     }
   },
-  async mounted () {
-    try {
-      const res = await LayoutService.getLayout()
-      if (res.data) {
-        this.footer = res.data.footer
-      }
-    } catch (err) {
-      this.$store.dispatch('setErrors', err.response.data.errors)
-    }
+  mounted () {
+    this.updateFooter()
   },
 }
 </script>

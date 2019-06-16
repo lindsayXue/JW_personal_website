@@ -9,7 +9,7 @@
           <i class="fas fa-edit"></i>
         </v-btn>
       </template>
-      <ContentHandler v-on:closeDialog="closeDialog" :type="typeCreator()"/>
+      <ContentHandler v-on:closeDialog="closeDialog" :title="title" :content="content"/>
     </v-dialog>
     <div class="content primary--text" v-html="content"></div>
   </div>
@@ -30,12 +30,6 @@ export default {
   methods: {
     closeDialog () {
       this.dialog = false
-    },
-    typeCreator () {
-      if (this.title === 'about') {
-        return 'aboutme'
-      }
-      return 'aboutresearch'
     }
   },
 }

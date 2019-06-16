@@ -10,14 +10,14 @@
         >{{$store.state.errors.server.msg}}</v-alert>
 
         <div class="edit-content">
-          <vue-editor class="editor" v-model="content"></vue-editor>
+          <vue-editor class="editor" v-model="contentEdit"></vue-editor>
         </div>
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" flat @click="closeEdit">Back</v-btn>
-        <v-btn color="tertiary" flat @click="editContent">Edit</v-btn>
+        <v-btn color="primary" flat @click="close">Back</v-btn>
+        <v-btn color="tertiary" flat @click="edit">Edit</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -27,26 +27,37 @@ import ProfileService from '../../services/Profile'
 import { VueEditor } from "vue2-editor"
 
 export default {
-  props: ['type'],
+  props: ['title', 'content'],
   components: {
     VueEditor
   },
   data () {
     return {
-      content: '',
-      isLoading: true
+      contentEdit: '',
+      isLoading: false
+    }
+  },
+  watch: {
+    content: function (val) {
+      this.contentEdit = val
     }
   },
   methods: {
-    async editContent () {
+    async edit () {
       this.isLoading = true
       this.$store.dispatch('setErrors', null)
+      let serviceName = null
+      if (!this.title) {
+        serviceName = `editresearch`
+      } else {
+        serviceName = `edit${this.title}`
+      }
       try {
-        await ProfileService[`edit${this.type}`]({
-          content: this.content
+        await ProfileService[serviceName]({
+          content: this.contentEdit
         })
         await this.$store.dispatch('getProfile')
-        this.$emit('updateContent', this.content)
+        this.contentEdit = this.content
         this.isLoading = false
         this.$emit('closeDialog')
       } catch (err) {
@@ -56,37 +67,15 @@ export default {
         this.isLoading = false
       }
     },
-    async closeEdit () {
+    close () {
       this.$emit('closeDialog')
       this.$store.dispatch('setErrors', null)
-      try {
-        const res = await ProfileService.getProfile()
-        if (res.data && res.data[this.type]) {
-          this.content = res.data[this.type]
-        } else {
-          this.content = ''
-        }
-        this.isLoading = false
-      } catch (err) {
-        if (err.response.data.errors) {
-          this.$store.dispatch('setErrors', err.response.data.errors)
-        }
-        this.isLoading = false
-      }
+      this.contentEdit = this.content
+      this.isLoading = false
     },
   },
-  async mounted () {
-    try {
-      const res = await ProfileService.getProfile()
-      if (res.data && res.data[this.type]) {
-        this.content = res.data[this.type]
-      }
-      this.isLoading = false
-    } catch (err) {
-      if (err.response.data.errors) {
-        this.$store.dispatch('setErrors', err.response.data.errors)
-      }
-    }
+  mounted () {
+    this.contentEdit = this.content
   },
 }
 </script>

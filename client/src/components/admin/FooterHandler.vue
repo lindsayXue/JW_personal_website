@@ -15,7 +15,7 @@
                 <v-progress-circular v-if="isLoading" :width="3" color="secondary" indeterminate></v-progress-circular>
               </v-flex>
               <v-flex xs11>
-                <v-text-field v-model="footer" :disabled="isLoading" label="Footer" clearable></v-text-field>
+                <v-text-field v-model="footerEdit" :disabled="isLoading" label="Footer" clearable></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
@@ -34,9 +34,10 @@
 import LayoutService from '../../services/Layout'
 
 export default {
+  props: ['footer'],
   data () {
     return {
-      footer: '',
+      footerEdit: '',
       isLoading: true
     }
   },
@@ -46,46 +47,22 @@ export default {
       this.$store.dispatch('setErrors', null)
       try {
         await LayoutService.editFooter({
-          footer: this.footer
+          footer: this.footerEdit
         })
-        this.$emit('updateFooter', this.footer)
         this.isLoading = false
-        this.$emit('closeDialog')
+        this.$emit('closeDialog', true)
       } catch (err) {
         this.$store.dispatch('setErrors', err.response.data.errors)
       }
     },
-    async closeEdit () {
-      this.$emit('closeDialog')
+    closeEdit () {
+      this.$emit('closeDialog', false)
       this.$store.dispatch('setErrors', null)
-      try {
-        const res = await LayoutService.getLayout()
-        if (res.data) {
-          this.description = res.data[`${this.title}Desc`]
-        } else {
-          this.$refs.form.reset()
-        }
-        this.isLoading = false
-      } catch (err) {
-        if (err.response.data.errors) {
-          this.$store.dispatch('setErrors', err.response.data.errors)
-        }
-        this.isLoading = false
-      }
     },
   },
-  async mounted () {
-    try {
-      const res = await LayoutService.getLayout()
-      if (res.data) {
-        this.footer = res.data.footer
-      }
-      this.isLoading = false
-    } catch (err) {
-      if (err.response.data.errors) {
-        this.$store.dispatch('setErrors', err.response.data.errors)
-      }
-    }
+  mounted () {
+    this.footerEdit = this.footer
+    this.isLoading = false
   },
 }
 </script>

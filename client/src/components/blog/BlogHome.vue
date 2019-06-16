@@ -13,16 +13,16 @@
           <p class="detail d-inline px-2">Sorted by Date</p>
           <i @click="sorted" class="fas fa-sort" style="{cursor: pointer}"></i>
         </v-flex>
+        <v-progress-linear v-if="isLoading" :indeterminate="true" color="secondary" height="3"></v-progress-linear>
       </v-layout>
-      <BlogList :selectedCatagory="selectedCatagory" :blogData="blogShow"/>
+
+      <BlogList :blogData="blogData"/>
     </v-flex>
     <v-flex md3 class="tertiary">
       <BlogCatagory
         class="catagory hidden-sm-and-down"
         :catagoryData="catagoryData"
-        :selectedCatagory="selectedCatagory"
-        v-on:selectClick="selectClick"
-        v-on:updateCatagory="updateCatagory"
+        v-on:updateBlog="updateBlog"
       />
     </v-flex>
   </v-layout>
@@ -40,49 +40,33 @@ export default {
   data () {
     return {
       blogData: [],
-      blogShow: [],
       catagoryData: [],
-      selectedCatagory: null,
-      searchContent: null
+      searchContent: null,
+      isLoading: false
     }
   },
   methods: {
-    selectClick (cata) {
-      if (!cata) {
-        this.selectedCatagory = null
-        this.blogShow = this.blogData
-        return
-      }
-      this.selectedCatagory = cata
-      this.blogShow = this.blogData.filter(blog => blog.catagory._id === cata)
-    },
     sorted () {
-      this.blogShow.reverse()
+      this.blogData.reverse()
     },
-    async updateCatagory () {
+    async updateBlog () {
+      this.isLoading = true
       try {
-        const res = await BlogService.getCatagory()
-        this.catagoryData = res.data
-
+        const resBlog = await BlogService.getBlog()
+        this.blogData = resBlog.data
+        const resCatagory = await BlogService.getCatagory()
+        this.catagoryData = resCatagory.data
+        this.isLoading = false
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)
         }
+        this.isLoading = false
       }
     }
   },
-  async mounted () {
-    try {
-      let res = await BlogService.getBlog()
-      this.blogData = res.data
-      this.blogShow = res.data
-      res = await BlogService.getCatagory()
-      this.catagoryData = res.data
-    } catch (err) {
-      if (err.response.data.errors) {
-        this.$store.dispatch('setErrors', err.response.data.errors)
-      }
-    }
+  mounted () {
+    this.updateBlog()
   },
 }
 </script>

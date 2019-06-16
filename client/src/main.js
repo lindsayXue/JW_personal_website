@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 import router from './router'
 import App from './App.vue'
 import store from './store'
+import { sync } from 'vuex-router-sync'
 
 import './stylus/main.styl'
 
@@ -19,6 +20,8 @@ Vue.use(Vuetify, {
 })
 Vue.use(VueRouter)
 Vue.use(require('vue-moment'))
+
+sync(store, router)
 
 new Vue({
   render: h => h(App),
