@@ -210,12 +210,23 @@ router.put(
       return res.status(400).json({ errors: errors.mapped() })
     }
     try {
-      const { id, blogTitle, blogCatagory, blogContent } = req.body
+      const { id, blogTitle, blogContent } = req.body
+      const blog = await Blog.findById(id)
 
-      const blog = await Blog.findByIdAndUpdate(id, {
+      if (!req.body.blogCatagory) {
+        await blog.updateOne({
+          $set: {
+            title: blogTitle,
+            content: blogContent
+          }
+        })
+        return res.json(blog)
+      }
+
+      await blog.updateOne({
         $set: {
-          titl: blogTitle,
-          catagory: blogCatagory,
+          title: blogTitle,
+          catagory: req.body.blogCatagory,
           content: blogContent
         }
       })
@@ -227,5 +238,87 @@ router.put(
     }
   }
 )
+
+// @route    POST api/blog/comment
+// @desc     Add a blog
+// @access   Admin
+router.post(
+  '/comment',
+  [
+    check('comment', 'Comment is required')
+      .not()
+      .isEmpty(),
+    check('commentName', 'Name content is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+    try {
+      const { id, comment, commentName } = req.body
+      const blog = await Blog.findById(id)
+
+      if (!blog) {
+        return res.status(404).json({ msg: 'Blog does not exist' })
+      }
+
+      blog.comments.unshift({
+        user: commentName,
+        comment
+      })
+
+      await blog.save()
+
+      res.json(blog)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
+// @route    DELETE api/blog/comment/:blogid/:commentid
+// @desc     Delete a blog
+// @access   Admin
+router.delete('/comment/:blogid/:commentid', async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.blogid)
+    if (!blog) {
+      return res
+        .status(400)
+        .json({ errors: { noBlog: { msg: 'No blog found' } } })
+    }
+
+    const comment = blog.comments.find(
+      item => item._id.toString() === req.params.commentid
+    )
+
+    // Make sure comment exists
+    if (!comment) {
+      return res.status(404).json({ msg: 'Comment does not exist' })
+    }
+
+    const removeIndex = blog.comments
+      .map(item => item._id.toString())
+      .indexOf(req.params.commentid)
+
+    if (removeIndex < 0) {
+      return res.status(404).json({ msg: 'Something wrong' })
+    }
+
+    blog.comments.splice(removeIndex, 1)
+
+    await blog.save()
+
+    res.json(blog)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+  }
+})
 
 module.exports = router

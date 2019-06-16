@@ -84,14 +84,19 @@ export default {
       this.isLoading = true
       this.$store.dispatch('setErrors', null)
       try {
-        const res = await BlogService.editBlog({
+        await BlogService.editBlog({
           id: this.$store.state.route.params.id,
           blogTitle: this.title,
           blogCatagory: this.catagory,
           blogContent: this.content
         })
         this.isLoading = false
-        this.$router.push('/blog')
+        this.$router.push({
+          name: 'view-blog',
+          params: {
+            id: this.$store.state.route.params.id
+          }
+        })
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)

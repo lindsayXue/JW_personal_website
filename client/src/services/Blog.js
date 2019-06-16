@@ -27,5 +27,11 @@ export default {
   },
   deleteCatagory(id) {
     return Api().delete(`/blog/catagory/${id}`)
+  },
+  createComment(params) {
+    return Api().post('/blog/comment', params)
+  },
+  deleteComment(params) {
+    return Api().delete(`/blog/comment/${params.blogid}/${params.commentid}`)
   }
 }
