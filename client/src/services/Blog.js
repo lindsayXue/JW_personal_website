@@ -4,6 +4,12 @@ export default {
   getBlog() {
     return Api().get('/blog')
   },
+  getBlogById(id) {
+    return Api().get(`/blog/${id}`)
+  },
+  editBlog(params) {
+    return Api().put('/blog', params)
+  },
   createBlog(params) {
     return Api().post('/blog', params)
   },

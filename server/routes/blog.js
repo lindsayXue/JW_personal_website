@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
       .sort({ date: -1 })
 
     res.json(blogs)
-  } catch (e) {
+  } catch (err) {
     console.log(err)
     res.status(500).json({ errors: { server: { msg: 'Server error' } } })
   }
@@ -29,9 +29,6 @@ router.post(
   '/',
   [
     check('blogTitle', 'Blog title is required')
-      .not()
-      .isEmpty(),
-    check('blogCatagory', 'Blog catagory is required')
       .not()
       .isEmpty(),
     check('blogContent', 'Blog content is required')
@@ -161,5 +158,59 @@ router.delete('/catagory/:id', async (req, res) => {
     res.status(500).json({ errors: { server: { msg: 'Server error' } } })
   }
 })
+
+// @route    GET api/blog/:id
+// @desc     Get a blog
+// @access   Public
+router.get('/:id', async (req, res) => {
+  try {
+    const blogs = await Blog.findById(req.params.id)
+      .populate('catagory', 'name')
+      .sort({ date: -1 })
+
+    res.json(blogs)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+  }
+})
+
+// @route    PUT api/blog
+// @desc     Edit blog
+// @access   Admin
+router.put(
+  '/',
+  [
+    check('blogTitle', 'Blog title is required')
+      .not()
+      .isEmpty(),
+    check('blogContent', 'Blog content is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+    try {
+      const { id, blogTitle, blogCatagory, blogContent } = req.body
+
+      const blog = await Blog.findByIdAndUpdate(id, {
+        $set: {
+          titl: blogTitle,
+          catagory: blogCatagory,
+          content: blogContent
+        }
+      })
+
+      res.json(blog)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
 
 module.exports = router

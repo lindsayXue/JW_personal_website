@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-view">
+  <div class="view-blog">
     <div class="blog-content">
       <v-btn to="/blog" color="primary mr-4" dark absolute right>
         <i class="fas fa-chevron-left pr-2"></i>back
@@ -9,7 +9,7 @@
         {{blogData.catagory}}
         <i class="fas fa-tag pr-2"></i>
         {{blogData.author}}
-        {{blogData.date}}
+        {{ blogData.date | moment("MM-DD-YYYY") }}
       </div>
       <div class="content primary--text" v-html="blogData.content"></div>
     </div>
@@ -32,6 +32,7 @@
 </template>
 <script>
 import CommentForm from './CommentForm'
+import BlogService from '../../services/Blog'
 
 export default {
   components: {
@@ -39,26 +40,12 @@ export default {
   },
   data () {
     return {
-      blogData: {
-        title: 'Blog View Test',
-        catagory: 'VR',
-        author: 'Admin',
-        date: '06/06/2019',
-        content: 'Blog View TestBlog View TestBlog View TestBlog View TestBlog View TestBlog View TestBlog View TestBlog View TestBlog View TestBlog View TestBlog View TestBlog View TestBlog View TestBlog View Test',
-        comments: [
-          {
-            user: 'Lindsay',
-            content: 'Very good!!!',
-            date: '06/06/2019'
-          },
-          {
-            user: 'Lindsay',
-            content: 'Very good!!!',
-            date: '06/06/2019'
-          }
-        ]
-      }
+      blogData: {}
     }
+  },
+  async mounted () {
+    const res = await BlogService.getBlogById(this.$store.state.route.params.id)
+    this.blogData = res.data
   },
 }
 </script>

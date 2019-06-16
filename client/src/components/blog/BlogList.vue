@@ -15,7 +15,19 @@
         v-if="!blogData || blogData.length === 0"
       >No data yet!</v-alert>
       <template v-for="(item, index) in blogShow">
-        <v-list-tile :key="item._id" :to="{name: 'blog-view', params:{id: item._id}}">
+        <v-list-tile :key="item._id" :to="{name: 'view-blog', params:{id: item._id}}">
+          <v-list-tile-avatar>
+            <v-btn
+              flat
+              fab
+              light
+              small
+              color="primary"
+              :to="{name: 'edit-blog', params:{id: item._id}}"
+            >
+              <i class="fas fa-edit"></i>
+            </v-btn>
+          </v-list-tile-avatar>
           <v-list-tile-content>
             <v-list-tile-title class="blog-title tertiary--text">{{item.title}}</v-list-tile-title>
             <v-list-tile-sub-title class="detail">

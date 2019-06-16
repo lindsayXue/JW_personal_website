@@ -5,9 +5,9 @@ import Research from '../components/Research'
 import Publications from '../components/Publications'
 import Blog from '../components/blog/Blog'
 import BlogHome from '../components/blog/BlogHome'
-import BlogView from '../components/blog/BlogView'
+import ViewBlog from '../components/blog/ViewBlog'
 import CreateBlog from '../components/blog/CreateBlog'
-
+import EditBlog from '../components/blog/EditBlog'
 import Contact from '../components/Contact'
 
 const router = new VueRouter({
@@ -42,9 +42,14 @@ const router = new VueRouter({
           component: CreateBlog
         },
         {
+          path: '/blog/edit/:id',
+          name: 'edit-blog',
+          component: EditBlog
+        },
+        {
           path: '/blog/:id',
-          name: 'blog-view',
-          component: BlogView
+          name: 'view-blog',
+          component: ViewBlog
         }
       ]
     },
