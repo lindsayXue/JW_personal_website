@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import ProfileService from '../services/Profile'
+import AdminService from '../services/Admin'
+
+import setAuthToken from '../services/setAuthToken'
 
 Vue.use(Vuex)
 
@@ -16,11 +19,8 @@ export default new Vuex.Store({
     setProfile: (state, profile) => {
       state.profile = profile
     },
-    setAdmin: (state, admin) => {
-      if (!admin) {
-        return (state.isAdmin = false)
-      }
-      state.isAdmin = true
+    setAdmin: (state, isAdmin) => {
+      state.isAdmin = isAdmin
     },
     setErrors: (state, errors) => {
       if (!errors) {
@@ -56,6 +56,18 @@ export default new Vuex.Store({
     },
     setErrors: ({ commit }, errors) => {
       commit('setErrors', errors)
+    },
+    loginAdmin: async ({ commit }, params) => {
+      try {
+        const res = await AdminService.login(params)
+        setAuthToken(res.data.token)
+        commit('setAdmin', true)
+      } catch (err) {
+        commit('setErrors', err.response.data.errors)
+      }
+    },
+    setAdmin: ({ commit }, isAdmin) => {
+      commit('setAdmin', isAdmin)
     }
   }
 })

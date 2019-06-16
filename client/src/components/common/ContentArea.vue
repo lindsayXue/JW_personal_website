@@ -1,9 +1,7 @@
 <template>
   <div id="content-area">
-    <h1
-      class="tertiary--text font-weight-regular mb-4"
-    >{{title.charAt(0).toUpperCase() + title.slice(1)}}</h1>
-    <v-dialog v-model="dialog" width="600">
+    <h1 class="tertiary--text font-weight-regular mb-4 text-capitalize">{{title}}</h1>
+    <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin">
       <template v-slot:activator="{ on }">
         <v-btn color="tertiary" flat light small v-on="on">
           <i class="fas fa-edit"></i>

@@ -8,7 +8,7 @@
         >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</h1>
         <p class="detail textGrey--text text-xs-center">{{$store.state.profile.currentTitle}}</p>
       </div>
-      <v-dialog v-model="dialog" width="600">
+      <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin">
         <template v-slot:activator="{ on }">
           <v-btn flat dark v-on="on" absolute right>
             <i class="fas fa-plus pr-2" v-if="!$store.state.profile"></i>

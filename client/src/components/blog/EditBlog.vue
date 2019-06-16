@@ -113,6 +113,10 @@ export default {
     }
   },
   async mounted () {
+    if (!this.$store.state.isAdmin) {
+      this.$router.push('/blog')
+      return
+    }
     try {
       const resBlog = await BlogService.getBlogById(this.$store.state.route.params.id)
       this.blogData = resBlog.data

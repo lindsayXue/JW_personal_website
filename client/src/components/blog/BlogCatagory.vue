@@ -2,10 +2,10 @@
   <div class="blog-catagory">
     <h1 class="white--text font-weight-regular ma-2">
       Catagory
-      <v-btn dark flat small @click="addClick" v-if="!adding ">
+      <v-btn dark flat small @click="addClick" v-if="!adding && $store.state.isAdmin">
         <i class="fas fa-plus"></i>
       </v-btn>
-      <v-btn dark flat small @click="closeClick" v-if="adding">
+      <v-btn dark flat small @click="closeClick" v-if="adding && $store.state.isAdmin">
         <i class="fas fa-times"></i>
       </v-btn>
     </h1>
@@ -15,7 +15,7 @@
         :value="true"
         type="error"
         class="alert my-4"
-        v-if="!catagoryData || catagoryData.length === 0"
+        v-if="$store.state.isAdmin && (!catagoryData || catagoryData.length === 0)"
       >No data yet!</v-alert>
       <template v-for="item in catagoryData">
         <v-list-tile
@@ -23,7 +23,7 @@
           @click="selectClick(item)"
           :key="item._id"
         >
-          <v-list-tile-avatar>
+          <v-list-tile-avatar v-if="$store.state.isAdmin">
             <v-dialog v-model="dialog" width="600">
               <template v-slot:activator="{ on }">
                 <v-btn flat fab dark small v-on="on">
@@ -39,7 +39,7 @@
               {{item.name}}
             </v-list-tile-title>
           </v-list-tile-content>
-          <v-list-tile-action>
+          <v-list-tile-action v-if="$store.state.isAdmin">
             <v-btn flat dark small fab>
               <i class="fas fa-times" @click="deleteItem(item._id)"></i>
             </v-btn>

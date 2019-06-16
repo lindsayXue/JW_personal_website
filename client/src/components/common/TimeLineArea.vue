@@ -1,8 +1,8 @@
 <template>
   <div id="timeline-area">
-    <h1 class="tertiary--text font-weight-regular mb-4">
-      {{title.charAt(0).toUpperCase() + title.slice(1)}}
-      <v-dialog v-model="dialog" width="600">
+    <h1 class="tertiary--text font-weight-regular mb-4 text-capitalize">
+      {{title}}
+      <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin">
         <template v-slot:activator="{ on }">
           <v-btn flat light color="tertiary" fab v-on="on">
             <i class="fas fa-plus"></i>
@@ -16,7 +16,7 @@
         :value="true"
         type="error"
         class="alert my-4"
-        v-if="!!timelineData && timelineData.length === 0"
+        v-if="$store.state.isAdmin && (!!timelineData && timelineData.length === 0)"
       >No data yet!</v-alert>
       <v-layout
         v-for="item in timelineData"
@@ -40,7 +40,7 @@
             {{item.location.city}}, {{item.location.country}}
           </p>
         </v-flex>
-        <v-flex xs1>
+        <v-flex xs1 v-if="$store.state.isAdmin">
           <v-btn flat small fab color="tertiary" @click="deleteItem(item._id)">
             <i class="fas fa-times"></i>
           </v-btn>

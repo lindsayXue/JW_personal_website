@@ -92,6 +92,10 @@ export default {
     }
   },
   async mounted () {
+    if (!this.$store.state.isAdmin) {
+      this.$router.push('/blog')
+      return
+    }
     try {
       const res = await BlogService.getCatagory()
       this.blogCatagory = res.data

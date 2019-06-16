@@ -1,10 +1,7 @@
 <template>
   <div class="timeline-handler">
     <v-card>
-      <v-card-title
-        class="headline tertiary white--text"
-        primary-title
-      >{{title.charAt(0).toUpperCase() + title.slice(1)}}</v-card-title>
+      <v-card-title class="headline tertiary white--text" primary-title text-capitalize>{{title}}</v-card-title>
       <v-card-text>
         <v-alert
           :value="true"

@@ -5,7 +5,7 @@
       :value="true"
       type="error"
       class="alert my-4"
-      v-if="!$store.state.profile"
+      v-if="!$store.state.profile && $store.state.isAdmin"
     >Please create profile firstly</v-alert>
     <v-layout class="content primary--text" row wrap align-center v-if="$store.state.profile">
       <v-flex md5 xs11>
@@ -33,7 +33,7 @@
         </div>
       </v-flex>
       <v-flex md5 xs11>
-        <v-dialog v-model="dialog" width="600">
+        <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin">
           <template v-slot:activator="{ on }">
             <v-btn color="tertiary" flat light small absolute right v-on="on">
               <i class="fas fa-edit"></i>

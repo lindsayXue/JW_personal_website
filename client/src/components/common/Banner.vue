@@ -1,10 +1,10 @@
 <template>
   <v-layout id="banner" align-center>
     <v-flex class="content white--text">
-      <h1 class="font-weight-regular mb-4">{{title.toUpperCase()}}</h1>
+      <h1 class="font-weight-regular mb-4 text-capitalize">{{title}}</h1>
       <p class="detail">
         {{desc}}
-        <v-dialog v-model="dialog" width="600">
+        <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin">
           <template v-slot:activator="{ on }">
             <v-btn flat dark small v-on="on">
               <i class="fas fa-edit"></i>

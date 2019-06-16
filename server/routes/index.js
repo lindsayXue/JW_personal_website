@@ -7,13 +7,18 @@ const layoutRouter = require('./layout')
 
 const blogRouter = require('./blog')
 
+const adminRouter = require('./admin')
+
 // Profile routes
 router.use('/profile', profileRouter)
 
 // Layout routes
 router.use('/layout', layoutRouter)
 
-// Layout routes
+// Blog routes
 router.use('/blog', blogRouter)
+
+// Admin routes
+router.use('/admin', adminRouter)
 
 module.exports = router

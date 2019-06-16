@@ -13,7 +13,11 @@
         v-if="$store.state.profile"
         class="textGrey--text font-weight-bold"
       >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</v-toolbar-title>
-      <v-dialog v-model="dialogEdit" width="600" v-if="!!$store.state.profile">
+      <v-dialog
+        v-model="dialogEdit"
+        width="600"
+        v-if="!!$store.state.profile && $store.state.isAdmin"
+      >
         <template v-slot:activator="{ on }">
           <v-btn flat dark fab v-on="on" class="hidden-md-and-up">
             <i class="fas fa-edit"></i>
@@ -23,7 +27,7 @@
       </v-dialog>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-dialog v-model="dialog" width="600" v-if="!$store.state.profile">
+        <v-dialog v-model="dialog" width="600" v-if="!$store.state.profile && $store.state.isAdmin">
           <template v-slot:activator="{ on }">
             <v-btn flat dark v-on="on">
               <i class="fas fa-plus pr-2"></i> profile

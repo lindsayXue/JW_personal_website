@@ -1,7 +1,7 @@
 <template>
   <div class="pub-list lightGrey">
     <v-dialog v-model="dialog" width="600">
-      <template v-slot:activator="{ on }">
+      <template v-slot:activator="{ on }" v-if="$store.state.isAdmin">
         <v-btn flat light small absolute right color="tertiary" fab v-on="on">
           <i class="fas fa-plus"></i>
         </v-btn>
@@ -12,12 +12,20 @@
       :value="true"
       type="error"
       class="alert my-4"
-      v-if="!pubData || pubData.length === 0"
+      v-if="$store.state.isAdmin && (!pubData || pubData.length === 0)"
     >No data yet!</v-alert>
     <v-sheet class="lightGrey my-4" v-for="(item, key) in pubData" :key="item.id">
       <div class="pub-title my-1 tertiary--text">
         {{item.title}}
-        <v-btn fab flat dark small color="tertiary" @click="deleteItem(item._id)">
+        <v-btn
+          v-if="$store.state.isAdmin"
+          fab
+          flat
+          dark
+          small
+          color="tertiary"
+          @click="deleteItem(item._id)"
+        >
           <i class="fas fa-times"></i>
         </v-btn>
       </div>

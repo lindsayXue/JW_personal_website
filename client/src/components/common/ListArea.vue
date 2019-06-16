@@ -2,7 +2,7 @@
   <div id="list-area">
     <h1 class="font-weight-regular mb-4">
       {{title}}
-      <v-dialog v-model="dialog" width="600">
+      <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin">
         <template v-slot:activator="{ on }">
           <v-btn flat light color="tertiary" fab v-on="on">
             <i class="fas fa-plus"></i>
@@ -16,7 +16,7 @@
         :value="true"
         type="error"
         class="alert my-4"
-        v-if="!listData || listData.length === 0"
+        v-if="$store.state.isAdmin && (!listData || listData.length === 0)"
       >No data yet!</v-alert>
       <v-list-tile v-for="item in listData" :key="item._id">
         <v-list-tile-action>
@@ -25,7 +25,7 @@
         <v-list-tile-content>
           <v-list-tile-title class="detail" v-html="item.title"></v-list-tile-title>
         </v-list-tile-content>
-        <v-list-tile-action>
+        <v-list-tile-action v-if="$store.state.isAdmin">
           <v-btn fab flat dark small color="tertiary" @click="deleteItem(item._id)">
             <i class="fas fa-times"></i>
           </v-btn>

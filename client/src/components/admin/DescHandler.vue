@@ -4,7 +4,8 @@
       <v-card-title
         class="headline tertiary white--text"
         primary-title
-      >{{title.toUpperCase()}} Description</v-card-title>
+        text-capitalize
+      >{{title}} Description</v-card-title>
       <v-card-text>
         <v-alert
           :value="true"

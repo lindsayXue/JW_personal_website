@@ -7,19 +7,21 @@
         </v-btn>
         <h1 class="tertiary--text font-weight-regular mb-4">
           {{blogData.title}}
-          <v-btn
-            flat
-            fab
-            light
-            small
-            color="primary"
-            :to="{name: 'edit-blog', params:{id: $store.state.route.params.id}}"
-          >
-            <i class="fas fa-edit"></i>
-          </v-btn>
-          <v-btn flat fab small color="primary" @click="deleteBlog">
-            <i class="fas fa-trash-alt"></i>
-          </v-btn>
+          <span v-if="$store.state.isAdmin">
+            <v-btn
+              flat
+              fab
+              light
+              small
+              color="primary"
+              :to="{name: 'edit-blog', params:{id: $store.state.route.params.id}}"
+            >
+              <i class="fas fa-edit"></i>
+            </v-btn>
+            <v-btn flat fab small color="primary" @click="deleteBlog">
+              <i class="fas fa-trash-alt"></i>
+            </v-btn>
+          </span>
         </h1>
         <v-divider></v-divider>
         <div class="detail blog-info secondary--text">
@@ -61,7 +63,7 @@
                 </span>
               </v-list-tile-sub-title>
             </v-list-tile-content>
-            <v-list-tile-action>
+            <v-list-tile-action v-if="$store.state.isAdmin">
               <v-btn flat light small fab color="primary">
                 <i class="fas fa-times" @click="deleteComment(item._id)"></i>
               </v-btn>

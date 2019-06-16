@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   try {
     const layout = await Layout.findOne({})
     res.json(layout)
-  } catch (e) {
+  } catch (err) {
     console.log(err)
     res.status(500).json({ errors: { server: { msg: 'Server error' } } })
   }

@@ -10,6 +10,8 @@ import CreateBlog from '../components/blog/CreateBlog'
 import EditBlog from '../components/blog/EditBlog'
 import Contact from '../components/Contact'
 
+import AdminLogin from '../components/admin/AdminLogin'
+
 const router = new VueRouter({
   routes: [
     {
@@ -57,6 +59,11 @@ const router = new VueRouter({
       path: '/contact',
       name: 'contact',
       component: Contact
+    },
+    {
+      path: '/admin/login',
+      name: 'admin-login',
+      component: AdminLogin
     }
   ],
   mode: 'history'

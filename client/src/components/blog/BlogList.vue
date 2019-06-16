@@ -11,7 +11,7 @@
         :value="true"
         type="error"
         class="alert my-4"
-        v-if="!blogData || blogData.length === 0"
+        v-if="$store.state.isAdmin && (!blogData || blogData.length === 0)"
       >No data yet!</v-alert>
       <template v-for="(item, index) in blogShow">
         <v-list-tile :key="item._id" :to="{name: 'view-blog', params:{id: item._id}}">
