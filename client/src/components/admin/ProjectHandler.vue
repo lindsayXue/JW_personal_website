@@ -25,14 +25,21 @@
                 ></v-text-field>
               </v-flex>
               <v-flex xs11>
-                <v-text-field
+                <!-- <v-text-field
                   v-model="form.detail"
                   :error="!!$store.state.errors.projectDetail"
                   :error-messages="$store.state.errors.projectDetail? $store.state.errors.projectDetail.msg  : ''"
                   :disabled="isLoading"
                   label="Detail"
                   clearable
-                ></v-text-field>
+                ></v-text-field>-->
+                <vue-editor class="editor" v-model="form.detail" :disabled="isLoading"></vue-editor>
+                <v-alert
+                  :value="true"
+                  type="error"
+                  dismissible
+                  v-if="!!$store.state.errors.projectDetail"
+                >{{$store.state.errors.projectDetail.msg}}</v-alert>
               </v-flex>
               <v-flex xs11>
                 <v-text-field
@@ -59,8 +66,12 @@
 </template>
 <script>
 import ProfileService from '../../services/Profile'
+import { VueEditor } from "vue2-editor"
 
 export default {
+  components: {
+    VueEditor
+  },
   data () {
     return {
       form: {
@@ -87,6 +98,7 @@ export default {
         this.$emit('closeDialog')
         this.isLoading = false
         this.$refs.form.reset()
+        this.form.detail = ''
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)
@@ -97,6 +109,7 @@ export default {
     close () {
       this.$emit('closeDialog')
       this.$refs.form.reset()
+      this.form.detail = ''
       this.$store.dispatch('setErrors', null)
     }
   },

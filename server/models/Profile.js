@@ -88,18 +88,16 @@ const Profile = new Schema({
         type: String,
         required: true
       },
-      location: [
-        {
-          city: {
-            type: String,
-            required: true
-          },
-          country: {
-            type: String,
-            required: true
-          }
+      location: {
+        city: {
+          type: String,
+          required: true
+        },
+        country: {
+          type: String,
+          required: true
         }
-      ]
+      }
     }
   ],
   aboutresearch: {
@@ -136,8 +134,14 @@ const Profile = new Schema({
         required: true
       },
       authors: [{ type: String }],
-      info: String,
-      Year: String
+      info: {
+        type: String,
+        required: true
+      },
+      year: {
+        type: String,
+        required: true
+      }
     }
   ]
 })

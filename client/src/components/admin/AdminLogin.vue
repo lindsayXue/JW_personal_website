@@ -50,11 +50,14 @@ export default {
   },
   methods: {
     login () {
+      this.$store.dispatch('setErrors', null)
       this.$store.dispatch('loginAdmin', {
         username: this.username,
         password: this.password
       }).then(() => {
-        this.$router.push('/')
+        if (Object.keys(this.$store.state.errors).length === 0) {
+          this.$router.push('/')
+        }
       })
     }
   },

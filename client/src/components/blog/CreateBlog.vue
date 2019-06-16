@@ -77,12 +77,18 @@ export default {
       this.isLoading = true
       this.$store.dispatch('setErrors', null)
       try {
-        await BlogService.createBlog({
+        const res = await BlogService.createBlog({
           blogTitle: this.title,
           blogCatagory: this.catagory,
           blogContent: this.content
         })
         this.isLoading = false
+        this.$router.push({
+          name: 'view-blog',
+          params: {
+            id: res.data._id
+          }
+        })
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)

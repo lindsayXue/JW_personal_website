@@ -32,7 +32,7 @@
         </v-list-tile>
         <v-divider :key="index"></v-divider>
       </template>
-      <v-btn color="tertiary" to="/blog/add" dark small flat>
+      <v-btn color="tertiary" to="/blog/add" dark small flat v-if="$store.state.isAdmin">
         <i class="fas fa-plus"></i>
       </v-btn>
     </v-list>

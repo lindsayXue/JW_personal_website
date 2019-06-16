@@ -39,7 +39,7 @@
         </v-list-tile>
       </template>
       <v-divider class="textGrey"></v-divider>
-      <v-list-tile class="nav-item textGrey--text" @click="logout">
+      <v-list-tile class="nav-item textGrey--text" @click="logout" v-if="$store.state.isAdmin">
         <v-list-tile-action>
           <v-list-tile-title class="nav-item-icon secondary--text font-weight-bold">|</v-list-tile-title>
         </v-list-tile-action>
