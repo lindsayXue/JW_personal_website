@@ -39,6 +39,17 @@
         </v-list-tile>
       </template>
       <v-divider class="textGrey"></v-divider>
+      <v-list-tile class="nav-item textGrey--text" @click="logout">
+        <v-list-tile-action>
+          <v-list-tile-title class="nav-item-icon secondary--text font-weight-bold">|</v-list-tile-title>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title class="nav-item-content font-weight-bold">LOGOUT</v-list-tile-title>
+        </v-list-tile-content>
+        <v-list-tile-action class="nav-item-icon secondary--text font-weight-bold">
+          <i class="fas fa-chevron-right"></i>
+        </v-list-tile-action>
+      </v-list-tile>
     </v-list>
     <v-list class="nav-items hidden-md-and-up">
       <template v-for="(item, index) in navItems">
@@ -104,6 +115,10 @@ export default {
   methods: {
     closeDialog () {
       this.dialog = false
+    },
+    logout () {
+      this.$store.dispatch('logoutAdmin')
+      this.$router.push('/admin/login')
     }
   }
 }

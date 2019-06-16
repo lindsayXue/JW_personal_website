@@ -68,6 +68,10 @@ export default new Vuex.Store({
     },
     setAdmin: ({ commit }, isAdmin) => {
       commit('setAdmin', isAdmin)
+    },
+    logoutAdmin: ({ commit }) => {
+      setAuthToken()
+      commit('setAdmin', false)
     }
   }
 })
