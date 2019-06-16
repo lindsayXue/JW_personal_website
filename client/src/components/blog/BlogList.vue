@@ -6,9 +6,8 @@
         class="fas fa-chevron-right"
       ></i>
     </h1>
-    <v-list>
+    <v-list two-line>
       <v-alert
-        three-line
         :value="true"
         type="error"
         class="alert my-4"
@@ -18,10 +17,16 @@
         <v-list-tile :key="item._id" :to="{name: 'view-blog', params:{id: item._id}}">
           <v-list-tile-content>
             <v-list-tile-title class="blog-title tertiary--text">{{item.title}}</v-list-tile-title>
-            <v-list-tile-sub-title class="detail">
-              {{!item.catagory?'': item.catagory.name}}
-              <i class="fas fa-tag px-2"></i>
-              <span class="detail">{{ item.date | moment("MM-DD-YYYY") }}</span>
+            <v-list-tile-sub-title class="detail secondary--text">
+              <span class="catarogy pr-2">
+                <i class="fas fa-tag pr-1"></i>
+                {{!item.catagory?'': item.catagory.name}}
+              </span>
+              |
+              <span class="date pl-2">
+                <i class="fas fa-calendar-alt pr-1"></i>
+                {{item.date | moment("MM-DD-YYYY") }}
+              </span>
             </v-list-tile-sub-title>
           </v-list-tile-content>
         </v-list-tile>

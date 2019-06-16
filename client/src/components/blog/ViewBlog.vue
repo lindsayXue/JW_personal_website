@@ -25,7 +25,7 @@
         <div class="detail blog-info secondary--text">
           <span class="authors px-2">
             <i class="fas fa-tag pr-1"></i>
-            {{blogData.catagory}}
+            {{blogData.catagory.name}}
           </span> |
           <span class="authors px-2">
             <i class="fas fa-user pr-1"></i>
@@ -42,6 +42,10 @@
     <div class="blog-comments lightGrey">
       <h1 class="primary--text font-weight-regular mb-2">Comments</h1>
       <v-list two-line class="lightGrey">
+        <div
+          class="no-commen detail primary--text"
+          v-if="blogData.comments && blogData.comments.length === 0"
+        >No comment yet</div>
         <template v-for="(item, index) in blogData.comments">
           <v-list-tile :key="item._id">
             <v-list-tile-content>
@@ -117,6 +121,7 @@ export default {
   },
   mounted () {
     this.updateBlog()
+    this.$store.dispatch('setErrors', null)
   },
 }
 </script>
