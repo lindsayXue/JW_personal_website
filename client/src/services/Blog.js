@@ -13,6 +13,9 @@ export default {
   createBlog(params) {
     return Api().post('/blog', params)
   },
+  deleteBlog(id) {
+    return Api().delete(`/blog/${id}`)
+  },
   getCatagory() {
     return Api().get('/blog/catagory')
   },

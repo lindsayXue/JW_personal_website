@@ -47,7 +47,13 @@
           dismissible
           v-if="!!$store.state.errors.blogContent"
         >{{$store.state.errors.blogContent.msg}}</v-alert>
-        <v-btn color="primary" dark to="/blog">
+        <v-btn
+          color="primary"
+          dark
+          :to="{name: 'view-blog', params: {
+          id:$store.state.route.params.id 
+        }}"
+        >
           <i class="fas fa-chevron-left pr-2"></i>Back
         </v-btn>
         <v-btn color="tertiary" dark @click="editBlog">Edit</v-btn>

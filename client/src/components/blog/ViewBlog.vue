@@ -4,7 +4,22 @@
       <v-btn to="/blog" color="primary mr-4" dark absolute right>
         <i class="fas fa-chevron-left pr-2"></i>back
       </v-btn>
-      <h1 class="tertiary--text font-weight-regular mb-4">{{blogData.title}}</h1>
+      <h1 class="tertiary--text font-weight-regular mb-4">
+        {{blogData.title}}
+        <v-btn
+          flat
+          fab
+          light
+          small
+          color="primary"
+          :to="{name: 'edit-blog', params:{id: $store.state.route.params.id}}"
+        >
+          <i class="fas fa-edit"></i>
+        </v-btn>
+        <v-btn flat fab color="primary" @click="deleteItem">
+          <i class="fas fa-trash-alt"></i>
+        </v-btn>
+      </h1>
       <div class="detail secondary--text">
         {{blogData.catagory}}
         <i class="fas fa-tag pr-2"></i>
@@ -41,6 +56,18 @@ export default {
   data () {
     return {
       blogData: {}
+    }
+  },
+  methods: {
+    async deleteItem () {
+      try {
+        await BlogService.deleteBlog(this.$store.state.route.params.id)
+        this.$router.push('/blog')
+      } catch (err) {
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
+      }
     }
   },
   async mounted () {

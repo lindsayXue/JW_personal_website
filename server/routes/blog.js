@@ -175,6 +175,21 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+// @route    DELETE api/blog/:id
+// @desc     delete a blog
+// @access   Admin
+router.delete('/:id', async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id)
+    await blog.remove()
+
+    res.json(blog)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+  }
+})
+
 // @route    PUT api/blog
 // @desc     Edit blog
 // @access   Admin
