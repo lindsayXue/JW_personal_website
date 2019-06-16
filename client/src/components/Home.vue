@@ -1,13 +1,20 @@
 <template>
   <div id="home">
     <Banner class="banner" title="home"></Banner>
-    <ContentArea class="about" title="about" :content="$store.state.profile.aboutme"/>
+    <ContentArea
+      class="about"
+      title="about"
+      :content="$store.state.profile? $store.state.profile.aboutme: ''"
+    />
     <TimeLineArea
       class="lightGrey"
       title="education"
-      :timelineData="$store.state.profile.education"
+      :timelineData="$store.state.profile? $store.state.profile.education : ''"
     />
-    <TimeLineArea title="experience" :timelineData="$store.state.profile.experience"/>
+    <TimeLineArea
+      title="experience"
+      :timelineData="$store.state.profile?$store.state.profile.experience : ''"
+    />
   </div>
 </template>
 <script>

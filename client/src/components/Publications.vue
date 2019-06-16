@@ -14,7 +14,7 @@
         <i @click="sorted" class="fas fa-sort"></i>
       </v-flex>
     </v-layout>
-    <PubList :pubData="$store.state.profile.publications"/>
+    <PubList :pubData="$store.state.profile?$store.state.profile.publications : ''"/>
   </div>
 </template>
 <script>

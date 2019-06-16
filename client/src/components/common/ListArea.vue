@@ -39,10 +39,7 @@ import InterestsHandler from '../admin/InterestsHandler'
 import ProfileService from '../../services/Profile'
 
 export default {
-  props: {
-    title: String,
-    listData: Array
-  },
+  props: ['title', 'listData'],
   components: {
     InterestsHandler
   },

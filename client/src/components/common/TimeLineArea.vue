@@ -54,10 +54,7 @@ import ProfileService from '../../services/Profile'
 import TimeLineHandler from '../admin/TimeLineHandler'
 
 export default {
-  props: {
-    title: String,
-    timelineData: Array
-  },
+  props: ['title', 'timelineData'],
   components: {
     TimeLineHandler
   },

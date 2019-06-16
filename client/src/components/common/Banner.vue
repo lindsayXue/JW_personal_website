@@ -43,7 +43,10 @@ export default {
     async updateDesc () {
       try {
         const res = await LayoutService.getLayout()
-        this.desc = res.data[`${this.title}Desc`]
+        if (res.data) {
+          this.desc = res.data[`${this.title}Desc`]
+          return
+        }
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)

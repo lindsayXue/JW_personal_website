@@ -50,10 +50,7 @@ import ProjectHandler from '../admin/ProjectHandler'
 import ProfileService from '../../services/Profile'
 
 export default {
-  props: {
-    title: String,
-    projectsData: Array
-  },
+  props: ['title', 'projectsData'],
   components: {
     ProjectHandler
   },

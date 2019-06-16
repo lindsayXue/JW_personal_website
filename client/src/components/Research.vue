@@ -3,20 +3,20 @@
     <Banner class="banner" title="research"></Banner>
     <v-layout row wrap justify-center>
       <v-flex md8 order-md1 order-sm2 order-xs2>
-        <ContentArea title :content="$store.state.profile.aboutresearch"/>
+        <ContentArea title :content="$store.state.profile?$store.state.profile.aboutresearch : ''"/>
       </v-flex>
       <v-flex md4 xs11 order-md2 order-sm1 order-xs1>
         <ListArea
           class="tertiary--text"
           title="Interests"
-          :listData="$store.state.profile.interests"
+          :listData="$store.state.profile? $store.state.profile.interests: ''"
         />
       </v-flex>
     </v-layout>
     <ProjectsList
       class="lightGrey"
       title="Research Projects"
-      :projectsData="$store.state.profile.projects"
+      :projectsData="$store.state.profile? $store.state.profile.projects: ''"
     />
   </div>
 </template>
