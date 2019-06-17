@@ -11,6 +11,7 @@ export default {
     return Api().post('/layout/research', params)
   },
   editpublicationsDesc(params) {
+    console.log('edit fired!!')
     return Api().post('/layout/publications', params)
   },
   editblogDesc(params) {

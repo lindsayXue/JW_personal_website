@@ -592,6 +592,57 @@ router.post(
   }
 )
 
+// @route    PUT api/profile/project
+// @desc     Edit project
+// @access   Admin
+router.put(
+  '/project',
+  [
+    check('projectName', 'Project name is required')
+      .not()
+      .isEmpty(),
+    check('projectDetail', 'Project detail is required')
+      .not()
+      .isEmpty(),
+    check('projectImage', 'Project image URL is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+    try {
+      const profile = await Profile.findOne({})
+
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+      }
+
+      const { projectId, projectName, projectDetail, projectImage } = req.body
+
+      const profileUpdate = await Profile.updateOne(
+        { 'projects._id': projectId },
+        {
+          $set: {
+            'projects.$.name': projectName,
+            'projects.$.detail': projectDetail,
+            'projects.$.imgURL': projectImage
+          }
+        }
+      )
+      res.send({ msg: 'Update success!!!' })
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
 // @route    DELETE api/profile/project/:id
 // @desc     Delete project
 // @access   Admin

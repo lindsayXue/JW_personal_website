@@ -37,6 +37,9 @@ export default {
   createproject(params) {
     return Api().post('/profile/project', params)
   },
+  editproject(params) {
+    return Api().put('/profile/project', params)
+  },
   deleteproject(id) {
     return Api().delete(`/profile/project/${id}`)
   },

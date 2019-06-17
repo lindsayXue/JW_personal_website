@@ -25,14 +25,6 @@
                 ></v-text-field>
               </v-flex>
               <v-flex xs11>
-                <!-- <v-text-field
-                  v-model="form.detail"
-                  :error="!!$store.state.errors.projectDetail"
-                  :error-messages="$store.state.errors.projectDetail? $store.state.errors.projectDetail.msg  : ''"
-                  :disabled="isLoading"
-                  label="Detail"
-                  clearable
-                ></v-text-field>-->
                 <vue-editor class="editor" v-model="form.detail" :disabled="isLoading"></vue-editor>
                 <v-alert
                   :value="true"
@@ -86,19 +78,19 @@ export default {
     async create () {
       this.isLoading = true
       this.$store.dispatch('setErrors', null)
+      const { name, detail, imgURL } = this.form
+      const newProject = {
+        projectName: name,
+        projectDetail: detail,
+        projectImage: imgURL
+      }
       try {
-        const { name, detail, imgURL } = this.form
-        const newProject = {
-          projectName: name,
-          projectDetail: detail,
-          projectImage: imgURL
-        }
         await ProfileService.createproject(newProject)
-        this.$store.dispatch('getProfile')
         this.$emit('closeDialog')
         this.isLoading = false
         this.$refs.form.reset()
         this.form.detail = ''
+        this.$store.dispatch('getProfile')
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)

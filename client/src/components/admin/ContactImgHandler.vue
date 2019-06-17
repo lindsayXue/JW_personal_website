@@ -41,6 +41,7 @@
 import LayoutService from '../../services/Layout'
 
 export default {
+  props: ['imgURLOrigin'],
   data () {
     return {
       imgURL: '',
@@ -55,9 +56,8 @@ export default {
         await LayoutService.editContactImg({
           contactImg: this.imgURL
         })
-        this.$emit('updateImg', this.imgURL)
         this.isLoading = false
-        this.$emit('closeDialog')
+        this.$emit('closeDialog', true)
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)
@@ -65,37 +65,20 @@ export default {
         this.isLoading = false
       }
     },
-    async close () {
-      this.$emit('closeDialog')
+    close () {
+      this.$emit('closeDialog', false)
       this.$store.dispatch('setErrors', null)
-      try {
-        const res = await LayoutService.getLayout()
-        if (res.data) {
-          this.imgURL = res.data.contactImgURL
-        } else {
-          this.$refs.form.reset()
-        }
-        this.isLoading = false
-      } catch (err) {
-        if (err.response.data.errors) {
-          this.$store.dispatch('setErrors', err.response.data.errors)
-        }
-        this.isLoading = false
-      }
-    },
-  },
-  async mounted () {
-    try {
-      const res = await LayoutService.getLayout()
-      if (res.data) {
-        this.imgURL = res.data.contactImgURL
+      if (this.imgURLOrigin) {
+        this.imgURL = this.imgURLOrigin
+      } else {
+        this.$refs.form.reset()
       }
       this.isLoading = false
-    } catch (err) {
-      if (err.response.data.errors) {
-        this.$store.dispatch('setErrors', err.response.data.errors)
-      }
     }
+  },
+  mounted () {
+    this.imgURL = this.imgURLOrigin
+    this.isLoading = false
   },
 }
 </script>

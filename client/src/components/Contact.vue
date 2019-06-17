@@ -43,15 +43,9 @@
               <i class="fas fa-edit"></i>
             </v-btn>
           </template>
-          <ContactImgHandler v-on:closeDialog="closeDialog" v-on:updateImg="updateImg"/>
+          <ContactImgHandler v-on:closeDialog="closeDialog" :imgURLOrigin="imgURL"/>
         </v-dialog>
-        <v-img
-          max-width="500"
-          max-height="500"
-          aspect-ratio="1"
-          class="tertiary hidden-sm-and-down"
-          :src="imgURL"
-        >
+        <v-img max-width="500" class="tertiary hidden-sm-and-down" :src="imgURL">
           <template v-slot:placeholder>
             <v-layout fill-height align-center justify-center ma-0>
               <v-progress-circular indeterminate color="white"></v-progress-circular>
@@ -65,6 +59,7 @@
 <script>
 import Banner from './common/Banner'
 import ContactImgHandler from './admin/ContactImgHandler'
+import LayoutService from '../services/Layout'
 
 export default {
   components: {
@@ -74,16 +69,31 @@ export default {
   data () {
     return {
       dialog: false,
-      imgURL: 'https://i.ytimg.com/vi/MOWDb2TBYDg/maxresdefault.jpg'
+      imgURL: ''
     }
   },
   methods: {
-    closeDialog () {
+    closeDialog (update) {
       this.dialog = false
+      if (update) {
+        this.updateImg()
+      }
     },
-    updateImg (newData) {
-      this.imgURL = newData
+    async updateImg () {
+      try {
+        const res = await LayoutService.getLayout()
+        if (res.data.contactImgURL) {
+          this.imgURL = res.data.contactImgURL
+        }
+      } catch (err) {
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
+      }
     }
+  },
+  mounted () {
+    this.updateImg()
   },
 }
 </script>

@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const Layout = new Schema({
   homeDesc: String,
   researchDesc: String,
-  applicationsDesc: String,
+  publicationsDesc: String,
   blogDesc: String,
   contactDesc: String,
   footer: String,

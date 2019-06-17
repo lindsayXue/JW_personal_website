@@ -27,7 +27,7 @@ router.post('/home', async (req, res) => {
     const layout = await Layout.findOne({})
     if (!layout) {
       const newLayout = new Layout({
-        description
+        homeDesc: description
       })
       await newLayout.save()
       return res.json(newLayout)
@@ -50,7 +50,7 @@ router.post('/research', async (req, res) => {
     const layout = await Layout.findOne({})
     if (!layout) {
       const newLayout = new Layout({
-        description
+        researchDesc: description
       })
       await newLayout.save()
       return res.json(newLayout)
@@ -73,7 +73,7 @@ router.post('/publications', async (req, res) => {
     const layout = await Layout.findOne({})
     if (!layout) {
       const newLayout = new Layout({
-        description
+        publicationsDesc: description
       })
       await newLayout.save()
       return res.json(newLayout)
@@ -96,7 +96,7 @@ router.post('/blog', async (req, res) => {
     const layout = await Layout.findOne({})
     if (!layout) {
       const newLayout = new Layout({
-        description
+        blogDesc: description
       })
       await newLayout.save()
       return res.json(newLayout)
@@ -119,7 +119,7 @@ router.post('/contact', async (req, res) => {
     const layout = await Layout.findOne({})
     if (!layout) {
       const newLayout = new Layout({
-        description
+        contactDesc: description
       })
       await newLayout.save()
       return res.json(newLayout)

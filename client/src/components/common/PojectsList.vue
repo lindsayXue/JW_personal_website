@@ -29,7 +29,7 @@
                 dark
                 small
                 color="tertiary"
-                @click="deleteItem(item._id)"
+                @click.stop="deleteItem(item._id)"
                 absolute
                 right
                 v-if="$store.state.isAdmin"
@@ -99,7 +99,7 @@ export default {
     async deleteItem (id) {
       try {
         await ProfileService.deleteproject(id)
-        await this.$store.dispatch('getProfile')
+        this.$store.dispatch('getProfile')
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)
