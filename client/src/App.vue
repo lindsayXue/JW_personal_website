@@ -53,7 +53,7 @@ h1 {
   font-size: 1.8rem;
 }
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }
 .detail {
   font-size: 1.2rem;

@@ -1,8 +1,13 @@
 <template>
-  <v-layout id="not-found" row wrap justify-center align-start>
+  <v-layout id="not-found" class="lightGrey" row wrap justify-center align-start>
     <v-flex md6 xs11 class="my-4">
-      <h1 class="font-weight-regular error--text mb-4">Page not found :(</h1>
-      <v-btn dark color="tertiary" to="/">
+      <h1 class="font-weight-regular primary--text my-4">
+        OOPS!!!
+        <i class="fas fa-times-circle"></i>
+      </h1>
+      <h1 class="font-weight-regular error--text my-4">404 Error</h1>
+      <h1 class="font-weight-regular primary--text my-4">Looks like this page doesn't exist :(</h1>
+      <v-btn dark color="primary" to="/" large>
         <i class="fas fa-arrow-left pr-2"></i>Home
       </v-btn>
     </v-flex>
@@ -18,7 +23,6 @@ export default {
 <style scoped>
 #not-found {
   height: 100vh;
-  background: var(--v-lightGrey-base);
 }
 
 #not-found h1 {
