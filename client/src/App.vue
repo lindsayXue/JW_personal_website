@@ -4,6 +4,19 @@
     <v-content>
       <v-container fluid pa-0>
         <main>
+          <v-btn
+            class="hidden-md-and-up"
+            @click="scrollToTop"
+            color="tertiary"
+            fab
+            dark
+            small
+            fixed
+            bottom
+            right
+          >
+            <i class="fas fa-chevron-up"></i>
+          </v-btn>
           <v-scroll-y-transition mode="out-in">
             <router-view></router-view>
           </v-scroll-y-transition>
@@ -19,6 +32,15 @@ export default {
   name: 'app',
   components: {
     Navbar
+  },
+  methods: {
+    scrollToTop () {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      })
+    }
   },
   mounted () {
     this.$store.dispatch('getProfile')

@@ -2,7 +2,10 @@
   <div class="view-blog">
     <div class="blog">
       <div class="blog-header lightGrey">
-        <v-btn to="/blog" color="primary mr-4" dark absolute right>
+        <v-btn class="hidden-sm-and-down" to="/blog" color="primary mr-4" dark absolute right>
+          <i class="fas fa-chevron-left pr-2"></i>back
+        </v-btn>
+        <v-btn class="hidden-md-and-up" to="/blog" color="primary" dark flat>
           <i class="fas fa-chevron-left pr-2"></i>back
         </v-btn>
         <h1 class="tertiary--text font-weight-regular mb-4">

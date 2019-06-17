@@ -44,10 +44,16 @@
         <v-img
           max-width="500"
           max-height="500"
-          class="secondary hidden-sm-and-down"
+          aspect-ratio="1"
+          class="tertiary hidden-sm-and-down"
           :src="imgURL"
-          contain
-        ></v-img>
+        >
+          <template v-slot:placeholder>
+            <v-layout fill-height align-center justify-center ma-0>
+              <v-progress-circular indeterminate color="white"></v-progress-circular>
+            </v-layout>
+          </template>
+        </v-img>
       </v-flex>
     </v-layout>
   </div>

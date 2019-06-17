@@ -2,7 +2,19 @@
   <div>
     <div class="title hidden-sm-and-down">
       <div class="profile" v-if="$store.state.profile">
-        <div class="logo"></div>
+        <v-img
+          class="logo"
+          :src="$store.state.profile.imgURL"
+          alt="Fail to download the image"
+          aspect-ratio="1"
+          position="top center"
+        >
+          <template v-slot:placeholder>
+            <v-layout fill-height align-center justify-center ma-0>
+              <v-progress-circular indeterminate color="white"></v-progress-circular>
+            </v-layout>
+          </template>
+        </v-img>
         <h1
           class="textGrey--text text-xs-center mb-4"
         >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</h1>
@@ -136,8 +148,9 @@ export default {
 </script>
 <style scoped>
 .logo {
-  background: url(../../../assets/Logo.jpg) no-repeat center;
-  background-size: cover;
+  /* background: url(../../../assets/Logo.jpg) no-repeat center;
+  background-size: cover; */
+  background: var(--v-tertiary-base);
   border: 2px solid white;
   border-radius: 50%;
   width: 150px;
