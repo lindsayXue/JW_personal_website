@@ -12,6 +12,8 @@ import Contact from '../components/Contact'
 
 import AdminLogin from '../components/admin/AdminLogin'
 
+import NotFound from '../components/NotFound'
+
 const router = new VueRouter({
   routes: [
     {
@@ -64,6 +66,11 @@ const router = new VueRouter({
       path: '/admin/login',
       name: 'admin-login',
       component: AdminLogin
+    },
+    {
+      path: '*',
+      name: '404',
+      component: NotFound
     }
   ],
   mode: 'history'
