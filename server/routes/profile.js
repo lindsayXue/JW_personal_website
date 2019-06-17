@@ -11,6 +11,7 @@ const { check, validationResult } = require('express-validator/check')
 router.get('/', async (req, res) => {
   try {
     const profile = await Profile.findOne({})
+
     res.json(profile)
   } catch (err) {
     console.log(err)
@@ -647,7 +648,8 @@ router.post(
       .isEmpty(),
     check('year', 'Year is required')
       .not()
-      .isEmpty()
+      .isEmpty(),
+    check('year', 'Year format is YYYY').isInt({ min: 1000, max: 3000 })
   ],
   async (req, res) => {
     const errors = validationResult(req)

@@ -34,7 +34,7 @@
         <span class="pr-2" v-for="(author, index) in item.authors" :key="index">{{author}}</span>
       </div>
       <div class="pub-info detail">{{item.info}}</div>
-      <div class="pub-year">Publication year: {{item.year}}</div>
+      <div class="pub-year">Publication year: {{item.year | moment("YYYY") }}</div>
       <v-divider class="my-2" :key="key"></v-divider>
     </v-sheet>
   </div>
@@ -82,7 +82,13 @@ export default {
           this.$store.dispatch('setErrors', err.response.data.errors)
         }
       }
+    },
+    sorted () {
+      this.pubShow.reverse()
     }
+  },
+  mounted () {
+    this.pubShow = this.pubData
   },
 }
 </script>

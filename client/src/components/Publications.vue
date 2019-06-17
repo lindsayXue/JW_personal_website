@@ -19,15 +19,8 @@
           </template>
         </v-autocomplete>
       </v-flex>
-      <v-flex class="sort my-auto" md5 xs11>
-        <p class="d-inline px-2">Sorted by Year</p>
-        <i @click="sorted" class="fas fa-sort"></i>
-      </v-flex>
     </v-layout>
-    <PubList
-      :pubData="$store.state.profile? $store.state.profile.publications: ''"
-      :searchData="searchData"
-    />
+    <PubList :pubData="$store.state.profile.publications" :searchData="searchData"/>
   </div>
 </template>
 <script>
@@ -42,11 +35,6 @@ export default {
   data () {
     return {
       searchData: null
-    }
-  },
-  methods: {
-    sorted () {
-
     }
   }
 }

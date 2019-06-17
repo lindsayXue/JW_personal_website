@@ -21,7 +21,7 @@
         </v-flex>
         <v-flex class="sort my-auto" md4 xs11>
           <p class="detail d-inline px-2">Sorted by Date</p>
-          <i @click="sorted" class="fas fa-sort" style="{cursor: pointer}"></i>
+          <i @click="sorted" class="fas fa-sort"></i>
         </v-flex>
         <v-progress-linear v-if="isLoading" :indeterminate="true" color="secondary" height="3"></v-progress-linear>
       </v-layout>
