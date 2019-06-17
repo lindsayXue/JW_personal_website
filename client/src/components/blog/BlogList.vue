@@ -42,14 +42,20 @@
 <script>
 export default {
   props: [
-    'blogData'
+    'blogData',
+    'searchData'
   ],
   watch: {
-    '$store.state.route.query': function () {
-      this.selectBlog()
+    '$store.state.route.query': function (val) {
+      this.selectBlog(val, null)
     },
     'blogData': function () {
       this.selectBlog()
+    },
+    'searchData': function (val) {
+      if (val) {
+        this.selectBlog(null, val)
+      }
     }
   },
   data () {
@@ -60,12 +66,15 @@ export default {
     }
   },
   methods: {
-    selectBlog () {
-      if (this.$store.state.route.query.cataId) {
-        this.blogShow = this.blogData.filter(blog => blog.catagory && blog.catagory._id === this.$store.state.route.query.cataId)
-        return
-      }
+    selectBlog (queryData, searchData) {
       this.blogShow = this.blogData
+      if (queryData && !!queryData.cataId) {
+        this.blogShow = this.blogData.filter(blog => blog.catagory && blog.catagory._id === queryData.cataId)
+      }
+      if (searchData) {
+        this.blogShow = this.blogData.filter(blog => blog._id === searchData)
+        this.$router.push({ query: { catagory: this.blogShow[0].catagory.name, cataId: this.blogShow[0].catagory._id } })
+      }
     },
   },
   mounted () {

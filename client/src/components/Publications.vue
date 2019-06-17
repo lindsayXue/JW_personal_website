@@ -3,18 +3,31 @@
     <Banner class="banner" title="publications"></Banner>
     <v-layout class="search-bar mt-2" row wrap justify-space-between align-center>
       <v-flex md5 xs11>
-        <v-text-field label="Search..." v-model="searchContent" clearable>
+        <v-autocomplete
+          v-model="searchData"
+          :items="$store.state.profile.publications"
+          item-text="title"
+          item-value="_id"
+          label="Search..."
+          clearable
+        >
           <template v-slot:prepend-inner>
             <i class="fas fa-search"></i>
           </template>
-        </v-text-field>
+          <template v-slot:no-data>
+            <span class="primary--text pl-4">No pulication found</span>
+          </template>
+        </v-autocomplete>
       </v-flex>
       <v-flex class="sort my-auto" md5 xs11>
         <p class="d-inline px-2">Sorted by Year</p>
         <i @click="sorted" class="fas fa-sort"></i>
       </v-flex>
     </v-layout>
-    <PubList :pubData="$store.state.profile?$store.state.profile.publications : ''"/>
+    <PubList
+      :pubData="$store.state.profile? $store.state.profile.publications: ''"
+      :searchData="searchData"
+    />
   </div>
 </template>
 <script>
@@ -28,7 +41,7 @@ export default {
   },
   data () {
     return {
-      searchContent: null
+      searchData: null
     }
   },
   methods: {

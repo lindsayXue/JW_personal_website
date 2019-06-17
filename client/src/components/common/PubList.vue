@@ -14,7 +14,7 @@
       class="alert my-4"
       v-if="$store.state.isAdmin && (!pubData || pubData.length === 0)"
     >No data yet!</v-alert>
-    <v-sheet class="lightGrey my-4" v-for="(item, key) in pubData" :key="item.id">
+    <v-sheet class="lightGrey my-4" v-for="(item, key) in pubShow" :key="item.id">
       <div class="pub-title my-1 tertiary--text">
         {{item.title}}
         <v-btn
@@ -45,14 +45,28 @@ import ProfileService from '../../services/Profile'
 
 export default {
   props: [
-    'pubData'
+    'pubData',
+    'searchData'
   ],
   components: {
     PublicationHandler
   },
   data () {
     return {
+      pubShow: [],
       dialog: false
+    }
+  },
+  watch: {
+    pubData: function () {
+      this.pubShow = this.pubData
+    },
+    searchData: function (val) {
+      if (!val) {
+        this.pubShow = this.pubData
+      } else {
+        this.pubShow = this.pubData.filter(pub => pub._id === val)
+      }
     }
   },
   methods: {

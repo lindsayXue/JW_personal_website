@@ -3,11 +3,21 @@
     <v-flex md9>
       <v-layout class="search-bar mt-2 primary--text" row wrap align-start justify-space-between>
         <v-flex md7 xs11>
-          <v-text-field label="Search..." v-model="searchContent" clearable>
+          <v-autocomplete
+            v-model="searchData"
+            :items="blogData"
+            item-text="title"
+            item-value="_id"
+            label="Search..."
+            clearable
+          >
             <template v-slot:prepend-inner>
               <i class="fas fa-search"></i>
             </template>
-          </v-text-field>
+            <template v-slot:no-data>
+              <span class="primary--text pl-4">No blog found</span>
+            </template>
+          </v-autocomplete>
         </v-flex>
         <v-flex class="sort my-auto" md4 xs11>
           <p class="detail d-inline px-2">Sorted by Date</p>
@@ -16,7 +26,7 @@
         <v-progress-linear v-if="isLoading" :indeterminate="true" color="secondary" height="3"></v-progress-linear>
       </v-layout>
 
-      <BlogList :blogData="blogData"/>
+      <BlogList :blogData="blogData" :searchData="searchData"/>
     </v-flex>
     <v-flex md3 class="tertiary">
       <BlogCatagory
@@ -41,7 +51,7 @@ export default {
     return {
       blogData: [],
       catagoryData: [],
-      searchContent: null,
+      searchData: null,
       isLoading: false
     }
   },

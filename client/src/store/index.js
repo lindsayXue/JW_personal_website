@@ -64,6 +64,7 @@ export default new Vuex.Store({
         const res = await AdminService.login(params)
         setAuthToken(res.data.token)
         commit('setAdmin', true)
+        window.localStorage.removeItem('vuex')
       } catch (err) {
         commit('setErrors', err.response.data.errors)
       }
