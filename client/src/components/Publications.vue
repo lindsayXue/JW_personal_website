@@ -5,7 +5,7 @@
       <v-flex md5 xs11>
         <v-autocomplete
           v-model="searchData"
-          :items="$store.state.profile.publications"
+          :items="$store.state.profile? $store.state.profile.publications : []"
           item-text="title"
           item-value="_id"
           label="Search..."
@@ -20,7 +20,10 @@
         </v-autocomplete>
       </v-flex>
     </v-layout>
-    <PubList :pubData="$store.state.profile.publications" :searchData="searchData"/>
+    <PubList
+      :pubData="$store.state.profile? $store.state.profile.publications : []"
+      :searchData="searchData"
+    />
   </div>
 </template>
 <script>
