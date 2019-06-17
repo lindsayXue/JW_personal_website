@@ -703,8 +703,7 @@ router.post(
       .isEmpty(),
     check('year', 'Year is required')
       .not()
-      .isEmpty(),
-    check('year', 'Year format is YYYY').isInt({ min: 1000, max: 3000 })
+      .isEmpty()
   ],
   async (req, res) => {
     const errors = validationResult(req)
