@@ -87,10 +87,10 @@
               </v-flex>
               <v-flex xs12>
                 <v-text-field
-                  v-model="form.socialLinks.facebook"
-                  :error="!!$store.state.errors.facebook"
-                  :error-messages="$store.state.errors.facebook? $store.state.errors.facebook.msg  : ''"
-                  label="Facebook URL"
+                  v-model="form.socialLinks.researchgate"
+                  :error="!!$store.state.errors.researchgate"
+                  :error-messages="$store.state.errors.researchgate? $store.state.errors.researchgate.msg  : ''"
+                  label="Researchgate URL"
                   :disabled="isLoading"
                   clearable
                 ></v-text-field>
@@ -161,7 +161,7 @@ export default {
         currentTitle: '',
         imgURL: '',
         socialLinks: {
-          facebook: '',
+          researchgate: '',
           linkedin: '',
           github: '',
           youtube: ''

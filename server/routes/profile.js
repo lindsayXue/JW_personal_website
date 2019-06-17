@@ -53,12 +53,14 @@ router.post(
     check('imgURL', 'Image URL is required')
       .not()
       .isEmpty(),
-    check('facebook', 'Facebook is required').custom((value, { req }) => {
-      if (!req.body.socialLinks.facebook) {
-        return false
+    check('researchgate', 'Researchgate is required').custom(
+      (value, { req }) => {
+        if (!req.body.socialLinks.researchgate) {
+          return false
+        }
+        return true
       }
-      return true
-    }),
+    ),
     check('linkedin', 'LinkedIn is required').custom((value, { req }) => {
       if (!req.body.socialLinks.linkedin) {
         return false
@@ -150,12 +152,14 @@ router.put(
     check('imgURL', 'Image URL is required')
       .not()
       .isEmpty(),
-    check('facebook', 'Facebook is required').custom((value, { req }) => {
-      if (!req.body.socialLinks.facebook) {
-        return false
+    check('researchgate', 'Researchgate is required').custom(
+      (value, { req }) => {
+        if (!req.body.socialLinks.researchgate) {
+          return false
+        }
+        return true
       }
-      return true
-    }),
+    ),
     check('linkedin', 'LinkedIn is required').custom((value, { req }) => {
       if (!req.body.socialLinks.linkedin) {
         return false

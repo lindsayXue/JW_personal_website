@@ -18,8 +18,12 @@
           {{$store.state.profile.location.city}}, {{$store.state.profile.location.country}}
         </h2>
         <div class="social" v-if="$store.state.profile.socialLinks">
-          <a class="social-icon" :href="$store.state.profile.socialLinks.facebook" target="_blank">
-            <i class="fab fa-facebook fa-2x"></i>
+          <a
+            class="social-icon"
+            :href="$store.state.profile.socialLinks.researchgate"
+            target="_blank"
+          >
+            <i class="fab fa-researchgate fa-2x"></i>
           </a>
           <a class="social-icon" :href="$store.state.profile.socialLinks.linkedin" target="_blank">
             <i class="fab fa-linkedin fa-2x"></i>

@@ -35,7 +35,7 @@ const Profile = new Schema({
   },
   aboutme: String,
   socialLinks: {
-    facebook: String,
+    researchgate: String,
     linkedin: String,
     github: String,
     youtube: String
