@@ -12,12 +12,6 @@
       </v-dialog>
     </h1>
     <v-layout class="list-content" row wrap justify-center>
-      <v-alert
-        :value="true"
-        type="error"
-        class="alert my-4"
-        v-if="$store.state.isAdmin && (!projectsData || projectsData.length === 0)"
-      >No data yet!</v-alert>
       <v-flex md10 xs11>
         <v-dialog v-model="dialogProject" max-width="600">
           <template v-slot:activator="{ on }">

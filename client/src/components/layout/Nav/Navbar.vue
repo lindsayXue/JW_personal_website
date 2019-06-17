@@ -8,7 +8,21 @@
       v-if="!$vuetify.breakpoint.lgAndUp"
       class="nav-toolbar primary white--text py-2"
     >
-      <div class="logo-toolbar"></div>
+      <div class="logo-toolbar">
+        <v-img
+          class="logo"
+          :src="$store.state.profile.imgURL"
+          alt="Fail to download the image"
+          aspect-ratio="1"
+          position="top center"
+        >
+          <template v-slot:placeholder>
+            <v-layout fill-height align-center justify-center ma-0>
+              <v-progress-circular indeterminate color="white"></v-progress-circular>
+            </v-layout>
+          </template>
+        </v-img>
+      </div>
       <v-toolbar-title
         v-if="$store.state.profile"
         class="textGrey--text font-weight-bold"
@@ -101,12 +115,15 @@ export default {
 </script>
 <style scoped>
 .logo-toolbar {
-  background: url(../../../assets/Logo.jpg) no-repeat center;
-  background-size: cover;
-  border: 2px solid white;
-  border-radius: 50%;
+  /* background: url(../../../assets/Logo.jpg) no-repeat center;
+  background-size: cover; */
+
   width: 60px;
   height: 60px;
+}
+.logo {
+  border: 2px solid white;
+  border-radius: 50%;
 }
 .nav-small {
   top: 80px;
