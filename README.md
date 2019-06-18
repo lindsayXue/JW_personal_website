@@ -11,3 +11,7 @@ Get the project using git:
 - Cd server/config, add a default.json(development) file which include database secret, jwt secret, session secret, and google client ID and secret.
 - Cd server/config, add passport_setup.js file which include passport google oauth2.0 setup.
 - In server directory, run npm dev to test in development mode.
+
+## View
+
+[Yuanjie Wu's personal research website](https://yuanjiewu.me)
