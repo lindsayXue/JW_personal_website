@@ -67,7 +67,7 @@ export default {
 <style scoped>
 #banner {
   height: 280px;
-  background-color: var(--v-tertiary-base);
+  background-color: var(--v-white-base);
 }
 .content {
   padding-left: 5vw;

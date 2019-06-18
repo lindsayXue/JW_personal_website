@@ -37,7 +37,7 @@ export default {
 </script>
 <style scoped>
 .banner {
-  background: url(../assets/home_banner_bg.svg) center/cover no-repeat;
+  background: url(../assets/research_banner_bg.svg) center/cover no-repeat;
 }
 </style>
 

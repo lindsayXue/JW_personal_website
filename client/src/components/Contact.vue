@@ -98,6 +98,9 @@ export default {
 }
 </script>
 <style scoped>
+.banner {
+  background: url(../assets/contact_banner_bg.svg) center/cover no-repeat;
+}
 .content {
   padding: 2rem 5vw;
   height: calc(100vh - 280px);
