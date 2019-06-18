@@ -1,6 +1,6 @@
 <template>
   <div class="blog-catagory">
-    <h1 class="white--text font-weight-regular ma-2">
+    <h1 class="tertiary--text font-weight-regular ma-2">
       Catagory
       <v-btn dark flat small @click="addClick" v-if="!adding && $store.state.isAdmin">
         <i class="fas fa-plus"></i>
@@ -10,7 +10,7 @@
       </v-btn>
     </h1>
     <v-progress-linear v-if="isLoading" :indeterminate="true" color="secondary" height="3"></v-progress-linear>
-    <v-list dense class="tertiary textGrey--text">
+    <v-list class="textGrey tertiary--text">
       <v-alert
         :value="true"
         type="error"
@@ -143,8 +143,8 @@ export default {
 </script>
 <style scoped>
 .active-list {
-  background: var(--v-primary-base);
-  color: white;
+  background: var(--v-lightGrey-base);
+  color: var(--v-tertiary-base);
 }
 </style>
 

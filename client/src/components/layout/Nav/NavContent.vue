@@ -17,7 +17,7 @@
             </template>
           </v-img>
           <h1
-            class="textGrey--text text-xs-center mb-4"
+            class="textGrey--text text-xs-center mb-4 font-weight-regular"
           >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</h1>
           <p class="detail textGrey--text text-xs-center">{{$store.state.profile.currentTitle}}</p>
         </div>

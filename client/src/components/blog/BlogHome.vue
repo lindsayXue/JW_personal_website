@@ -28,7 +28,7 @@
 
       <BlogList :blogData="blogData" :searchData="searchData"/>
     </v-flex>
-    <v-flex md3 class="tertiary">
+    <v-flex md3 textGrey>
       <BlogCatagory
         class="catagory hidden-sm-and-down"
         :catagoryData="catagoryData"
