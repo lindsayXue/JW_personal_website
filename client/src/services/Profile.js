@@ -46,6 +46,9 @@ export default {
   createpublication(params) {
     return Api().post('/profile/publications', params)
   },
+  editpublication(params) {
+    return Api().put('/profile/publications', params)
+  },
   deletepublication(id) {
     return Api().delete(`/profile/publications/${id}`)
   }

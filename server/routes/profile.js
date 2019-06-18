@@ -625,7 +625,7 @@ router.put(
 
       const { projectId, projectName, projectDetail, projectImage } = req.body
 
-      const profileUpdate = await Profile.updateOne(
+      await Profile.updateOne(
         { 'projects._id': projectId },
         {
           $set: {
@@ -734,6 +734,67 @@ router.post(
 
       await profile.save()
       res.json(profile)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ errors: { server: { msg: 'Server error' } } })
+    }
+  }
+)
+
+// @route    PUT api/profile/publications
+// @desc     Edit publications
+// @access   Admin
+router.put(
+  '/publications',
+  [
+    check('title', 'Title is required')
+      .not()
+      .isEmpty(),
+    check('catagory', 'Catagory is required')
+      .not()
+      .isEmpty(),
+    check('authors', 'Author is required')
+      .not()
+      .isEmpty(),
+    check('info', 'Info is required')
+      .not()
+      .isEmpty(),
+    check('year', 'Year is required')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.mapped() })
+    }
+    try {
+      const profile = await Profile.findOne({})
+
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ errors: { noProfile: { msg: 'No profile yet' } } })
+      }
+
+      const { id, title, catagory, authors, info, year } = req.body
+
+      const authorsArray = authors.split(',')
+
+      await Profile.updateOne(
+        { 'publications._id': id },
+        {
+          $set: {
+            'publications.$.title': title,
+            'publications.$.catagory': catagory,
+            'publications.$.authors': authorsArray,
+            'publications.$.info': info,
+            'publications.$.year': year
+          }
+        }
+      )
+      res.send({ msg: 'Update success!!!' })
     } catch (err) {
       console.log(err)
       res.status(500).json({ errors: { server: { msg: 'Server error' } } })

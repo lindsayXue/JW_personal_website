@@ -8,7 +8,7 @@
             <i class="fas fa-plus"></i>
           </v-btn>
         </template>
-        <ProjectHandler v-on:closeDialog="closeDialog"/>
+        <ProjectHandler v-on:closeDialog="closeDialog" :isCreating="true"/>
       </v-dialog>
     </h1>
     <v-layout class="list-content" row wrap justify-center>
@@ -23,12 +23,33 @@
               v-on="on"
               @click="reviewProject(item)"
             >
+              <v-dialog v-model="dialogEdit" width="600" v-if="$store.state.isAdmin" persistent>
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    fab
+                    flat
+                    dark
+                    small
+                    color="tertiary"
+                    v-if="$store.state.isAdmin"
+                    class="mr-4"
+                    v-on="on"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </v-btn>
+                </template>
+                <ProjectHandler
+                  v-on:closeDialog="closeDialogEdit"
+                  :isCreating="false"
+                  :editItem="item"
+                />
+              </v-dialog>
               <v-btn
                 fab
                 flat
                 dark
                 small
-                color="tertiary"
+                color="primary"
                 @click.stop="deleteItem(item._id)"
                 absolute
                 right
@@ -86,12 +107,17 @@ export default {
     return {
       dialog: false,
       dialogProject: false,
+      dialogEdit: false,
       selectProject: null
+
     }
   },
   methods: {
     closeDialog () {
       this.dialog = false
+    },
+    closeDialogEdit () {
+      this.dialogEdit = false
     },
     reviewProject (item) {
       this.selectProject = item
@@ -106,7 +132,7 @@ export default {
         }
       }
     }
-  },
+  }
 }
 </script>
 <style scoped>

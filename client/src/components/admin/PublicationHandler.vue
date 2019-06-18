@@ -69,10 +69,15 @@
         </v-form>
       </v-card-text>
       <v-divider></v-divider>
-      <v-card-actions>
+      <v-card-actions v-if="isCreating">
         <v-spacer></v-spacer>
         <v-btn color="primary" flat @click="close">Back</v-btn>
         <v-btn color="tertiary" flat @click="create">Create</v-btn>
+      </v-card-actions>
+      <v-card-actions v-if="!isCreating">
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat @click="closeEdit">Back</v-btn>
+        <v-btn color="tertiary" flat @click="edit">Edit</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -81,6 +86,7 @@
 import ProfileService from '../../services/Profile'
 
 export default {
+  props: ['isCreating', 'editItem'],
   data () {
     return {
       form: {
@@ -88,7 +94,7 @@ export default {
         catagory: '',
         authors: '',
         info: '',
-        Year: ''
+        year: ''
       },
       isLoading: false
     }
@@ -110,10 +116,42 @@ export default {
         this.isLoading = false
       }
     },
+    async edit () {
+      this.isLoading = true
+      this.$store.dispatch('setErrors', null)
+      try {
+        await ProfileService.editpublication({ ...this.form, id: this.editItem._id })
+        this.$store.dispatch('getProfile')
+        this.$emit('closeDialog')
+        this.isLoading = false
+      } catch (err) {
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
+        this.isLoading = false
+      }
+    },
     close () {
       this.$emit('closeDialog')
       this.$refs.form.reset()
       this.$store.dispatch('setErrors', null)
+    },
+    closeEdit () {
+      this.$emit('closeDialog')
+      this.resetEditForm()
+      this.$store.dispatch('setErrors', null)
+    },
+    resetEditForm () {
+      this.form.title = this.editItem.title
+      this.form.catagory = this.editItem.catagory
+      this.form.authors = this.editItem.authors.join(',')
+      this.form.info = this.editItem.info
+      this.form.year = this.editItem.year
+    }
+  },
+  mounted () {
+    if (!this.isCreating) {
+      this.resetEditForm()
     }
   },
 }

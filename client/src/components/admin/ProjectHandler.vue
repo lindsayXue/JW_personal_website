@@ -48,10 +48,15 @@
         </v-form>
       </v-card-text>
       <v-divider></v-divider>
-      <v-card-actions>
+      <v-card-actions v-if="isCreating">
         <v-spacer></v-spacer>
         <v-btn color="primary" flat @click="close">Back</v-btn>
         <v-btn color="tertiary" flat @click="create">Create</v-btn>
+      </v-card-actions>
+      <v-card-actions v-if="!isCreating">
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat @click="closeEdit">Back</v-btn>
+        <v-btn color="tertiary" flat @click="edit">Edit</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -61,6 +66,7 @@ import ProfileService from '../../services/Profile'
 import { VueEditor } from "vue2-editor"
 
 export default {
+  props: ['isCreating', 'editItem'],
   components: {
     VueEditor
   },
@@ -98,11 +104,48 @@ export default {
         this.isLoading = false
       }
     },
+    async edit () {
+      this.isLoading = true
+      this.$store.dispatch('setErrors', null)
+      const { name, detail, imgURL } = this.form
+      const editProject = {
+        projectId: this.editItem._id,
+        projectName: name,
+        projectDetail: detail,
+        projectImage: imgURL
+      }
+      try {
+        await ProfileService.editproject(editProject)
+        this.$emit('closeDialog')
+        this.isLoading = false
+        this.$store.dispatch('getProfile')
+      } catch (err) {
+        if (err.response.data.errors) {
+          this.$store.dispatch('setErrors', err.response.data.errors)
+        }
+        this.isLoading = false
+      }
+    },
     close () {
       this.$emit('closeDialog')
       this.$refs.form.reset()
       this.form.detail = ''
       this.$store.dispatch('setErrors', null)
+    },
+    closeEdit () {
+      this.$emit('closeDialog')
+      this.resetEditForm()
+      this.$store.dispatch('setErrors', null)
+    },
+    resetEditForm () {
+      this.form.name = this.editItem.name
+      this.form.detail = this.editItem.detail
+      this.form.imgURL = this.editItem.imgURL
+    }
+  },
+  mounted () {
+    if (!this.isCreating) {
+      this.resetEditForm()
     }
   },
 }
