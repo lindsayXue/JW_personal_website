@@ -28,12 +28,8 @@
 
       <BlogList :blogData="blogData" :searchData="searchData"/>
     </v-flex>
-    <v-flex md3 textGrey>
-      <BlogCatagory
-        class="catagory hidden-sm-and-down"
-        :catagoryData="catagoryData"
-        v-on:updateBlog="updateBlog"
-      />
+    <v-flex textGrey md3 xs11 order-sm1>
+      <BlogCatagory class="catagory" :catagoryData="catagoryData" v-on:updateBlog="updateBlog"/>
     </v-flex>
   </v-layout>
 </template>
@@ -86,8 +82,5 @@ export default {
 }
 .sort {
   font-size: 1.2rem;
-}
-.catagory {
-  height: calc(100vh - 280px);
 }
 </style>

@@ -1,84 +1,49 @@
 <template>
   <div class="blog-catagory">
-    <h1 class="tertiary--text font-weight-regular ma-2">
-      Catagory
-      <v-btn dark flat small @click="addClick" v-if="!adding && $store.state.isAdmin">
-        <i class="fas fa-plus"></i>
-      </v-btn>
-      <v-btn dark flat small @click="closeClick" v-if="adding && $store.state.isAdmin">
-        <i class="fas fa-times"></i>
-      </v-btn>
-    </h1>
-    <v-progress-linear v-if="isLoading" :indeterminate="true" color="secondary" height="3"></v-progress-linear>
-    <v-list class="textGrey tertiary--text">
-      <v-alert
-        :value="true"
-        type="error"
-        class="alert my-4"
-        v-if="$store.state.isAdmin && (!catagoryData || catagoryData.length === 0)"
-      >No data yet!</v-alert>
-      <template v-for="item in catagoryData">
-        <v-list-tile
-          :class="item._id === $store.state.route.query.cataId? 'active-list': ''"
-          @click="selectClick(item)"
-          :key="item._id"
-        >
-          <v-list-tile-avatar v-if="$store.state.isAdmin">
-            <v-dialog v-model="dialog" width="600" persistent>
-              <template v-slot:activator="{ on }">
-                <v-btn flat fab dark small v-on="on">
-                  <i class="fas fa-edit"></i>
-                </v-btn>
-              </template>
-              <CatagoryHandler v-on:closeDialog="closeDialog" :catagoryEdit="item"/>
-            </v-dialog>
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title class="content">
-              <span class="list-icon secondary--text font-weight-bold pr-2">|</span>
-              {{item.name}}
-            </v-list-tile-title>
-          </v-list-tile-content>
-          <v-list-tile-action v-if="$store.state.isAdmin">
-            <v-btn flat dark small fab>
-              <i class="fas fa-times" @click="deleteItem(item._id)"></i>
-            </v-btn>
-          </v-list-tile-action>
-        </v-list-tile>
-      </template>
-      <v-list-tile
-        :class="!$store.state.route.query.catagory? 'active-list': ''"
-        @click="selectClick(null)"
-      >
-        <v-list-tile-content>
-          <v-list-tile-title class="content">
-            <span class="list-icon secondary--text font-weight-bold pr-2">|</span>
-            ALL
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
-    <v-form class="pa-2" ref="form" v-if="adding">
-      <v-text-field
-        label="Catagory"
-        v-model="catagoryName"
-        :error="!!$store.state.errors.catagoryName"
-        :error-message="$store.state.errors.catagoryName? $store.state.errors.catagoryName.msg : ''"
-        dark
-        required
-      ></v-text-field>
-      <v-btn color="primary" dark small @click="addCatagory">Create</v-btn>
-    </v-form>
+    <div class="lgAndMd hidden-sm-and-down" :class="{'md': $vuetify.breakpoint.md}">
+      <h1 class="tertiary--text font-weight-regular ma-2">
+        Catagory
+        <v-btn dark flat small @click="addClick" v-if="!adding && $store.state.isAdmin">
+          <i class="fas fa-plus"></i>
+        </v-btn>
+        <v-btn dark flat small @click="closeClick" v-if="adding && $store.state.isAdmin">
+          <i class="fas fa-times"></i>
+        </v-btn>
+      </h1>
+      <v-progress-linear v-if="isLoading" :indeterminate="true" color="secondary" height="3"></v-progress-linear>
+      <CatagoryList v-on:updateBlog="updateBlog" :catagoryData="catagoryData"/>
+      <v-form class="pa-2" ref="form" v-if="adding">
+        <v-text-field
+          label="Catagory"
+          v-model="catagoryName"
+          :error="!!$store.state.errors.catagoryName"
+          :error-message="$store.state.errors.catagoryName? $store.state.errors.catagoryName.msg : ''"
+          dark
+          required
+        ></v-text-field>
+        <v-btn color="primary" dark small @click="addCatagory">Create</v-btn>
+      </v-form>
+    </div>
+    <div class="smAndXs hidden-md-and-up white">
+      <v-menu offset-y dark>
+        <template v-slot:activator="{ on }">
+          <v-btn dark color="tertiary" outline v-on="on">Catagory</v-btn>
+        </template>
+        <CatagoryList v-on:updateBlog="updateBlog" :catagoryData="catagoryData"/>
+      </v-menu>
+    </div>
   </div>
 </template>
 <script>
 import CatagoryHandler from '../admin/CatagoryHandler'
 import BlogService from '../../services/Blog'
+import CatagoryList from './CatagoryList'
 
 export default {
   props: ['catagoryData'],
   components: {
-    CatagoryHandler
+    CatagoryHandler,
+    CatagoryList
   },
   data () {
     return {
@@ -98,40 +63,15 @@ export default {
       this.$refs.form.reset()
       this.$store.dispatch('setErrors', null)
     },
-    closeDialog (update) {
-      this.dialog = false
-      if (update) {
-        this.isLoading = true
-        this.$emit('updateBlog')
-        this.isLoading = false
-        return
-      }
-      this.isLoading = false
-    },
-    selectClick (cata) {
-      if (cata) {
-        this.$router.push({ query: { catagory: cata.name, cataId: cata._id } })
-      } else {
-        this.$router.push({ query: { catagory: null, cataId: null } })
-      }
+    updateBlog () {
+      this.$emit('updateBlog')
     },
     async addCatagory () {
       try {
         await BlogService.createCatagory({ catagoryName: this.catagoryName })
-        this.$emit('updateBlog')
+        this.updateBlog()
         this.$refs.form.reset()
         this.adding = false
-      } catch (err) {
-        if (err.response.data.errors) {
-          this.$store.dispatch('setErrors', err.response.data.errors)
-        }
-      }
-    },
-    async deleteItem (id) {
-      try {
-        await BlogService.deleteCatagory(id)
-        this.$emit('updateBlog')
-        this.selectClick(null)
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)
@@ -142,9 +82,18 @@ export default {
 }
 </script>
 <style scoped>
+.blog-catagory .lgAndMd {
+  height: calc(100vh - 280px);
+}
+.blog-catagory .lgAndMd.md {
+  height: calc(100vh - 360px);
+}
 .active-list {
   background: var(--v-lightGrey-base);
   color: var(--v-tertiary-base);
+}
+.catagory-nav {
+  padding-top: 80px;
 }
 </style>
 
