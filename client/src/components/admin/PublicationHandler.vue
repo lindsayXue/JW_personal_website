@@ -99,6 +99,13 @@ export default {
       isLoading: false
     }
   },
+  watch: {
+    editItem: function (val) {
+      if (val) {
+        this.resetEditForm()
+      }
+    }
+  },
   methods: {
     async create () {
       this.isLoading = true
@@ -122,7 +129,7 @@ export default {
       try {
         await ProfileService.editpublication({ ...this.form, id: this.editItem._id })
         this.$store.dispatch('getProfile')
-        this.$emit('closeDialog')
+        this.$emit('closeDialog', this.editItem._id)
         this.isLoading = false
       } catch (err) {
         if (err.response.data.errors) {

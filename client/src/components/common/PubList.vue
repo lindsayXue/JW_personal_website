@@ -1,6 +1,6 @@
 <template>
   <div class="pub-list lightGrey">
-    <v-dialog v-model="dialog" width="600" persistent>
+    <v-dialog v-model="dialogCreate" width="600" persistent>
       <template v-slot:activator="{ on }" v-if="$store.state.isAdmin">
         <v-btn flat light small absolute right color="tertiary" fab v-on="on">
           <i class="fas fa-plus"></i>
@@ -15,21 +15,27 @@
       v-if="$store.state.isAdmin && (!pubData || pubData.length === 0)"
     >No data yet!</v-alert>
     <v-progress-linear v-if="isLoading" :indeterminate="true" color="secondary" height="3"></v-progress-linear>
-    <v-sheet class="lightGrey my-4" v-for="(item, key) in pubShow" :key="item.id">
+    <v-dialog v-model="dialogEdit" width="600" v-if="$store.state.isAdmin" persistent lazy>
+      <PublicationHandler
+        v-on:closeDialog="closeDialogEdit"
+        :isCreating="false"
+        :editItem="editItem"
+      />
+    </v-dialog>
+    <v-sheet class="lightGrey my-4" v-for="(item, index) in pubShow" :key="item._id">
       <div class="pub-title my-1 tertiary--text">
         {{item.title}}
-        <v-dialog v-model="dialogEdit" width="600" v-if="$store.state.isAdmin" persistent>
-          <template v-slot:activator="{ on }">
-            <v-btn fab flat dark small color="tertiary" v-if="$store.state.isAdmin" v-on="on">
-              <i class="fas fa-edit"></i>
-            </v-btn>
-          </template>
-          <PublicationHandler
-            v-on:closeDialog="closeDialogEdit"
-            :isCreating="false"
-            :editItem="item"
-          />
-        </v-dialog>
+        <v-btn
+          v-if="$store.state.isAdmin"
+          fab
+          flat
+          dark
+          small
+          color="tertiary"
+          @click="editClick(item)"
+        >
+          <i class="fas fa-edit"></i>
+        </v-btn>
         <v-btn
           v-if="$store.state.isAdmin"
           fab
@@ -48,7 +54,7 @@
       </div>
       <div class="pub-info detail">{{item.info}}</div>
       <div class="pub-year detail">{{item.year}}</div>
-      <v-divider class="my-2" :key="key"></v-divider>
+      <v-divider class="my-2" :key="index"></v-divider>
     </v-sheet>
   </div>
 </template>
@@ -67,8 +73,9 @@ export default {
   data () {
     return {
       pubShow: [],
-      dialog: false,
+      dialogCreate: false,
       dialogEdit: false,
+      editItem: null,
       isLoading: true
     }
   },
@@ -86,10 +93,15 @@ export default {
   },
   methods: {
     closeDialog () {
-      this.dialog = false
+      this.dialogCreate = false
     },
     closeDialogEdit () {
+      this.editItem = null
       this.dialogEdit = false
+    },
+    editClick (item) {
+      this.editItem = item
+      this.dialogEdit = true
     },
     async deleteItem (id) {
       this.isLoading = true
