@@ -1,4 +1,4 @@
-# Jason Wu Personal Research website
+# Jason Wu's Personal Research website
 
 This website is made for client from University of Canterbury.
 
@@ -14,4 +14,4 @@ Get the project using git:
 
 ## View
 
-[Yuanjie Wu's personal research website](https://yuanjiewu.me)
+[Jason Wu's personal research website](https://yuanjiewu.me)
