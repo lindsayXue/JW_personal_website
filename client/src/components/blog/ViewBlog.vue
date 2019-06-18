@@ -27,6 +27,7 @@
           </span>
         </h1>
         <v-divider></v-divider>
+        <v-progress-linear v-if="isLoading" :indeterminate="true" color="secondary" height="3"></v-progress-linear>
         <div class="detail blog-info secondary--text">
           <span class="authors px-2">
             <i class="fas fa-tag pr-1"></i>
@@ -92,25 +93,31 @@ export default {
   },
   data () {
     return {
-      blogData: {}
+      blogData: {},
+      isLoading: true
     }
   },
   methods: {
     async deleteBlog () {
+      this.isLoading = true
       try {
         await BlogService.deleteBlog(this.$store.state.route.params.id)
+        this.isLoading = false
         this.$router.push('/blog')
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)
         }
+        this.isLoading = false
       }
     },
     async updateBlog () {
       const res = await BlogService.getBlogById(this.$store.state.route.params.id)
       this.blogData = res.data
+      this.isLoading = false
     },
     async deleteComment (commentid) {
+      this.isLoading = true
       try {
         await BlogService.deleteComment({
           blogid: this.$store.state.route.params.id,
@@ -121,6 +128,7 @@ export default {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)
         }
+        this.isLoading = false
       }
     }
   },
