@@ -14,6 +14,7 @@
       class="alert my-4"
       v-if="$store.state.isAdmin && (!pubData || pubData.length === 0)"
     >No data yet!</v-alert>
+    <v-progress-linear v-if="isLoading" :indeterminate="true" color="secondary" height="3"></v-progress-linear>
     <v-sheet class="lightGrey my-4" v-for="(item, key) in pubShow" :key="item.id">
       <div class="pub-title my-1 tertiary--text">
         {{item.title}}
@@ -67,7 +68,8 @@ export default {
     return {
       pubShow: [],
       dialog: false,
-      dialogEdit: false
+      dialogEdit: false,
+      isLoading: true
     }
   },
   watch: {
@@ -90,13 +92,16 @@ export default {
       this.dialogEdit = false
     },
     async deleteItem (id) {
+      this.isLoading = true
       try {
         await ProfileService.deletepublication(id)
         await this.$store.dispatch('getProfile')
+        this.isLoading = false
       } catch (err) {
         if (err.response.data.errors) {
           this.$store.dispatch('setErrors', err.response.data.errors)
         }
+        this.isLoading = false
       }
     },
     sorted () {
@@ -105,6 +110,7 @@ export default {
   },
   mounted () {
     this.pubShow = this.pubData
+    this.isLoading = false
   },
 }
 </script>

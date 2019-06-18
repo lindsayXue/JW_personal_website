@@ -44,7 +44,7 @@ router.post(
     try {
       const newBlog = new Blog({
         title: req.body.blogTitle,
-        catagory: req.body.blogCatagory,
+        catagory: req.body.blogCatagory ? req.body.blogCatagory : null,
         content: req.body.blogContent
       })
 
