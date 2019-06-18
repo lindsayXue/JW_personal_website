@@ -2,7 +2,7 @@
   <div id="projects-list">
     <h1 class="primary--text font-weight-regular mb-4">
       {{title}}
-      <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin" persistent>
+      <v-dialog v-model="dialogCreate" width="600" v-if="$store.state.isAdmin" persistent>
         <template v-slot:activator="{ on }">
           <v-btn flat light color="tertiary" fab v-on="on">
             <i class="fas fa-plus"></i>
@@ -11,6 +11,7 @@
         <ProjectHandler v-on:closeDialog="closeDialog" :isCreating="true"/>
       </v-dialog>
     </h1>
+
     <v-layout class="list-content" row wrap justify-center>
       <v-flex md10 xs11>
         <v-dialog v-model="dialogProject" max-width="600">
@@ -23,27 +24,6 @@
               v-on="on"
               @click="reviewProject(item)"
             >
-              <v-dialog v-model="dialogEdit" width="600" v-if="$store.state.isAdmin" persistent>
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    fab
-                    flat
-                    dark
-                    small
-                    color="tertiary"
-                    v-if="$store.state.isAdmin"
-                    class="mr-4"
-                    v-on="on"
-                  >
-                    <i class="fas fa-edit"></i>
-                  </v-btn>
-                </template>
-                <ProjectHandler
-                  v-on:closeDialog="closeDialogEdit"
-                  :isCreating="false"
-                  :editItem="item"
-                />
-              </v-dialog>
               <v-btn
                 fab
                 flat
@@ -74,21 +54,40 @@
               </v-layout>
             </v-card>
           </template>
-          <v-card class="project-card">
-            <v-card-title
-              class="headline tertiary--text"
-              primary-title
-            >{{selectProject? selectProject.name : ''}}</v-card-title>
+          <div>
+            <v-card class="project-card" v-if="!isEditing">
+              <v-btn
+                fab
+                flat
+                dark
+                small
+                color="tertiary"
+                v-if="$store.state.isAdmin"
+                class="mr-4"
+                @click="editClick"
+              >
+                <i class="fas fa-edit"></i>
+              </v-btn>
+              <v-card-title
+                class="headline tertiary--text"
+                primary-title
+              >{{selectProject? selectProject.name : ''}}</v-card-title>
+              <v-card-text class="detail" v-html="selectProject? selectProject.detail:''"></v-card-text>
 
-            <v-card-text class="detail" v-html="selectProject? selectProject.detail:''"></v-card-text>
+              <v-divider></v-divider>
 
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" flat @click="dialogProject = false">Close</v-btn>
-            </v-card-actions>
-          </v-card>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" flat @click="dialogProject = false">Close</v-btn>
+              </v-card-actions>
+            </v-card>
+            <ProjectHandler
+              :isCreating="false"
+              v-if="isEditing"
+              :editItem="selectProject"
+              v-on:closeDialog="closeDialogEdit"
+            />
+          </div>
         </v-dialog>
       </v-flex>
     </v-layout>
@@ -105,19 +104,23 @@ export default {
   },
   data () {
     return {
-      dialog: false,
+      dialogCreate: false,
       dialogProject: false,
-      dialogEdit: false,
-      selectProject: null
+      selectProject: null,
+      isEditing: false
 
     }
   },
   methods: {
     closeDialog () {
-      this.dialog = false
+      this.dialogCreate = false
     },
     closeDialogEdit () {
-      this.dialogEdit = false
+      this.dialogProject = false
+      this.isEditing = false
+    },
+    editClick () {
+      this.isEditing = true
     },
     reviewProject (item) {
       this.selectProject = item
