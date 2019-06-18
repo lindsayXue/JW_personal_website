@@ -44,7 +44,7 @@ export default {
 </script>
 <style scoped>
 .banner {
-  background: url(../assets/pub_banner_bg.svg) center/cover no-repeat;
+  background: url(../assets/pub_banner_bg.svg) center right/cover no-repeat;
 }
 .search-bar {
   padding: 0 5vw;

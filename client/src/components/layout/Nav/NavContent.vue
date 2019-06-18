@@ -1,68 +1,64 @@
 <template>
   <div>
-    <div class="title hidden-sm-and-down">
-      <div class="profile" v-if="$store.state.profile">
-        <v-img
-          class="logo"
-          :src="$store.state.profile.imgURL"
-          alt="Fail to download the image"
-          aspect-ratio="1"
-          position="top center"
-        >
-          <template v-slot:placeholder>
-            <v-layout fill-height align-center justify-center ma-0>
-              <v-progress-circular indeterminate color="white"></v-progress-circular>
-            </v-layout>
+    <div class="hidden-sm-and-down">
+      <div class="title">
+        <div class="profile" v-if="$store.state.profile">
+          <v-img
+            class="logo"
+            :src="$store.state.profile.imgURL"
+            alt="Fail to download the image"
+            aspect-ratio="1"
+            position="top center"
+          >
+            <template v-slot:placeholder>
+              <v-layout fill-height align-center justify-center ma-0>
+                <v-progress-circular indeterminate color="white"></v-progress-circular>
+              </v-layout>
+            </template>
+          </v-img>
+          <h1
+            class="textGrey--text text-xs-center mb-4"
+          >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</h1>
+          <p class="detail textGrey--text text-xs-center">{{$store.state.profile.currentTitle}}</p>
+        </div>
+        <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin" persistent>
+          <template v-slot:activator="{ on }">
+            <v-btn flat dark v-on="on" absolute right>
+              <i class="fas fa-plus pr-2" v-if="!$store.state.profile"></i>
+              <i class="fas fa-edit pr-2" v-if="!!$store.state.profile"></i> profile
+            </v-btn>
           </template>
-        </v-img>
-        <h1
-          class="textGrey--text text-xs-center mb-4"
-        >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</h1>
-        <p class="detail textGrey--text text-xs-center">{{$store.state.profile.currentTitle}}</p>
+          <ProfileHandler v-on:closeDialog="closeDialog"/>
+        </v-dialog>
       </div>
-      <v-dialog v-model="dialog" width="600" v-if="$store.state.isAdmin" persistent>
-        <template v-slot:activator="{ on }">
-          <v-btn flat dark v-on="on" absolute right>
-            <i class="fas fa-plus pr-2" v-if="!$store.state.profile"></i>
-            <i class="fas fa-edit pr-2" v-if="!!$store.state.profile"></i> profile
-          </v-btn>
+      <v-list class="nav-items">
+        <template v-for="(item, index) in navItems">
+          <v-divider :key="index" class="textGrey"></v-divider>
+          <v-list-tile
+            :key="item.title"
+            class="nav-item textGrey--text"
+            active-class="white--text bgGrey"
+            :to="item.to"
+          >
+            <v-list-tile-action>
+              <v-list-tile-title class="nav-item-icon secondary--text font-weight-regular">|</v-list-tile-title>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title class="nav-item-content font-weight-regular">{{item.title}}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
         </template>
-        <ProfileHandler v-on:closeDialog="closeDialog"/>
-      </v-dialog>
-    </div>
-    <v-list class="nav-items hidden-sm-and-down">
-      <template v-for="(item, index) in navItems">
-        <v-divider :key="index" class="textGrey"></v-divider>
-        <v-list-tile
-          :key="item.title"
-          class="nav-item textGrey--text"
-          active-class="white--text bgGrey"
-          :to="item.to"
-        >
+        <v-divider class="textGrey"></v-divider>
+        <v-list-tile class="nav-item textGrey--text" @click="logout" v-if="$store.state.isAdmin">
           <v-list-tile-action>
-            <v-list-tile-title class="nav-item-icon secondary--text font-weight-bold">|</v-list-tile-title>
+            <v-list-tile-title class="nav-item-icon secondary--text font-weight-regular">|</v-list-tile-title>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title class="nav-item-content font-weight-bold">{{item.title}}</v-list-tile-title>
+            <v-list-tile-title class="nav-item-content font-weight-regular">LOGOUT</v-list-tile-title>
           </v-list-tile-content>
-          <v-list-tile-action class="nav-item-icon secondary--text font-weight-bold">
-            <i class="fas fa-chevron-right"></i>
-          </v-list-tile-action>
         </v-list-tile>
-      </template>
-      <v-divider class="textGrey"></v-divider>
-      <v-list-tile class="nav-item textGrey--text" @click="logout" v-if="$store.state.isAdmin">
-        <v-list-tile-action>
-          <v-list-tile-title class="nav-item-icon secondary--text font-weight-bold">|</v-list-tile-title>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="nav-item-content font-weight-bold">LOGOUT</v-list-tile-title>
-        </v-list-tile-content>
-        <v-list-tile-action class="nav-item-icon secondary--text font-weight-bold">
-          <i class="fas fa-chevron-right"></i>
-        </v-list-tile-action>
-      </v-list-tile>
-    </v-list>
+      </v-list>
+    </div>
     <v-list class="nav-items hidden-md-and-up">
       <template v-for="(item, index) in navItems">
         <v-divider :key="index" class="textGrey"></v-divider>
@@ -73,30 +69,24 @@
           :to="item.to"
         >
           <v-list-tile-action>
-            <v-list-tile-title class="nav-item-icon secondary--text font-weight-bold">|</v-list-tile-title>
+            <v-list-tile-title class="nav-item-icon secondary--text font-weight-regular">|</v-list-tile-title>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title class="nav-item-content font-weight-bold">{{item.title}}</v-list-tile-title>
+            <v-list-tile-title class="nav-item-content font-weight-regular">{{item.title}}</v-list-tile-title>
           </v-list-tile-content>
-          <v-list-tile-action class="nav-item-icon secondary--text font-weight-bold">
-            <i class="fas fa-chevron-right"></i>
-          </v-list-tile-action>
         </v-list-tile>
       </template>
       <v-divider class="textGrey"></v-divider>
       <v-list-tile class="nav-item textGrey--text" @click="logout" v-if="$store.state.isAdmin">
         <v-list-tile-action>
-          <v-list-tile-title class="nav-item-icon secondary--text font-weight-bold">|</v-list-tile-title>
+          <v-list-tile-title class="nav-item-icon secondary--text font-weight-regular">|</v-list-tile-title>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title class="nav-item-content font-weight-bold">LOGOUT</v-list-tile-title>
+          <v-list-tile-title class="nav-item-content font-weight-regular">LOGOUT</v-list-tile-title>
         </v-list-tile-content>
-        <v-list-tile-action class="nav-item-icon secondary--text font-weight-bold">
-          <i class="fas fa-chevron-right"></i>
-        </v-list-tile-action>
       </v-list-tile>
     </v-list>
-    <Footer class="footer hidden-sm-and-down"/>
+    <Footer class="footer"/>
   </div>
 </template>
 <script>
@@ -126,10 +116,6 @@ export default {
         {
           title: 'BLOG',
           to: '/blog'
-        },
-        {
-          title: 'CONTACT',
-          to: '/contact'
         }
       ],
       dialog: false

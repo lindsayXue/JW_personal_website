@@ -8,7 +8,6 @@ import BlogHome from '../components/blog/BlogHome'
 import ViewBlog from '../components/blog/ViewBlog'
 import CreateBlog from '../components/blog/CreateBlog'
 import EditBlog from '../components/blog/EditBlog'
-import Contact from '../components/Contact'
 
 import AdminLogin from '../components/admin/AdminLogin'
 
@@ -56,11 +55,6 @@ const router = new VueRouter({
           component: ViewBlog
         }
       ]
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: Contact
     },
     {
       path: '/admin/login',

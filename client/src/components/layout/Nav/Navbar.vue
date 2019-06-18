@@ -58,12 +58,9 @@
         <v-btn
           flat
           dark
-          @click.stop="drawerMedium = !drawerMedium"
-          class="hidden-lg-and-up hidden-sm-and-down"
+          @click.stop="drawerMediumSmall = !drawerMediumSmall"
+          class="hidden-lg-and-up"
         >
-          <i class="fas fa-bars fa-2x"></i>
-        </v-btn>
-        <v-btn flat dark @click.stop="drawerSmall = !drawerSmall" class="hidden-md-and-up">
           <i class="fas fa-bars fa-2x"></i>
         </v-btn>
       </v-toolbar-items>
@@ -71,17 +68,7 @@
     <v-navigation-drawer app fixed class="nav-side primary hidden-md-and-down">
       <NavContent/>
     </v-navigation-drawer>
-    <v-navigation-drawer app v-model="drawerMedium" temporary fixed class="nav-medium primary">
-      <NavContent/>
-    </v-navigation-drawer>
-    <v-navigation-drawer
-      class="nav-small primary"
-      v-model="drawerSmall"
-      app
-      fixed
-      temporary
-      height="250"
-    >
+    <v-navigation-drawer app v-model="drawerMediumSmall" temporary class="nav-medium-small primary">
       <NavContent/>
     </v-navigation-drawer>
   </div>
@@ -97,8 +84,7 @@ export default {
   },
   data () {
     return {
-      drawerMedium: false,
-      drawerSmall: false,
+      drawerMediumSmall: false,
       dialog: false,
       dialogEdit: false
     }
@@ -124,8 +110,5 @@ export default {
 .logo {
   border: 2px solid white;
   border-radius: 50%;
-}
-.nav-small {
-  top: 80px;
 }
 </style>
