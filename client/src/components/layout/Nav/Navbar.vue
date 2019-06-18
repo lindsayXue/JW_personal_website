@@ -25,7 +25,7 @@
       </div>
       <v-toolbar-title
         v-if="$store.state.profile"
-        class="textGrey--text font-weight-bold"
+        class="textGrey--text font-weight-regular"
       >{{$store.state.profile.firstName}} {{$store.state.profile.lastName}}</v-toolbar-title>
       <v-dialog
         v-model="dialogEdit"
