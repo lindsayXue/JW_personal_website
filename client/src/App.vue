@@ -6,7 +6,7 @@
         <main>
           <v-btn
             class="hidden-md-and-up"
-            @click="scrollToTop"
+            @click="$vuetify.goTo(0, {easing: 'easeInOutCubic',duration: 600})"
             color="tertiary"
             fab
             dark
@@ -32,15 +32,6 @@ export default {
   name: 'app',
   components: {
     Navbar
-  },
-  methods: {
-    scrollToTop () {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      })
-    }
   },
   mounted () {
     this.$store.dispatch('getProfile')
