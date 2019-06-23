@@ -13,7 +13,7 @@
     </h1>
 
     <v-layout class="list-content" row wrap justify-center>
-      <v-flex md10 xs11>
+      <v-flex md10 xs12>
         <v-dialog v-model="dialogProject" max-width="600">
           <template v-slot:activator="{ on }">
             <v-card
@@ -47,7 +47,7 @@
                     </template>
                   </v-img>
                 </v-flex>
-                <v-flex sm7 xs11>
+                <v-flex md7 xs12>
                   <v-card-title class="title tertiary--text">{{item.name}}</v-card-title>
                   <v-card-text class="detail" v-html="item.detail.slice(0, 100) + '...'"></v-card-text>
                 </v-flex>
