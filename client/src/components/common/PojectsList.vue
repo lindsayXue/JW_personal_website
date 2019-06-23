@@ -48,7 +48,7 @@
                   </v-img>
                 </v-flex>
                 <v-flex sm7 xs11>
-                  <v-card-title class="headline tertiary--text">{{item.name}}</v-card-title>
+                  <v-card-title class="title tertiary--text">{{item.name}}</v-card-title>
                   <v-card-text class="detail" v-html="item.detail.slice(0, 100) + '...'"></v-card-text>
                 </v-flex>
               </v-layout>
@@ -69,7 +69,7 @@
                 <i class="fas fa-edit"></i>
               </v-btn>
               <v-card-title
-                class="headline tertiary--text"
+                class="title tertiary--text"
                 primary-title
               >{{selectProject? selectProject.name : ''}}</v-card-title>
               <v-card-text class="detail" v-html="selectProject? selectProject.detail:''"></v-card-text>
