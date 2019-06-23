@@ -6,7 +6,7 @@
         <main>
           <v-btn
             class="hidden-md-and-up"
-            @click="$vuetify.goTo(0, {easing: 'easeInOutCubic',duration: 600})"
+            @click="$vuetify.goTo(0, {easing: 'easeInOutCubic',duration: 1000})"
             color="tertiary"
             fab
             dark

@@ -39,7 +39,7 @@
               </v-btn>
               <v-layout wrap>
                 <v-flex xs4 class="hidden-sm-and-down">
-                  <v-img class="secondary" height="200" width="200" :src="item.imgURL">
+                  <v-img class="secondary" aspect-ratio="1" max-width="200" :src="item.imgURL">
                     <template v-slot:placeholder>
                       <v-layout fill-height align-center justify-center ma-0>
                         <v-progress-circular indeterminate color="white"></v-progress-circular>
