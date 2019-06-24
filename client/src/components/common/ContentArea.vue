@@ -34,7 +34,6 @@ export default {
 </script>
 <style scoped>
 .content {
-  padding: 0 5vw;
   font-size: 1.2rem;
   overflow-wrap: break-word;
   line-height: 3rem;

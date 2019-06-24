@@ -70,7 +70,7 @@ export default {
   background-color: var(--v-white-base);
 }
 .content {
-  padding-left: 5vw;
+  padding-left: 10vw;
 }
 </style>
 

@@ -21,7 +21,7 @@
       <v-layout
         v-for="item in timelineData"
         :key="item._id"
-        mb-4
+        class="list-item"
         row
         wrap
         justify-center
@@ -83,11 +83,13 @@ export default {
 </script>
 <style scoped>
 #timeline-area {
-  padding: 2rem 5vw;
+  padding: 6rem 10vw;
 }
 .content {
-  padding: 0 5vw;
   font-size: 1.2rem;
   line-height: 1.5rem;
+}
+.list-item {
+  margin: 4rem 0;
 }
 </style>

@@ -11,7 +11,7 @@
         <InterestsHandler v-on:closeDialog="closeDialog"/>
       </v-dialog>
     </h1>
-    <v-list>
+    <v-list dense>
       <v-alert
         :value="true"
         type="error"
@@ -20,7 +20,7 @@
       >No data yet!</v-alert>
       <v-list-tile v-for="item in listData" :key="item._id">
         <v-list-tile-action>
-          <v-list-tile-title class="list-icon secondary--text font-weight-bold">|</v-list-tile-title>
+          <v-list-tile-title class="list-icon secondary--text">|</v-list-tile-title>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title class="detail" v-html="item.title"></v-list-tile-title>
@@ -66,9 +66,6 @@ export default {
 }
 </script>
 <style scoped>
-#list-area {
-  padding: 2rem 0;
-}
 .list-icon {
   font-size: 1.6rem;
 }

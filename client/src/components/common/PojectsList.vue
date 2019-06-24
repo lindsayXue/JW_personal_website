@@ -1,6 +1,6 @@
 <template>
   <div id="projects-list">
-    <h1 class="primary--text font-weight-regular mb-4">
+    <h1 class="primary--text font-weight-regular">
       {{title}}
       <v-dialog v-model="dialogCreate" width="600" v-if="$store.state.isAdmin" persistent>
         <template v-slot:activator="{ on }">
@@ -11,13 +11,12 @@
         <ProjectHandler v-on:closeDialog="closeDialog" :isCreating="true"/>
       </v-dialog>
     </h1>
-
-    <v-layout class="list-content" row wrap justify-center>
+    <v-layout class="list-content" row wrap justify-start>
       <v-flex md10 xs12>
         <v-dialog v-model="dialogProject" max-width="600">
           <template v-slot:activator="{ on }">
             <v-card
-              class="project-card mb-4"
+              class="project-card list-item"
               v-for="item in projectsData"
               :key="item._id"
               hover
@@ -140,12 +139,12 @@ export default {
 </script>
 <style scoped>
 #projects-list {
-  padding: 2rem 5vw;
-}
-.list-content {
-  padding: 0 5vw;
+  padding: 6rem 10vw;
 }
 .project-card {
   overflow-wrap: break-word;
+}
+.project-card.list-item {
+  margin: 4rem 0;
 }
 </style>

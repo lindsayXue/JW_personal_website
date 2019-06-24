@@ -35,7 +35,7 @@ export default {
   background: url(../assets/home_banner_bg.svg) center right / cover no-repeat;
 }
 .about {
-  padding: 2rem 5vw;
+  padding: 6rem 10vw;
 }
 </style>
 
