@@ -24,7 +24,7 @@
         class="list-item"
         row
         wrap
-        justify-center
+        justify-start
         align-start
       >
         <v-flex sm4 xs11>
