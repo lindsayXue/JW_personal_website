@@ -11,7 +11,7 @@
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
-    "vue-moment": "^4.0.0",
+    "vue-moment": "^4.1.0",
     "vue-router": "^3.0.6",
     "vue2-editor": "^2.7.2",
     "vuetify": "^1.5.14",
